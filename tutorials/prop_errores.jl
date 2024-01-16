@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.7
+# v0.19.36
 
 using Markdown
 using InteractiveUtils
@@ -457,6 +457,7 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
@@ -479,7 +480,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.9.4"
 manifest_format = "2.0"
-project_hash = "04d4a9f7d561f8779c3004a8d7e172eb4750301f"
+project_hash = "a5c23a4a0c884609ad1f0ac5883512ce65f6bb96"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -1946,11 +1947,11 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╠═ab3bd1bb-412a-4395-aa16-6c27fa825600
-# ╠═5e02dff8-b168-4a7c-810d-d9962c428907
-# ╠═85b6d6ab-5c52-41f0-b2e9-7e6373cf43b2
-# ╠═13cdba4e-4f96-4997-80cd-2f643640e055
-# ╠═fc63e3ff-a1f2-4c3d-829d-6399ec8c7bd5
+# ╟─ab3bd1bb-412a-4395-aa16-6c27fa825600
+# ╟─5e02dff8-b168-4a7c-810d-d9962c428907
+# ╟─85b6d6ab-5c52-41f0-b2e9-7e6373cf43b2
+# ╟─13cdba4e-4f96-4997-80cd-2f643640e055
+# ╟─fc63e3ff-a1f2-4c3d-829d-6399ec8c7bd5
 # ╠═bac670a4-3cf4-455c-ab78-3c2c208af7c0
 # ╠═7a2d399f-de57-4ade-a1fd-3d41b8281a84
 # ╠═7173722b-3c66-484e-a8a1-722986172bdf
