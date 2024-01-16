@@ -6,6 +6,8 @@ version = "1.0.0"
 [deps]
 Artifacts = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
 Franklin = "713c75ef-9fc9-4b05-94a9-213340da978e"
+Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
+Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoStaticHTML = "359b1769-a58e-495b-9770-312e911026ad"
 
 [compat]
