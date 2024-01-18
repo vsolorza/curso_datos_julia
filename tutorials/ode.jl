@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.7
+# v0.19.36
 
 using Markdown
 using InteractiveUtils
@@ -75,7 +75,7 @@ porque no pudu utilizarse Measurements.jl  en la versión de segundo orden.
 """
 
 # ╔═╡ 5d4f4146-a225-42ec-9b1b-a7e88df5bce3
-plotly()
+gr()
 
 # ╔═╡ f4a00686-979f-4498-ae73-8833c1c8320f
 md"con parámetero $\omega$:"
@@ -308,7 +308,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.9.4"
 manifest_format = "2.0"
-project_hash = "877aa488a58131635889ce7846ac48bf13e2dc33"
+project_hash = "c8373fcd67b0a5943447e2bc2b12acaa272b7e15"
 
 [[deps.ADTypes]]
 git-tree-sha1 = "41c37aa88889c171f1300ceac1313c06e891d245"

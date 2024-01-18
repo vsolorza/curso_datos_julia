@@ -21,7 +21,7 @@ end
     lx_readhtml(com, _)
 
 Embed a Pluto notebook via:
-https://github.com/rikhuijzer/PlutoStaticHTML.jl
+https://github.com/jsheinbaum/PlutoStaticHTML.jl
 """
 function lx_readhtml(com, _)
     file = string(Franklin.content(com.braces[1]))::String

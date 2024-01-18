@@ -1,3 +1,3 @@
-# JuliaTutorialsTemplate
+# curso_datos_julia
 
-See <http://rikhuijzer.github.io/JuliaTutorialsTemplate/> for more information.
+See <http://github.com/jsheinbaum/curso_datos_julia/> for more information.

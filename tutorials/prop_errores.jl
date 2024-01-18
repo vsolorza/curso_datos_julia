@@ -15,7 +15,7 @@ macro bind(def, element)
 end
 
 # ╔═╡ 85b6d6ab-5c52-41f0-b2e9-7e6373cf43b2
-using Distributions,Measurements,Plots, PlutoUI, Unitful, StatsPlots, DataFrames, LinearAlgebra
+using Distributions,Measurements,Plots, PlutoUI, Unitful, StatsPlots, DataFrames, LinearAlgebra, Latexify
 
 # ╔═╡ ab3bd1bb-412a-4395-aa16-6c27fa825600
 md"""
@@ -25,13 +25,52 @@ md"""
 # ╔═╡ 5e02dff8-b168-4a7c-810d-d9962c428907
 md"## Load Packages"
 
+# ╔═╡ a2cd2cbe-08a5-410c-940a-323af467e05f
+gr()
+
 # ╔═╡ 13cdba4e-4f96-4997-80cd-2f643640e055
+md"""
+* ### Cifras significativass
+* ### Algunas reglas
+* ### Siempre escribe la estimación (medición) y su error
+* ### Incertidumbre o error relativo
+"""
+
+# ╔═╡ fb7af13a-94ce-49db-9035-8cc125373ca7
+md"""Consideren:\
+900 vs 900.0 \
+0.00054 vs 1.00054 \
+1245.3 ± 10 \
+30 ± 4.5
+"""
+
+# ╔═╡ 33281294-80f7-4fda-9235-aec8bb7f11fc
+md"
+###### Algunas reglas para redondear cifras significativas:
+
+1. **Todos los dígitos diferentes de cero son significativos:** Por ejemplo, en el número 123, los tres dígitos son significativos.
+
+2. **Los ceros entre dígitos diferentes de cero son significativos:** En el número 1002, los cuatro dígitos son significativos.
+
+3. **Los ceros a la izquierda del primer dígito diferente de cero no son significativos:** Por ejemplo, en 0.00456, solo los dígitos 456 son significativos.
+
+4. **Si escribes los ceros a la derecha de un número decimal estos serán siempre significativos:** En 10.200, los cuatro dígitos son significativos. Indicas que tienes una precisión de \pm 0.001 si no escribes explícitamente la incertidumbre.
+
+5. **Redondea al final de tus cálculos** en forma consistente con tus mediciones y errores
+
+Recuerda  conservar el número apropiado de cifras significativas para mantener la precisión adecuada en tus resultados.
+"
+
+# ╔═╡ 861d6ad1-624d-47ae-9f54-dfc434688082
 md"""
 * ### Suponiendo errores pequeños
 * ### Desarrollo Taylor
 * ### Todavía no consideramos que el error es aleatorio
 * ### Incertidumbre o error relativo
 """
+
+# ╔═╡ 6ceebaf0-241f-44d5-9e4c-16b634548093
+md"#### Estimación y  propagación elemental de incertidumbres"
 
 # ╔═╡ fc63e3ff-a1f2-4c3d-829d-6399ec8c7bd5
 md"""
@@ -74,6 +113,9 @@ Si consideramos errores aleatorios sumamos en cuadratura
 ```
 """
 
+# ╔═╡ 10c8be85-5e1c-470f-b8fd-1ee9fefe7925
+md"#### Comparemos las estimaciones con ambos métodos"
+
 # ╔═╡ 7a2d399f-de57-4ade-a1fd-3d41b8281a84
 begin
 t=1.6 ± 0.1
@@ -84,36 +126,40 @@ hₑ=Measurements.value(h);
 tₑ=Measurements.value(t);
 g=2h/t^2;
 gₑ=2hₑ/tₑ^2;
-δg=δh/hₑ+(2δt/tₑ);
+δgᵣ=δh/hₑ+(2δt/tₑ);
+δg=gₑ*δgᵣ
 end
 
 # ╔═╡ 7173722b-3c66-484e-a8a1-722986172bdf
-δg/gₑ
+md"Estimación, incertidumbre, cuadratura"
+
+# ╔═╡ 05aedf3d-bf7f-4d64-a2b1-a039715d23ea
+[round(g), round(δg), g]
 
 # ╔═╡ db095cec-628b-4cc6-85c5-7d41fdfffe62
-md"Algunas reglas para reportar mediciones y sus incertidumbres:
+md"##### Algunas reglas para reportar mediciones y sus incertidumbres:
 
 1. **Expresar la Medición:**
-   - Reportar el valor medido con las unidades correspondiente.
+   - Reportar el valor medido con las unidades correspondientes.
    - Utilizar el número correcto de cifras significativas basado en la precisión de tu medición.
 
 2. **Incluir la Incertidumbre:**
-   - Proporciona la incertidumbre asociada con tu medición. Puede ser desde una estimación sencilla del error o en forma de desviación estándar, error estándarm(si reportas el promedio de varias mediciones)  o un intervalo de confianza.
+   - Proporciona la incertidumbre asociada con tu medición. Puede ser desde una estimación sencilla del error o en forma de desviación estándar, error estándar (si reportas el promedio de varias mediciones)  o un intervalo de confianza. Veremos cómo calcular y hacer eso.
 
-3. **Formato para Medición y Incertidumbre Combinadas:**
+3. **Formato para Medición e Incertidumbre Combinadas:**
    - Expresa el resultado en la forma: $( \text{Valor Medido} \pm \text{Incertidumbre})$.
    - Por ejemplo: $( 25.4 \, \text{cm} \pm 0.2 \, \text{cm})$.
 
 4. **Usar Unidades Coherentes:**
-   - Asegúrate de que las unidades de la medición y la incertidumbre sean coherentes.
+   - Asegúrate de que las unidades de la medición y la incertidumbre sean coherentes. Por lo general mismas unidades.
 
 5. **Expresar la Incertidumbre Apropiadamente:**
-   - Medición e incertidumbre deben ser consistentes en su número de cifras significativas
-   - Comunica la incertidumbre a un nivel de confianza (por ejemplo, intervalo de confianza del 95%).
-   - Especifica el método utilizado para calcular o estimar la incertidumbre.
+   - Medición e incertidumbre deben ser consistentes en cuanto a número de cifras significativas
+   - Comunicar la incertidumbre a un nivel de confianza (por ejemplo, intervalo de confianza del 95%).
+   - Especificar el método/suposición utilizado para calcular o estimar la incertidumbre.
 
 6. **Incluye la Precisión del Instrumento:**
-   - Si es aplicable, considera y reporta la precisión del instrumento de medición.
+   - Si es aplicable, considera y reportar la precisión del instrumento de medición.
 
 7. **Proporciona Contexto:**
    - Indica claramente las condiciones bajo las cuales se realizó la medición (por ejemplo, temperatura, presión), ya que pueden afectar el resultado.
@@ -127,24 +173,7 @@ md"Algunas reglas para reportar mediciones y sus incertidumbres:
 10. **Repite las Mediciones:**
     - Si es posible, presenta resultados basados en múltiples mediciones para demostrar consistencia y confiabilidad.
 
-Recuerda que informar de manera clara y precisa las mediciones y sus incertidumbres es crucial para la interpretación y comparación adecuada de resultados científicos o experimentales.
-"
-
-# ╔═╡ f425fb59-d486-4df3-abf6-5978d8d062cc
-md"
-Algunas reglas para redondear cifras significativas:
-
-1. **Todos los dígitos diferentes de cero son significativos:** Por ejemplo, en el número 123, los tres dígitos son significativos.
-
-2. **Los ceros entre dígitos diferentes de cero son significativos:** En el número 1002, los cuatro dígitos son significativos.
-
-3. **Los ceros a la izquierda del primer dígito diferente de cero no son significativos:** Por ejemplo, en 0.00456, solo los dígitos 456 son significativos.
-
-4. **Si escribes los ceros a la derecha de un número decimal estos serán siempre significativos:** En 10.200, los cuatro dígitos son significativos. Indicas que tienes una precisión de \pm 0.001 si no escribes explícitamente la incertidumbre.
-
-5. **Redondea al final de tus cálculos** en forma consistente con tus mediciones y errores
-
-Recuerda  conservar el número apropiado de cifras significativas para mantener la precisión adecuada en tus resultados.
+Recuerda que reportar de manera clara y precisa las mediciones y sus incertidumbres es crucial para la interpretación y comparación adecuada de resultados científicos o experimentales.
 "
 
 # ╔═╡ 71f6c7c4-bc22-41f8-8f60-a5cf32012293
@@ -169,7 +198,7 @@ Si $x \  \text{e} \ y$  tienen errores aleatorios independientes
 $\delta{x}$ y $\delta{y}$, entonces el error relativo en la multiplicación
 $(z=xy)$ es
 
-$\frac{\delta{z}}{z}=\sqrt{\left(\frac{\delta{x}^2}{x}\right) + \left(\frac{\delta{y}^2}{y}\right)},.$
+$\frac{\delta{z}}{z}=\sqrt{\left(\frac{\delta{x}}{x}\right)^2 + \left(\frac{\delta{y}}{y}\right)^2},.$
 
 \
 
@@ -279,6 +308,8 @@ $s_{q}=\sqrt{s^2_{x_1}\left(\frac{\partial{q}}{\partial{x_1}}\right)^2 +
 """
 
 # ╔═╡ 586fac47-31c8-41f0-a046-15599aa5bbda
+# ╠═╡ disabled = true
+#=╠═╡
 md"""
 ## Ejemplo:
 
@@ -372,6 +403,206 @@ $({\delta{S}}/{\delta{C}})$ y obtener la desviación estándar asociado al
 cálculo de la salinidad $(\delta{S})$.
 
 """
+  ╠═╡ =#
+
+# ╔═╡ e8c51384-733b-4a42-bbeb-d23d9393f10b
+md"# Estadística básica y Probabilidad"
+
+# ╔═╡ f064bde5-9f13-4d3e-bdc3-3e1a9021d83c
+md"""
+
+#### Estadística básica
+
+La estadística trata de describir las características de una población
+continua a partir de muestras discretas de la misma. Hablamos de
+población y de muestra de una población. Si calculamos, por ejemplo, la
+media de una población, estamos calculando un **parámetro**. Cuando
+calculamos la media de una muestra le llamamos un estadístico de la
+población. \
+
+La estadística nos ayuda a organizar, analizar, presentar datos, y nos
+da información de cómo planear la recolección de los mismos, i.e.~a
+muestrear.
+
+```
+#\begin{center}
+#%\includegraphics[width=0.5\textwidth]{estadistica_poblacion.pdf}
+#\end{center}
+```
+
+##### 1.  La media o promedio
+
+La media de una muestra de N valores ($x_i=x_1,x_2,...,x_N$) es
+
+```math
+\begin{equation}
+\bar{x}=\frac{1}{N}\sum^N_{i=1}x_i=<x>,.
+\end{equation}
+```
+
+La media debe de diferenciarse de la mediana. La media es el momento de
+orden cero. La mediana de una población es aquel valor numérico que
+separa el 50\% de valores mas altos del 50\% de valores mas bajos. Se
+puede calcular ordenando de menor a mayor el conjunto de valores y
+escojer el valor central si el conjunto de datos es impar o el promedio
+de los dos centrales si es par. \
+
+
+##### 2.  La varianza:
+
+La varianza de un una muestra de N valores $(x_i)$ es
+
+```math
+\begin{equation}
+s^2=\frac{1}{N-1}\sum^N_{i=1}(x_i-\bar{x})^2=<x'^2>\,,
+\end{equation}
+```
+
+donde las primas indican fluctuaciones alrededor de la media. La
+varianza es una medida de cuán lejos estan los diferentes puntos de la
+muestra de la media de la población. La varianza es el segundo momento
+alrededor de la media. Al dividir por $N$ estamos subestimando la
+verdaderavarianza de la población. Al dividir por $(N-1)$ obtenemos un
+estimador insesgado. \
+
+NOTA: el sesgo de un estimador se refiere a la diferencia entre su
+valor esperado y el valor numérico (real) del parámetro que se
+estima. Un estimador que no tiene sesgo se dice insesgado. Por ejemplo,
+para la media:
+
+```math
+[E[x]-\mu \rightarrow {0}]
+
+[\bar{x}-\mu \rightarrow {0}]
+```
+
+EJERCICIO: Demostrar porqué hay que dividir por $(N-1)$ en lugar de
+$N$ para que la definición de varianza sea un estimador insesgado. \
+
+
+
+##### 3.  La desviación típica: 
+
+Es la raíz cuadrada de la varianza. Se suele escribir como $(\sigma)$
+para referirse a la población o como $s$ para su estimación estadística
+
+
+```math
+\begin{equation}
+s=\sqrt{s^2}\,.
+\end{equation}
+```
+
+
+##### 4. Momentos de orden superior: 
+
+
+Podemos definir un momento alrededor de la media como:
+
+```math
+\begin{equation}
+m_p=\frac{1}{N}\sum^N_{i=1}(x_i-\bar{x})^p=<x'^p>\,.
+\end{equation}
+```
+
+
+De esta forma $m_2$ es la varianza, $m_3$ es la asimetría, y $m_4$
+la curtosis. El momento $(m_3)$ indica la asimetría de la muestra
+alrededor de la media $(m_3>0)$ implica distribución con cola larga en
+la parte positiva y viceversa. $(m_4)$ indica el grado de esparcimiento
+de las muestras alrededor de la media. Una mayor curtosis indica mayor
+concentración de puntos alrededor de la media. Los momentos de orden
+superior ($(>2)$) se suelen adimensionalizar dividiendo por la
+desviación estandar:
+
+```math
+\begin{equation}
+    m_3=\frac{1}{N}\sum^N_{i=1}\left[\frac{x_i-\bar{x}}{\sigma}\right]^3=<(x/\sigma)'^3>
+\end{equation}
+```
+
+```math
+\begin{equation} 
+    m_4=\frac{1}{N}\sum^N_{i=1}\left[\frac{x_i-\bar{x}}{\sigma}\right]^4-3=<(x/\sigma)'^4>-3
+\end{equation}
+```
+donde el factor $-3$ hace que la curtosis tome el valor cero para una
+distribución Normal.
+
+
+"""
+
+# ╔═╡ 5ff136ca-23db-4141-8c90-c5da3cd8d562
+md""" 
+#### Covarianza y correlación
+
+
+La covarianza entre dos variables $(x)$ e $(y)$ puede definirse como un
+estadístico que relaciona  $(x)$ e $(y)$ de la siguiente forma
+
+```math
+[C_{xy}=<x'y'>=<(x-\bar{x})(y-\bar{y})>=\frac{1}{N-1}\sum\limits^N_{i=1} (x_i-\bar{x})(y_i-\bar{y})\,.]
+```
+
+La correlación es la covarianza normalizada
+
+```math
+[\rho_{x y}=\frac{C_{x y}}{s_x s_y}=\frac{<x' y'>}{\sqrt{<x'^2><y'^2>}}\,.]
+```
+
+Consideremos el modelo estadístico lineal de media cero (es una recta
+que pasa por $(\overline{x},\overline{y})=(0,0))$
+
+```math
+[\hat{y}=\alpha x\,,]
+```
+
+donde $(\alpha)$ es una constante. El error cometido por este estimador
+se define como el error cuadrático medio
+
+```math
+[\epsilon^2=<(\hat{y}-y)^2>=\alpha^2<x^2>+<y^2>-2\alpha<xy>]
+```
+
+y si queremos minimizar dicho error entonces tenemos que encontrar que
+$(\alpha)$ es el que provoca que la derivada
+
+$(\partial{\epsilon^2}/\partial{\alpha}\rightarrow{0})$. 
+
+Es decir
+
+$[\partial{\epsilon^2}/\partial{\alpha}=2\alpha<x^2>-2<xy>=0\,]$
+
+y  $(\alpha)$ es
+
+$[\alpha=\frac{<xy>}{<x^2>}\,.]$
+
+El error cuadrado mínimo se encuentra substituyendo el valor de
+$(\alpha)$ en la expresión del error $(\epsilon^2)$ de arriba
+
+```math
+[\epsilon^2=\frac{<xy>^2}{<x^2>} + <y^2> - 2\frac{<xy>^2}{<x^2>}=
+           <y^2>\left(\frac{<xy>^2}{<x^2><y^2>}+1-2\frac{<xy>^2}{<x^2><y^2>}\right)=\]
+
+[=<y^2>(1-\rho^2_{xy})\,.]
+```
+
+Si $(\rho^2_{xy}=1)$ entonces el error es cero que es error más pequeño de todos.
+Por el contrario, si $(\rho^2_{xy}=0)$ entonces el error es igual a la
+varianza, es decir, máximo error. Si $(\rho)$ toma valores intermedios,
+i.e., $(\rho^2_{xy}=0.5)$ entonces el error es $(\epsilon^2=0.5<y^2>)$,
+es decir, el error del modelo lineal es un (50\%) de la varianza. Por
+lo tanto, la correlación al cuadrado puede definirse también ciomo la
+eficiencia relativa del estimador $(\hat{y}^2)$ o la fracción de
+varianza explicada por el modelo lineal
+
+```math
+[\rho^2_{xy}=\frac{<\hat{y}^2>}{<y^2>}=\frac{{varianza-explicada}}{{varianza-total}}\,.]
+```
+A este parámetro se le puede encontrar en la literatura inglesa denominado como
+**skill** del modelo lineal.
+
+"""
 
 # ╔═╡ 7c97760b-0b64-440e-bd89-d71a17a9243b
 md"# Distribuciones de Probabilidad "
@@ -424,17 +655,17 @@ plot(Beta(alpha, beta),
 	linewidth = 2,
 	fill = true,
 	alpha = 0.3,
-	title = "Probability Density Function"
+	title = "Función de Densidad de Probabilidad"
 )
 
 # ╔═╡ 759f4a2b-b7a1-49e4-99a6-03eebf4d0573
 md"## Distribución Binomial"
 
 # ╔═╡ 4b0456cf-29ae-4551-a704-7f5fa906df89
-md"Number of Trials (n): $(@bind n Slider(1:1:10, 1, true))"
+md"Número de intentos (n): $(@bind n Slider(1:1:10, 1, true))"
 
 # ╔═╡ 144a4161-0a84-42f1-b674-946f0200101f
-md"Probability of Success (p): $(@bind p Slider(0.00:0.01:1.0, 0.5, true))"
+md"Probabilidad de éxitos (p): $(@bind p Slider(0.00:0.01:1.0, 0.5, true))"
 
 # ╔═╡ 0901abad-c184-436d-910f-ae429c15d122
 begin
@@ -457,6 +688,7 @@ PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+Latexify = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
@@ -467,6 +699,7 @@ Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 [compat]
 DataFrames = "~1.6.1"
 Distributions = "~0.25.107"
+Latexify = "~0.16.1"
 Measurements = "~2.11.0"
 Plots = "~1.39.0"
 PlutoUI = "~0.7.54"
@@ -480,7 +713,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.9.4"
 manifest_format = "2.0"
-project_hash = "a5c23a4a0c884609ad1f0ac5883512ce65f6bb96"
+project_hash = "328a9bbf3650bcb6b420ed1286c11afbf6e2f035"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -1947,33 +2180,42 @@ version = "1.4.1+1"
 """
 
 # ╔═╡ Cell order:
-# ╟─ab3bd1bb-412a-4395-aa16-6c27fa825600
-# ╟─5e02dff8-b168-4a7c-810d-d9962c428907
-# ╟─85b6d6ab-5c52-41f0-b2e9-7e6373cf43b2
-# ╟─13cdba4e-4f96-4997-80cd-2f643640e055
+# ╠═ab3bd1bb-412a-4395-aa16-6c27fa825600
+# ╠═5e02dff8-b168-4a7c-810d-d9962c428907
+# ╠═85b6d6ab-5c52-41f0-b2e9-7e6373cf43b2
+# ╠═a2cd2cbe-08a5-410c-940a-323af467e05f
+# ╠═13cdba4e-4f96-4997-80cd-2f643640e055
+# ╠═fb7af13a-94ce-49db-9035-8cc125373ca7
+# ╠═33281294-80f7-4fda-9235-aec8bb7f11fc
+# ╠═861d6ad1-624d-47ae-9f54-dfc434688082
+# ╠═6ceebaf0-241f-44d5-9e4c-16b634548093
 # ╟─fc63e3ff-a1f2-4c3d-829d-6399ec8c7bd5
-# ╠═bac670a4-3cf4-455c-ab78-3c2c208af7c0
+# ╟─bac670a4-3cf4-455c-ab78-3c2c208af7c0
+# ╟─10c8be85-5e1c-470f-b8fd-1ee9fefe7925
 # ╠═7a2d399f-de57-4ade-a1fd-3d41b8281a84
 # ╠═7173722b-3c66-484e-a8a1-722986172bdf
-# ╟─db095cec-628b-4cc6-85c5-7d41fdfffe62
-# ╟─f425fb59-d486-4df3-abf6-5978d8d062cc
-# ╟─71f6c7c4-bc22-41f8-8f60-a5cf32012293
-# ╟─6bd1ab2f-48e3-486e-80c5-055ea25404c5
-# ╟─22f6fe10-ac4d-4063-84a6-67601f61da38
+# ╠═05aedf3d-bf7f-4d64-a2b1-a039715d23ea
+# ╠═db095cec-628b-4cc6-85c5-7d41fdfffe62
+# ╠═71f6c7c4-bc22-41f8-8f60-a5cf32012293
+# ╠═6bd1ab2f-48e3-486e-80c5-055ea25404c5
+# ╠═22f6fe10-ac4d-4063-84a6-67601f61da38
 # ╠═586fac47-31c8-41f0-a046-15599aa5bbda
+# ╠═e8c51384-733b-4a42-bbeb-d23d9393f10b
+# ╠═f064bde5-9f13-4d3e-bdc3-3e1a9021d83c
+# ╠═5ff136ca-23db-4141-8c90-c5da3cd8d562
 # ╠═7c97760b-0b64-440e-bd89-d71a17a9243b
 # ╠═b659ae06-3180-4c22-bdda-419444458ae3
 # ╠═fca5675a-0063-45aa-8af9-f13069c4cff0
-# ╠═18567e0d-8f29-4ea4-92fc-6fabab0d5bac
-# ╠═b7c2233a-7957-4347-83d9-6f87d521eb3b
-# ╠═c25a9157-60e8-4309-b1e8-82f95453cd95
+# ╟─18567e0d-8f29-4ea4-92fc-6fabab0d5bac
+# ╟─b7c2233a-7957-4347-83d9-6f87d521eb3b
+# ╟─c25a9157-60e8-4309-b1e8-82f95453cd95
 # ╠═690b2f82-69da-4420-ac87-b25ce10bbfa6
 # ╠═e599ffd3-2ca7-42ee-b08f-7cf980d5a9be
 # ╠═786bb65f-fc11-4e54-9577-58cbae0abe91
-# ╠═e29357ed-2e57-48cb-b788-d3069401096f
+# ╟─e29357ed-2e57-48cb-b788-d3069401096f
 # ╠═759f4a2b-b7a1-49e4-99a6-03eebf4d0573
-# ╠═4b0456cf-29ae-4551-a704-7f5fa906df89
-# ╠═144a4161-0a84-42f1-b674-946f0200101f
+# ╟─4b0456cf-29ae-4551-a704-7f5fa906df89
+# ╟─144a4161-0a84-42f1-b674-946f0200101f
 # ╠═0901abad-c184-436d-910f-ae429c15d122
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
