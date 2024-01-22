@@ -12,8 +12,8 @@ Ver [Getting started](/getting-started).
 
 ## Qué hace este sitio?
 
-This template contains multiple Pluto notebooks in the `tutorials` folder.
-These tutorials are listed on the left side of this webpage.
+Este  sitio web tiene varios Pluto notebooks en el folder  `tutorials`.
+Los  tutoriales y tareas se listan a la izquierda de la página.
 Here,
 
 1. each tutorial is created and updated in [Pluto.jl](https://github.com/fonsp/Pluto.jl), which is super easy and convenient ✔️,

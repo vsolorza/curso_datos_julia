@@ -119,7 +119,7 @@ md"#### Comparemos las estimaciones con ambos métodos"
 # ╔═╡ 7a2d399f-de57-4ade-a1fd-3d41b8281a84
 begin
 t=1.6 ± 0.1
-h=46.2 ± 0.3
+h=(46.2/3.33) ± 0.3
 δt=Measurements.uncertainty(t);
 δh=Measurements.uncertainty(h);
 hₑ=Measurements.value(h);
@@ -130,11 +130,17 @@ gₑ=2hₑ/tₑ^2;
 δg=gₑ*δgᵣ
 end
 
+# ╔═╡ ee9a4c25-6d0b-4565-a54f-3e8221723008
+typeof(δgᵣ)
+
 # ╔═╡ 7173722b-3c66-484e-a8a1-722986172bdf
 md"Estimación, incertidumbre, cuadratura"
 
+# ╔═╡ 42db76e4-1bd0-4e94-b741-2fda5f9510e3
+typeof(δg)
+
 # ╔═╡ 05aedf3d-bf7f-4d64-a2b1-a039715d23ea
-[round(g), round(δg), g]
+[round(g), round(δg), round(gₑ)]
 
 # ╔═╡ db095cec-628b-4cc6-85c5-7d41fdfffe62
 md"##### Algunas reglas para reportar mediciones y sus incertidumbres:
@@ -259,52 +265,443 @@ $\delta{q}=\sqrt{x^2_2\delta{x_1}^2 + x^2_1\delta{x_2}^2}=\sqrt{q^2\left[ \left(
 
 $\frac{\delta{q}}{q}=\sqrt{\left(\frac{\delta{x_1}^2}{x_1}\right) + \left(\frac{\delta{x_2}^2}{x_2}\right)}$
 
+
+"""
+
+# ╔═╡ 29dbf31b-82eb-456e-9957-5172ad24b6c3
+md"# Estadística básica y Probabilidad"
+
+# ╔═╡ 2845e243-684e-4703-a9f3-a8098e61e204
+md"""
+#### Estadística básica
+
+Con la estadística tratamos de obtener estimaciones de las propiedades
+de una población a partir de muestras parciales de la misma. Hablamos de
+población y de muestra de una población. Propiedades de una población 
+como la media,desviación estándar,etc son **parámetros o propiedades** 'establecidas'
+de dicha población, aunque no se conozcan. En estadística utilizamos estas muestras
+y definimos estimadores o estadísticos de dichos parámetros basados en ellas. 
+
+Las poblaciones o espacios muestrales se caracterizan por tener una función de densidad de probabilidad (pdf) también conocida como función de distribución de probabilidad, con la que calculamos
+
+$Prob(a< x < b) = ∫_{a}^{b} ρ(x) dx$ 
+
+
+que nos dice la probabilidad de que x esté en el intervalo $(a,b)$ .
+
+Se tiene tanbién la función de distribución cumulativa $F(x)$ :
+
+
+$F(x) = ∫_{-∞}^{x} ρ(x') dx'$ 
+
+
+que nos dice la probabilidad de tener valores menores a $x$ y además
+
+
+$\frac{dF}{dx} = ρ(x)$
+
+
+La probabilidad está normalizada (lo que significa que siempre obtendremos un valor
+de la varable al tomar una muestra)
+
+
+$∫_{-∞}^{∞} ρ(x) dx = 1$
+
+
 \
+
+
+Con la densidad de probabilidad podemos calcular sus momentos definidos por 
+
+
+```math
+\begin{equation}
+M_{n}(x) = ∫_{-∞}^{∞} x^n ρ(x) dx
+\end{equation}
+
+```
+
+
+
+
+El primer momento se conoce como el valor esperado de una variable o función estadística:
+
+```math
+\begin{equation}
+ M_{1}(x) = E(x) = ∫_{-∞}^{∞} x ρ(x) dx = μ 
+\end{equation}
+
+```
+
+y nos da el valor medio  (promedio) de la variable.
+
+
+
+Utilizando este valor se calculan los momentos 'centrados' alrededor de $μ$:
+
+\
+
+```math
+\begin{equation}
+M_{n}(x - μ) = ∫_{-∞}^{∞} (x - μ)^n ρ(x) dx
+\end{equation}
+
+```
+
+
+
+De los cuales uno de los más importantes es el segundo momento conocido como varianza $σ^2$.
+
+```math
+\begin{equation}
+σ^2 = E((x-μ)^2) = ∫_{-∞}^{∞} (x - μ)^2 ρ(x) dx
+\end{equation}
+```
+
+Para cualquier función $a(x)$ definimos su valor esperado como:
+
+
+$E(a(x)) = ∫_{-∞}^{∞} a(x) ρ(x) dx$ 
+
+Una propiedad común que se busca tengan los estimadores estadísticos es que sean no sesgados. Esto significa que el "valor esperado" del estimador debe ser igual al parámetro o 'valor verdadero'  correspondiente de la población. Para demostrar muchas propiedades de los estimadores estadísticos no necesitamos hacer explícitamente las integrales. Con utilizar las propiedades de la integral y suponer que la muestra se toma de una población con pdf o momentos definidos se puede demostrar en forma sencilla, por ejemplo que:
+
+```
+#\begin{center}
+#%\includegraphics[width=0.5\textwidth]{estadistica_poblacion.pdf}
+#\end{center}
+```
+
+"""
+
+# ╔═╡ f6ee567a-45ea-43dc-ae86-ac1c7e530cfd
+md"""
+
+##### 1.  Estimador de la media o promedio
+
+Un estimador de la media de la población a partir de una muestra de N valores ($x_i=x_1,x_2,...,x_N$) es
+
+```math
+\begin{equation}
+\bar{x}=\frac{1}{N}\sum^N_{i=1}x_i
+\end{equation}
+```
+
+Es no sesgado porque
+
+$E(\bar{x})= E(\frac{1}{N}\sum^N_{i=1}x_i)= \frac{1}{N}\sum^N_{i=1}E(x_i)=\frac{1}{N}\sum^N_{i=1} μ=\frac{N}{N} μ = μ$
+
+
+Este rresultado se obtiene considerando que las variables $x_i$  provienen
+de una población o espacio muestral con media $μ$.
+
+La media debe de diferenciarse de la mediana. La media es el momento de
+orden uno. La mediana de una población es aquel valor numérico que
+separa el 50\% de valores mas altos del 50\% de valores mas bajos. Se
+puede calcular ordenando de menor a mayor el conjunto de valores y
+escoger el valor central si el conjunto de datos es impar o el promedio
+de los dos centrales si es par. \
+
+
+##### 2.  La varianza:
+
+La varianza de un una muestra de N valores $(x_i)$ es
+
+```math
+\begin{equation}
+s^2=\frac{1}{N-1}\sum^N_{i=1}(x_i-\bar{x})^2 = \frac{1}{N-1}\sum^N_{i=1} (x_i')^2,
+\end{equation}
+```
+
+donde las primas indican fluctuaciones alrededor de la media. La
+varianza es una medida de cuán lejos estan los diferentes puntos de la
+muestra de la media de la población o de la muestra. La varianza es el segundo momento
+alrededor de la media. Al dividir por $N$ estamos subestimando la
+verdadera varianza de la población. Al dividir por $(N-1)$ obtenemos un
+estimador no sesgado. \
+
+```math
+\begin{equation}
+E(s^2)=\frac{1}{N-1}\sum^N_{i=1}E((x_i-\bar{x})^2) \,,
+\end{equation}
+```
+
+
+EJERCICIO: Demostrar porqué hay que dividir por $(N-1)$ en lugar de
+$N$ para que el estimador clásico  de la varianza sea un estimador no sesgado. \
+
+
+
+##### 3.  La desviación típica: 
+
+Es la raíz cuadrada de la varianza. Se suele escribir como $(\sigma)$
+para referirse a la población o como $s$ para su estimación estadística
+
+
+```math
+\begin{equation}
+s=\sqrt{s^2}\,.
+\end{equation}
+```
+
+
+##### 4. Momentos de orden superior: 
+
+
+Podemos definir un momento alrededor de la media como:
+
+```math
+\begin{equation}
+m_p=\frac{1}{N}\sum^N_{i=1}(x_i-\bar{x})^p=<x'^p>\,.
+\end{equation}
+```
+
+
+De esta forma $m_2$ es la varianza, $m_3$ es la asimetría, y $m_4$
+la curtosis. El momento $(m_3)$ indica la asimetría de la muestra
+alrededor de la media $(m_3>0)$ implica distribución con cola larga en
+la parte positiva y viceversa. $(m_4)$ indica el grado de esparcimiento
+de las muestras alrededor de la media. Una mayor curtosis indica mayor
+concentración de puntos alrededor de la media. Los momentos de orden
+superior ($(>2)$) se suelen adimensionalizar dividiendo por la
+desviación estandar:
+
+```math
+\begin{equation}
+    m_3=\frac{1}{N}\sum^N_{i=1}\left[\frac{x_i-\bar{x}}{\sigma}\right]^3=<(x/\sigma)'^3>
+\end{equation}
+```
+
+```math
+\begin{equation} 
+    m_4=\frac{1}{N}\sum^N_{i=1}\left[\frac{x_i-\bar{x}}{\sigma}\right]^4-3=<(x/\sigma)'^4>-3
+\end{equation}
+```
+donde el factor $-3$ hace que la curtosis tome el valor cero para una
+distribución Normal.
+
+
+"""
+
+# ╔═╡ 56a415b4-1811-4f8c-8f0a-55defeec8d10
+md""" 
+#### Covarianza y correlación
+
+
+La covarianza entre dos variables $(x)$ e $(y)$ puede definirse como un
+estadístico que relaciona  $(x)$ e $(y)$ de la siguiente forma
+
+```math
+[C_{xy}=<x'y'>=<(x-\bar{x})(y-\bar{y})>=\frac{1}{N-1}\sum\limits^N_{i=1} (x_i-\bar{x})(y_i-\bar{y})\,.]
+```
+
+La correlación es la covarianza normalizada
+
+```math
+[\rho_{x y}=\frac{C_{x y}}{s_x s_y}=\frac{<x' y'>}{\sqrt{<x'^2><y'^2>}}\,.]
+```
+
+Consideremos el modelo estadístico lineal de media cero (es una recta
+que pasa por $(\overline{x},\overline{y})=(0,0))$
+
+```math
+[\hat{y}=\alpha x\,,]
+```
+
+donde $(\alpha)$ es una constante. El error cometido por este estimador
+se define como el error cuadrático medio
+
+```math
+[\epsilon^2=<(\hat{y}-y)^2>=\alpha^2<x^2>+<y^2>-2\alpha<xy>]
+```
+
+y si queremos minimizar dicho error entonces tenemos que encontrar que
+$(\alpha)$ es el que provoca que la derivada
+
+$(\partial{\epsilon^2}/\partial{\alpha}\rightarrow{0})$. 
+
+Es decir
+
+$[\partial{\epsilon^2}/\partial{\alpha}=2\alpha<x^2>-2<xy>=0\,]$
+
+y  $(\alpha)$ es
+
+$[\alpha=\frac{<xy>}{<x^2>}\,.]$
+
+El error cuadrado mínimo se encuentra substituyendo el valor de
+$(\alpha)$ en la expresión del error $(\epsilon^2)$ de arriba
+
+```math
+[\epsilon^2=\frac{<xy>^2}{<x^2>} + <y^2> - 2\frac{<xy>^2}{<x^2>}=
+           <y^2>\left(\frac{<xy>^2}{<x^2><y^2>}+1-2\frac{<xy>^2}{<x^2><y^2>}\right)=\]
+
+[=<y^2>(1-\rho^2_{xy})\,.]
+```
+
+Si $(\rho^2_{xy}=1)$ entonces el error es cero que es error más pequeño de todos.
+Por el contrario, si $(\rho^2_{xy}=0)$ entonces el error es igual a la
+varianza, es decir, máximo error. Si $(\rho)$ toma valores intermedios,
+i.e., $(\rho^2_{xy}=0.5)$ entonces el error es $(\epsilon^2=0.5<y^2>)$,
+es decir, el error del modelo lineal es un (50\%) de la varianza. Por
+lo tanto, la correlación al cuadrado puede definirse también ciomo la
+eficiencia relativa del estimador $(\hat{y}^2)$ o la fracción de
+varianza explicada por el modelo lineal
+
+```math
+[\rho^2_{xy}=\frac{<\hat{y}^2>}{<y^2>}=\frac{{varianza-explicada}}{{varianza-total}}\,.]
+```
+A este parámetro se le puede encontrar en la literatura inglesa denominado como
+**skill** del modelo lineal.
+
+"""
+
+# ╔═╡ 90779043-df48-4374-ae1f-c7861a72f96c
+md"""
+
+Si queremos relacionar los errores cuadráticos $\delta x_i^2$ con estimadores estadísticos (varianza y desviación estándar) debemos tener un poco de cuidado en la forma de hacer los cálculos.
+
+Para no generar confusión en vez de $x_1$ y $x_2$ llamemos a estas variables $x \, y$.
+por lo que $q=q(x,y)$. Supongamos ahora que hacemos $N$ medicones de $x$ y $y$ con las que ontenemos $N$ valores de $q$.
+
+Ahora hacemos una aproximación de primer orden de q alrededor de su valor medio:
+
+$q(x,y) \approx q(\bar{x},\bar{y}) + (\frac{\partial q}{\partial x}) \biggr\rvert_{\bar{x},\bar{y}} \delta x +  (\frac{\partial q}{\partial y})\biggr\rvert_{\bar{x},\bar{y}} \delta y$ 
+
+Es decir:
+
+$\bar{q} = q(\bar{x},\bar{y})$ 
+
+$\delta x = x-\bar{x}  ,\,\,\,  \delta y = y-\bar{y}$
+
+$\frac{1}{N}\sum\limits^N_{i=1} x_i = \bar{x}$
+
+$\frac{1}{N}\sum\limits^N_{i=1} y_i = \bar{y}$
+
+Ahora usamos el subíndice $i$ para denotar cada una de nuestras $N$ mediciones:
+
+$x_i \, y_i, => q_i = q(x_i,y_i)$ 
+
+De acuerdo a la fórmula para estimar la varianza o desviación estandar con base a N mediciones tenemos:
+
+$s_q^2=\frac{1}{N-1}\sum\limits^N_{i=1} (q_i - \bar{q})^2$
+
+$s_q^2 = \frac{1}{N-1}\sum\limits^N_{i=1} \biggl[(\frac{\partial q}{\partial x}) \biggr\rvert_{\bar{x},\bar{y}} (x_i-\bar{x}) + (\frac{\partial q}{\partial y}) \biggr\rvert_{\bar{x},\bar{y}} (y_i-\bar{y}) \biggr]^2$
+
+$s_q^2 = \biggl(\frac{\partial q}{\partial x} \biggr\rvert_{\bar{x},\bar{y}} \biggr)^2 \frac{1}{N-1}\sum\limits^N_{i=1} (x_i-\bar{x})^2  
+ + \biggl(\frac{\partial q}{\partial y} \biggr\rvert_{\bar{x},\bar{y}}\biggr)^2 \frac{1}{N-1}\sum\limits^N_{i=1} (y_i-\bar{y})^2 +$
+
+
+
+$\ldots 2(\frac{\partial q}{\partial x})(\frac{\partial q}{\partial y}) 
+
+\frac{1}{N-1}\sum\limits^N_{i=1}(x_i-\bar{x})(y_i-\bar{y})$
+
+
+$s_q^2 =  (\frac{\partial q}{\partial x} \biggr\rvert_{\bar{x},\bar{y}})^2  s_x^2 + 
+
+(\frac{\partial q}{\partial y} \biggr\rvert_{\bar{x},\bar{y}})^2  s_y^2 + 
+
+2(\frac{\partial q}{\partial x})(\frac{\partial q} {\partial y}) \biggr\rvert_{\bar{x},\bar{y}} s_{xy}$ 
+
+Donde 
+
+$s_{xy} = \frac{1}{N-1}\sum\limits^N_{i=1}(x_i-\bar{x})(y_i-\bar{y})$ 
+
+Es nuestro estimador de la covarianza entre $x$  y $y$. Si las variables son independientes la  covarianza es cero (lo contrario no siempre se cumple i.e. covarianza cero no necesariamente implica independencia) y recuperames las fórmulas anteriores de suma en cuadraturas donde ls incertidumbres se identifican con las desviaciones estándar
+
+"""
+
+# ╔═╡ c23fc7a8-85d6-4b3f-a5da-8e21caff006e
+md"""
+
+Si nuestra función depende de $M$ variables podemos hacer el mismo cálculo que con
+dos variables. Si lo hacemos con una muestra, esto significa que tenemos que hacer las estimaciones con las $N$ mediciones de cada una de las $M$ variables.
+Pero vamos a simplificar el cálculo usando el operador de expectación. Los cálculos
+peden hacerse de dos maneras: considerando que conocemos la media y la varianza de las poblaciones de las M variables, en cuyo caso el resultado se expresa usando dicha información al expresar los valores esperados. Si no conocemos los valores de la 
+población usamos las fórmulas para calcularlos a partir de la muestra de $N$ mediciones.
 
 *Demstración:*
 
-Queremos calcular la desviación estándar de la función
+Queremos estimar la desviación estándar de la función
 
-$[q=q(x_1, x_2,....,x_N)]$
+$[q=q(x_1, x_2,....,x_M)]$
 
-que depende de $N$ variables independientes $x_1$, $x_2$,
-$\ldots.,x_N$. 
+que depende de $M$ variables independientes $x_1$, $x_2$,
+$\ldots.,x_M$. 
 
 El desarrollo de Taylor a primer orden de la función $q$ alrededor
 de la media $(\bar{q})$ se puede escribir:
 
-$[q - \bar{q}]=[\left(x_1 - \bar{x}_1\right)\frac{\partial{q}}{\partial{x_1}} +
-                          \left(x_2 - \bar{x}_2\right)\frac{\partial{q}}{\partial{x_2}}+  \,.\,.\,.\,
-                          + \left(x_N - \bar{x}_N\right)\frac{\partial{q}}{\partial{x_N}}\,.]$
-
+```math 
+[q - \bar{q}] \approx [(x_1 - \bar{x}_1)\frac{\partial{q}}{\partial{x_1}} \\
+    + (x_2 - \bar{x}_2) \frac{\partial{q}}{\partial{x_2}} + \\ 
+\ldots  \\
+            + (x_M - \bar{x}_M) \frac{\partial{q}}{\partial{x_M}}\,.]
+```
 La varianza de la función $q$ es:
 
-$s^2_q=\frac{1}{N-1}\sum\limits^N_{i=1}\left( q_i-\bar{q} \right)^2=
-               \frac{1}{N-1}\left[
-               \left(x_1 - \bar{x}_1\right)\frac{\partial{q}}{\partial{x_1}} +
-               \left(x_2 - \bar{x}_2\right)\frac{\partial{q}}{\partial{x_2}} + 
-              \,.\,.\,.\, +
-               \left(x_N - \bar{x}_N\right)\frac{\partial{q}}{\partial{x_N}]}
-               \right]^2$
+```math
 
-$[=\frac{1}{N-1}\left[
-\left(x_1 - \bar{x}_1\right)^2\left(\frac{\partial{q}}{\partial{x_1}}\right)^2 +
-\left(x_2 - \bar{x}_2\right)^2\left(\frac{\partial{q}}{\partial{x_2}}\right)^2 +
-2\left(x_1 - \bar{x}_1\right)\left(x_2 - \bar{x}_2\right)
-\frac{\partial{q}}{\partial{x_1}}\frac{\partial{q}}{\partial{x_2}}+\,.\,.\,.\right]=]$
 
-$[=s^2_{x_1}\left(\frac{\partial{q}}{\partial{x_1}}\right)^2 +
+\begin{eqnarray}
+
+s^2_q &=& \sum\limits^M_{i=1}E( q_i-\bar{q})^2 \\
+
+
+s^2_q &=& E(\biggl[ (x_1 - \bar{x}_1) \frac{\partial{q}}{\partial{x_1}} + 
+
+(x_2 - \bar{x}_2) \frac{\partial{q}}{\partial{x_2}} 
+
++ \dots + 
+
+(x_M - \bar{x}_M) \frac{\partial{q}}{\partial{x_M}} \biggr]^2)
+
+\end{eqnarray}
+```
+
+```math
+
+\begin{eqnarray}
+
+s^2_q &=& E(x_1 - \bar{x}_1)^2 (\frac{\partial{q}}{\partial{x_1}})^2 +
+E(x_2 - \bar{x}_2)^2 (\frac{\partial{q}}{\partial{x_2}})^2 +
+2 E((x_1 - \bar{x}_1) (x_2 - \bar{x}_2) )
+\frac{\partial{q}}{\partial{x_1}}\frac{\partial{q}}{\partial{x_2}} + \ldots ]
+
+
+s^2_q &=& [s^2_{x_1}\left(\frac{\partial{q}}{\partial{x_1}}\right)^2 +
+
    s^2_{x_2}\left(\frac{\partial{q}}{\partial{x_2}}\right)^2+
-   2 s_{{x_1}{x_2}}
-   \frac{\partial{q}}{\partial{x_1}}\frac{\partial{q}}{\partial{x_2}}+\,.\,.\,.]$
 
-y finalmente la expresión general para la propagación del error es:
+   2 s_{{x_1}{x_2}}\frac{\partial{q}}{\partial{x_1}}\frac{\partial{q}}{\partial{x_2}} 
+
++ \ldots ]
+
+\end{eqnarray}
+
+```
+
+Para  dos variables recuperamos la expresión para la propagación del error obtenida enteriormente si nuestros estimadores de media y varianza corresponden a los de la muestra:
 
 $s_{q}=\sqrt{s^2_{x_1}\left(\frac{\partial{q}}{\partial{x_1}}\right)^2 +
                s^2_{x_2}\left(\frac{\partial{q}}{\partial{x_2}}\right)^2+
                 2 s_{{x_1}{x_2}}
                 \frac{\partial{q}}{\partial{x_1}}\frac{\partial{q}}{\partial{x_2}}+\,.\,.\,.}$
 
+#### PERO OJO!
+
+Con $M$ variables podemos tener covarianza entre todas ellas de manera que a diferencia de dos variables donde hay un solo valor de la covarianza, con M variables ahora tenemos lo que se denomina la "Matriz de Covarianza" en la que nos aparece la covarianza de cada variable con todas las demás. Esta es una matriz simétrica porque la covarianza entre la variable $x_i$ y $x_j$  es igual a la que hay entre $x_j$ y $x_i$
+
+$\sigma_{ij} = Cov(x_i,x_j)$
+
+Calculada a partir de una muestra de $N$  valores:
+
+$s_{ij}= \frac{1}{N-1}\sum\limits^N_{n=1} (x^{(n)}_i -\bar{x_i})(x^{(n)}_j - \bar{x_j})$
+
+
+$s_q^2 = \sum\limits^M_{i,j=1}\frac{\partial{q}}{\partial{x_i}}\frac{\partial{q}}{\partial{x_j}}s_{ij}$
+
+
+ 
 """
 
 # ╔═╡ 586fac47-31c8-41f0-a046-15599aa5bbda
@@ -404,205 +801,6 @@ cálculo de la salinidad $(\delta{S})$.
 
 """
   ╠═╡ =#
-
-# ╔═╡ e8c51384-733b-4a42-bbeb-d23d9393f10b
-md"# Estadística básica y Probabilidad"
-
-# ╔═╡ f064bde5-9f13-4d3e-bdc3-3e1a9021d83c
-md"""
-
-#### Estadística básica
-
-La estadística trata de describir las características de una población
-continua a partir de muestras discretas de la misma. Hablamos de
-población y de muestra de una población. Si calculamos, por ejemplo, la
-media de una población, estamos calculando un **parámetro**. Cuando
-calculamos la media de una muestra le llamamos un estadístico de la
-población. \
-
-La estadística nos ayuda a organizar, analizar, presentar datos, y nos
-da información de cómo planear la recolección de los mismos, i.e.~a
-muestrear.
-
-```
-#\begin{center}
-#%\includegraphics[width=0.5\textwidth]{estadistica_poblacion.pdf}
-#\end{center}
-```
-
-##### 1.  La media o promedio
-
-La media de una muestra de N valores ($x_i=x_1,x_2,...,x_N$) es
-
-```math
-\begin{equation}
-\bar{x}=\frac{1}{N}\sum^N_{i=1}x_i=<x>,.
-\end{equation}
-```
-
-La media debe de diferenciarse de la mediana. La media es el momento de
-orden cero. La mediana de una población es aquel valor numérico que
-separa el 50\% de valores mas altos del 50\% de valores mas bajos. Se
-puede calcular ordenando de menor a mayor el conjunto de valores y
-escojer el valor central si el conjunto de datos es impar o el promedio
-de los dos centrales si es par. \
-
-
-##### 2.  La varianza:
-
-La varianza de un una muestra de N valores $(x_i)$ es
-
-```math
-\begin{equation}
-s^2=\frac{1}{N-1}\sum^N_{i=1}(x_i-\bar{x})^2=<x'^2>\,,
-\end{equation}
-```
-
-donde las primas indican fluctuaciones alrededor de la media. La
-varianza es una medida de cuán lejos estan los diferentes puntos de la
-muestra de la media de la población. La varianza es el segundo momento
-alrededor de la media. Al dividir por $N$ estamos subestimando la
-verdaderavarianza de la población. Al dividir por $(N-1)$ obtenemos un
-estimador insesgado. \
-
-NOTA: el sesgo de un estimador se refiere a la diferencia entre su
-valor esperado y el valor numérico (real) del parámetro que se
-estima. Un estimador que no tiene sesgo se dice insesgado. Por ejemplo,
-para la media:
-
-```math
-[E[x]-\mu \rightarrow {0}]
-
-[\bar{x}-\mu \rightarrow {0}]
-```
-
-EJERCICIO: Demostrar porqué hay que dividir por $(N-1)$ en lugar de
-$N$ para que la definición de varianza sea un estimador insesgado. \
-
-
-
-##### 3.  La desviación típica: 
-
-Es la raíz cuadrada de la varianza. Se suele escribir como $(\sigma)$
-para referirse a la población o como $s$ para su estimación estadística
-
-
-```math
-\begin{equation}
-s=\sqrt{s^2}\,.
-\end{equation}
-```
-
-
-##### 4. Momentos de orden superior: 
-
-
-Podemos definir un momento alrededor de la media como:
-
-```math
-\begin{equation}
-m_p=\frac{1}{N}\sum^N_{i=1}(x_i-\bar{x})^p=<x'^p>\,.
-\end{equation}
-```
-
-
-De esta forma $m_2$ es la varianza, $m_3$ es la asimetría, y $m_4$
-la curtosis. El momento $(m_3)$ indica la asimetría de la muestra
-alrededor de la media $(m_3>0)$ implica distribución con cola larga en
-la parte positiva y viceversa. $(m_4)$ indica el grado de esparcimiento
-de las muestras alrededor de la media. Una mayor curtosis indica mayor
-concentración de puntos alrededor de la media. Los momentos de orden
-superior ($(>2)$) se suelen adimensionalizar dividiendo por la
-desviación estandar:
-
-```math
-\begin{equation}
-    m_3=\frac{1}{N}\sum^N_{i=1}\left[\frac{x_i-\bar{x}}{\sigma}\right]^3=<(x/\sigma)'^3>
-\end{equation}
-```
-
-```math
-\begin{equation} 
-    m_4=\frac{1}{N}\sum^N_{i=1}\left[\frac{x_i-\bar{x}}{\sigma}\right]^4-3=<(x/\sigma)'^4>-3
-\end{equation}
-```
-donde el factor $-3$ hace que la curtosis tome el valor cero para una
-distribución Normal.
-
-
-"""
-
-# ╔═╡ 5ff136ca-23db-4141-8c90-c5da3cd8d562
-md""" 
-#### Covarianza y correlación
-
-
-La covarianza entre dos variables $(x)$ e $(y)$ puede definirse como un
-estadístico que relaciona  $(x)$ e $(y)$ de la siguiente forma
-
-```math
-[C_{xy}=<x'y'>=<(x-\bar{x})(y-\bar{y})>=\frac{1}{N-1}\sum\limits^N_{i=1} (x_i-\bar{x})(y_i-\bar{y})\,.]
-```
-
-La correlación es la covarianza normalizada
-
-```math
-[\rho_{x y}=\frac{C_{x y}}{s_x s_y}=\frac{<x' y'>}{\sqrt{<x'^2><y'^2>}}\,.]
-```
-
-Consideremos el modelo estadístico lineal de media cero (es una recta
-que pasa por $(\overline{x},\overline{y})=(0,0))$
-
-```math
-[\hat{y}=\alpha x\,,]
-```
-
-donde $(\alpha)$ es una constante. El error cometido por este estimador
-se define como el error cuadrático medio
-
-```math
-[\epsilon^2=<(\hat{y}-y)^2>=\alpha^2<x^2>+<y^2>-2\alpha<xy>]
-```
-
-y si queremos minimizar dicho error entonces tenemos que encontrar que
-$(\alpha)$ es el que provoca que la derivada
-
-$(\partial{\epsilon^2}/\partial{\alpha}\rightarrow{0})$. 
-
-Es decir
-
-$[\partial{\epsilon^2}/\partial{\alpha}=2\alpha<x^2>-2<xy>=0\,]$
-
-y  $(\alpha)$ es
-
-$[\alpha=\frac{<xy>}{<x^2>}\,.]$
-
-El error cuadrado mínimo se encuentra substituyendo el valor de
-$(\alpha)$ en la expresión del error $(\epsilon^2)$ de arriba
-
-```math
-[\epsilon^2=\frac{<xy>^2}{<x^2>} + <y^2> - 2\frac{<xy>^2}{<x^2>}=
-           <y^2>\left(\frac{<xy>^2}{<x^2><y^2>}+1-2\frac{<xy>^2}{<x^2><y^2>}\right)=\]
-
-[=<y^2>(1-\rho^2_{xy})\,.]
-```
-
-Si $(\rho^2_{xy}=1)$ entonces el error es cero que es error más pequeño de todos.
-Por el contrario, si $(\rho^2_{xy}=0)$ entonces el error es igual a la
-varianza, es decir, máximo error. Si $(\rho)$ toma valores intermedios,
-i.e., $(\rho^2_{xy}=0.5)$ entonces el error es $(\epsilon^2=0.5<y^2>)$,
-es decir, el error del modelo lineal es un (50\%) de la varianza. Por
-lo tanto, la correlación al cuadrado puede definirse también ciomo la
-eficiencia relativa del estimador $(\hat{y}^2)$ o la fracción de
-varianza explicada por el modelo lineal
-
-```math
-[\rho^2_{xy}=\frac{<\hat{y}^2>}{<y^2>}=\frac{{varianza-explicada}}{{varianza-total}}\,.]
-```
-A este parámetro se le puede encontrar en la literatura inglesa denominado como
-**skill** del modelo lineal.
-
-"""
 
 # ╔═╡ 7c97760b-0b64-440e-bd89-d71a17a9243b
 md"# Distribuciones de Probabilidad "
@@ -2185,37 +2383,42 @@ version = "1.4.1+1"
 # ╠═85b6d6ab-5c52-41f0-b2e9-7e6373cf43b2
 # ╠═a2cd2cbe-08a5-410c-940a-323af467e05f
 # ╠═13cdba4e-4f96-4997-80cd-2f643640e055
-# ╠═fb7af13a-94ce-49db-9035-8cc125373ca7
-# ╠═33281294-80f7-4fda-9235-aec8bb7f11fc
+# ╟─fb7af13a-94ce-49db-9035-8cc125373ca7
+# ╟─33281294-80f7-4fda-9235-aec8bb7f11fc
 # ╠═861d6ad1-624d-47ae-9f54-dfc434688082
 # ╠═6ceebaf0-241f-44d5-9e4c-16b634548093
-# ╟─fc63e3ff-a1f2-4c3d-829d-6399ec8c7bd5
+# ╠═fc63e3ff-a1f2-4c3d-829d-6399ec8c7bd5
 # ╟─bac670a4-3cf4-455c-ab78-3c2c208af7c0
 # ╟─10c8be85-5e1c-470f-b8fd-1ee9fefe7925
 # ╠═7a2d399f-de57-4ade-a1fd-3d41b8281a84
+# ╠═ee9a4c25-6d0b-4565-a54f-3e8221723008
 # ╠═7173722b-3c66-484e-a8a1-722986172bdf
+# ╠═42db76e4-1bd0-4e94-b741-2fda5f9510e3
 # ╠═05aedf3d-bf7f-4d64-a2b1-a039715d23ea
 # ╠═db095cec-628b-4cc6-85c5-7d41fdfffe62
 # ╠═71f6c7c4-bc22-41f8-8f60-a5cf32012293
 # ╠═6bd1ab2f-48e3-486e-80c5-055ea25404c5
 # ╠═22f6fe10-ac4d-4063-84a6-67601f61da38
+# ╠═29dbf31b-82eb-456e-9957-5172ad24b6c3
+# ╠═2845e243-684e-4703-a9f3-a8098e61e204
+# ╠═f6ee567a-45ea-43dc-ae86-ac1c7e530cfd
+# ╠═56a415b4-1811-4f8c-8f0a-55defeec8d10
+# ╠═90779043-df48-4374-ae1f-c7861a72f96c
+# ╠═c23fc7a8-85d6-4b3f-a5da-8e21caff006e
 # ╠═586fac47-31c8-41f0-a046-15599aa5bbda
-# ╠═e8c51384-733b-4a42-bbeb-d23d9393f10b
-# ╠═f064bde5-9f13-4d3e-bdc3-3e1a9021d83c
-# ╠═5ff136ca-23db-4141-8c90-c5da3cd8d562
-# ╠═7c97760b-0b64-440e-bd89-d71a17a9243b
-# ╠═b659ae06-3180-4c22-bdda-419444458ae3
-# ╠═fca5675a-0063-45aa-8af9-f13069c4cff0
+# ╟─7c97760b-0b64-440e-bd89-d71a17a9243b
+# ╟─b659ae06-3180-4c22-bdda-419444458ae3
+# ╟─fca5675a-0063-45aa-8af9-f13069c4cff0
 # ╟─18567e0d-8f29-4ea4-92fc-6fabab0d5bac
 # ╟─b7c2233a-7957-4347-83d9-6f87d521eb3b
-# ╟─c25a9157-60e8-4309-b1e8-82f95453cd95
+# ╠═c25a9157-60e8-4309-b1e8-82f95453cd95
 # ╠═690b2f82-69da-4420-ac87-b25ce10bbfa6
 # ╠═e599ffd3-2ca7-42ee-b08f-7cf980d5a9be
 # ╠═786bb65f-fc11-4e54-9577-58cbae0abe91
 # ╟─e29357ed-2e57-48cb-b788-d3069401096f
-# ╠═759f4a2b-b7a1-49e4-99a6-03eebf4d0573
+# ╟─759f4a2b-b7a1-49e4-99a6-03eebf4d0573
 # ╟─4b0456cf-29ae-4551-a704-7f5fa906df89
 # ╟─144a4161-0a84-42f1-b674-946f0200101f
-# ╠═0901abad-c184-436d-910f-ae429c15d122
+# ╟─0901abad-c184-436d-910f-ae429c15d122
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
