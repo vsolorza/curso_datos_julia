@@ -14,6 +14,6 @@ prepath = "curso_datos_julia"
 generate_rss = false
 website_title = "curso_datos_julia"
 website_descr = "Example website containing Julia tutorials"
-website_url   = "https://github.com/jsheinbaum/curso_datos_julia/"
+website_url   = "https://github.com/vsolorza/curso_datos_julia/"
 +++
 
