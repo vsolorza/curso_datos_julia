@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.37
+# v0.19.36
 
 using Markdown
 using InteractiveUtils
@@ -243,7 +243,94 @@ md"""
 """
 
 # ╔═╡ 68f809cd-8b07-4c65-8fdc-a8ec5feff00f
+begin
+	# Ejerc. 26
+	A3=10.0; δA3=0.5
+	B3=2.5; δB3=0.1
+	Er6= sqrt((δA3/A3)^2 + (δB3/B3)^2) 
+	print("El error relativo del cociente entre A y B es ", Er6*100, "%")
+	# una cifra significativa decimal
+end
 
+# ╔═╡ 8a4407c9-0786-4ef9-b169-e30c80821306
+begin
+	# Ejerc. 27
+	X3=8.0; δX3=0.3
+	Y3=2.2; δY3=0.05
+	Er7= sqrt((δX3/X3)^2 + 2*(δY3/Y3)^2) 
+	print("El error relativo del cociente entre X y Y² es ", Er7*100, "%")
+	# una cifra significativa decimal
+end
+
+# ╔═╡ 9a398cbb-04a2-4abd-9ab7-1dcb40a1dac4
+begin
+	# Ejerc. 28
+	P3=6.0; δP3=0.3
+	Q3=2.5; δQ3=0.2
+	Er8= sqrt(2*(δP3/P3)^2 + (δQ3/Q3)^2) 
+	print("El error relativo del cociente entre P³ y Q es ", Er8*100, "%")
+	# una cifra significativa decimal
+end
+
+# ╔═╡ 81090871-2e5c-401c-a2a4-bceeea24561c
+begin
+	# Ejerc. 29
+	M3=10.0; δM3=0.5
+	N3=2.5; δN3=0.1
+	O3=2.5; δO3=0.1
+	
+	Er9= sqrt((δM3/M3)^2 + (δN3/N3)^2 + (δO3/O3)^2) 
+	print("El error relativo del cociente entre A y B es ", Er9*100, "%")
+	# una cifra significativa decimal
+end
+
+# ╔═╡ 64e8c1ae-de95-4a6f-836a-d582432988f2
+begin
+	# Ejerc. 30
+	Er10= sqrt((0.4/5.0)^2 + (0.1/1.2)^2) 
+	print("El error relativo del cociente de (5.0 ± 0.4) por (1.2 ± 0.1) es ", Er10*100, "%")
+	# una cifra significativa decimal
+end
+
+# ╔═╡ 6ac503a3-9eca-489e-94d8-a42528e253f2
+begin
+	# Ejerc. 31
+	Er11= sqrt((0.4/15.6)^2) 
+	print("El error relativo de (15.6 ± 0.4) es ", Er11*100, "%")
+	# una cifra significativa decimal
+end
+
+# ╔═╡ ec237b26-d044-4552-b2bf-51178f385c35
+begin
+	# Ejerc. 32
+	Er12= sqrt((0.5/18.2)^2) 
+	print("El error relativo de (18.2 ± 0.5) cm es ", Er12*100, "%")
+	# una cifra significativa decimal
+end
+
+# ╔═╡ 49138cc3-3d55-4e50-ac2a-d8c4ae9f344a
+begin
+	# Ejerc. 33
+	Er13= sqrt((0.7/25.3)^2) 
+	print("El error relativo de (25.3 ± 0.7) g es ", Er13*100, "%")
+	# una cifra significativa decimal
+end
+
+# ╔═╡ 557a3ae0-d712-4e99-897e-61281a381ae9
+begin
+	# Ejerc. 34
+	Er14= sqrt((1.5/30.0)^2) 
+	print("El error relativo de (30.0 ± 1.5) m/s es ", Er14*100, "%")
+	# una cifra significativa decimal
+end
+
+# ╔═╡ 46024f64-4508-4a0b-8e25-f7e0d8627d8a
+begin
+	# Ejerc. 35
+	Er15= sqrt((0.2/10.0)^2) 
+	print("El error relativo de (10.0 ± 0.2) es ", Er15*100, "%")
+	# una cifra significativa decimal
+end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -373,5 +460,14 @@ version = "5.8.0+1"
 # ╠═090eb200-14c5-4ac7-9ee4-bcd0f360f93a
 # ╟─abdbd8ef-53a2-4262-b0b8-17e06c5d93da
 # ╠═68f809cd-8b07-4c65-8fdc-a8ec5feff00f
+# ╠═8a4407c9-0786-4ef9-b169-e30c80821306
+# ╠═9a398cbb-04a2-4abd-9ab7-1dcb40a1dac4
+# ╠═81090871-2e5c-401c-a2a4-bceeea24561c
+# ╠═64e8c1ae-de95-4a6f-836a-d582432988f2
+# ╠═6ac503a3-9eca-489e-94d8-a42528e253f2
+# ╠═ec237b26-d044-4552-b2bf-51178f385c35
+# ╠═49138cc3-3d55-4e50-ac2a-d8c4ae9f344a
+# ╠═557a3ae0-d712-4e99-897e-61281a381ae9
+# ╠═46024f64-4508-4a0b-8e25-f7e0d8627d8a
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002

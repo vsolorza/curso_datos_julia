@@ -1,11 +1,8 @@
 ### A Pluto.jl notebook ###
-# v0.19.37
+# v0.19.36
 
 using Markdown
 using InteractiveUtils
-
-# ╔═╡ 23f80252-6a49-422b-8814-703889da7b56
-using Measurements
 
 # ╔═╡ 10166b16-91dc-4ff1-94b5-37c759c4121b
 md"# TAREA 1 CURSO ANÁLISIS DE DATOS"
@@ -149,175 +146,9 @@ Les dan una resma de 500 hojas y una regla graduada un milímetros.
 Medir el espesor de una hoja con una precisión del orden ~ $1.0 e{-3}$ milímetros.  
 """
 
-# ╔═╡ 8893a248-0b2a-4a09-9554-3a0c661c05e9
-md"""
-##### Sifras significativas  
-"""
-
-# ╔═╡ f06a89e6-26d8-4614-98ce-a04c7faf2697
-begin
-	
-		x1=23.4 + 2.1 + 0.1
-		x2=4.6*2.1/3.8
-		x3=375/1000
-		x4=5.7^3.2
-		print([x1,x2,x3,x4])
-end
-
-# ╔═╡ 695744ad-593d-4645-94cf-ee18e07b0fef
-md"""
-###### Propagacion de errores
-"""
-
-# ╔═╡ 7132fcbd-ca7d-4d94-9174-fa0566817640
-begin
-	a=(3.0 ± 0.2)
-	b=(2.5 ± 0.1)
-	c=a*b
-	print(c)
-end
-
-# ╔═╡ 580e4083-085c-4b73-9d3b-1ba67279ab03
-begin
-	x=(15.4 ± 0.3)
-	y=(8.6 ± 0.2)
-	z=x*y
-	print(z)
-end
-
-# ╔═╡ d5c65098-514e-479e-b2fc-ce90ace74f56
-begin
-	P=(20.0 ± 0.5)
-	Q=(4.0 ± 0.2)
-	R=P
-	S=(R/Q)
-	print(S)
-end
-
-# ╔═╡ 9a4cc7d6-b777-4b9a-bf84-e75778db2a5a
-begin
-	D=(3.2 ± 0.1)*(5.0 ± 0.2) + (2.0 ± 0.1)
-	print(D) 
-end
-
-# ╔═╡ d51ff4a7-ac66-4757-b9e3-a795bc1caed6
-begin
-	M₁=(14.2 ± 0.1)
-	M₂=(14.5 ± 0.2)
-end
-
-# ╔═╡ b0cce7f9-8fb1-437b-9f35-27fa62e16987
-
-
-# ╔═╡ 00000000-0000-0000-0000-000000000001
-PLUTO_PROJECT_TOML_CONTENTS = """
-[deps]
-Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
-
-[compat]
-Measurements = "~2.11.0"
-"""
-
-# ╔═╡ 00000000-0000-0000-0000-000000000002
-PLUTO_MANIFEST_TOML_CONTENTS = """
-# This file is machine-generated - editing it directly is not advised
-
-julia_version = "1.10.0"
-manifest_format = "2.0"
-project_hash = "02e77b1d3c45741082c3658bbbef332a14dae6da"
-
-[[deps.Artifacts]]
-uuid = "56f22d72-fd6d-98f1-02f0-08ddc0907c33"
-
-[[deps.Calculus]]
-deps = ["LinearAlgebra"]
-git-tree-sha1 = "f641eb0a4f00c343bbc32346e1217b86f3ce9dad"
-uuid = "49dc2e85-a5d0-5ad3-a950-438e2897f1b9"
-version = "0.5.1"
-
-[[deps.CompilerSupportLibraries_jll]]
-deps = ["Artifacts", "Libdl"]
-uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.5+1"
-
-[[deps.Libdl]]
-uuid = "8f399da3-3557-5675-b5ff-fb832c97cbdb"
-
-[[deps.LinearAlgebra]]
-deps = ["Libdl", "OpenBLAS_jll", "libblastrampoline_jll"]
-uuid = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-
-[[deps.Measurements]]
-deps = ["Calculus", "LinearAlgebra", "Printf", "Requires"]
-git-tree-sha1 = "bdcde8ec04ca84aef5b124a17684bf3b302de00e"
-uuid = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
-version = "2.11.0"
-
-    [deps.Measurements.extensions]
-    MeasurementsBaseTypeExt = "BaseType"
-    MeasurementsJunoExt = "Juno"
-    MeasurementsRecipesBaseExt = "RecipesBase"
-    MeasurementsSpecialFunctionsExt = "SpecialFunctions"
-    MeasurementsUnitfulExt = "Unitful"
-
-    [deps.Measurements.weakdeps]
-    BaseType = "7fbed51b-1ef5-4d67-9085-a4a9b26f478c"
-    Juno = "e5e0dc1b-0480-54bc-9374-aad01c23163d"
-    RecipesBase = "3cdcf5f2-1ef4-517c-9805-6587b60abb01"
-    SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
-    Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
-
-[[deps.OpenBLAS_jll]]
-deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
-uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+2"
-
-[[deps.Printf]]
-deps = ["Unicode"]
-uuid = "de0858da-6303-5e67-8744-51eddeeeb8d7"
-
-[[deps.Random]]
-deps = ["SHA"]
-uuid = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
-
-[[deps.Requires]]
-deps = ["UUIDs"]
-git-tree-sha1 = "838a3a4188e2ded87a4f9f184b4b0d78a1e91cb7"
-uuid = "ae029012-a4dd-5104-9daa-d747884805df"
-version = "1.3.0"
-
-[[deps.SHA]]
-uuid = "ea8e919c-243c-51af-8825-aaa63cd721ce"
-version = "0.7.0"
-
-[[deps.UUIDs]]
-deps = ["Random", "SHA"]
-uuid = "cf7118a7-6976-5b1a-9a39-7adc72f591a4"
-
-[[deps.Unicode]]
-uuid = "4ec0a83e-493e-50e2-b9ac-8f72acf5a8f5"
-
-[[deps.libblastrampoline_jll]]
-deps = ["Artifacts", "Libdl"]
-uuid = "8e850b90-86db-534c-a0d3-1478176c7d93"
-version = "5.8.0+1"
-"""
-
 # ╔═╡ Cell order:
 # ╠═10166b16-91dc-4ff1-94b5-37c759c4121b
 # ╟─72a753d8-b6ea-11ee-3203-235468905873
 # ╟─87135584-d489-4646-ac82-53e4b471f019
 # ╟─16020e1f-88c0-40fc-8ad8-673f151e860b
 # ╠═c815fedf-a5f6-4e10-905b-fa7e201be9b2
-# ╠═23f80252-6a49-422b-8814-703889da7b56
-# ╟─8893a248-0b2a-4a09-9554-3a0c661c05e9
-# ╠═f06a89e6-26d8-4614-98ce-a04c7faf2697
-# ╟─695744ad-593d-4645-94cf-ee18e07b0fef
-# ╠═7132fcbd-ca7d-4d94-9174-fa0566817640
-# ╠═580e4083-085c-4b73-9d3b-1ba67279ab03
-# ╠═d5c65098-514e-479e-b2fc-ce90ace74f56
-# ╠═9a4cc7d6-b777-4b9a-bf84-e75778db2a5a
-# ╠═d51ff4a7-ac66-4757-b9e3-a795bc1caed6
-# ╠═b0cce7f9-8fb1-437b-9f35-27fa62e16987
-# ╟─00000000-0000-0000-0000-000000000001
-# ╟─00000000-0000-0000-0000-000000000002
