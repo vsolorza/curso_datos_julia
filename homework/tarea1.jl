@@ -66,7 +66,7 @@ md"""
 17. Expresa $(6.789 \times 10^4)$ en notación científica con cifras significativas.
 18. Determina cuántas cifras significativas tiene el número $0.00723$.
 19. Convierte $2.345$ km a metros con la precisión adecuada.
-10. Eleva $( (2.0 \pm 0.1))$ a la potencia $(3.0 \pm 0.2)) $  con el número correcto de cifras significativas.
+10. Eleva $((2.0 \pm 0.1))$ a la potencia $(3.0 \pm 0.2))$  con el número correcto de cifras significativas.
 
 
 ### Ejercicios sobre Errores Relativos:
@@ -74,13 +74,13 @@ md"""
 ### Productos:
 
 21. **Producto Simple:**
-   Si $( A = 3.0 \pm 0.2 )$ y $( B = 2.5 \pm 0.1 )$, calcula el producto $( C = A \cdot B )$ y determina su error relativo.
+   Si $( A = 3.0 \pm 0.2 )$ y $( B = 2.5 \pm 0.1 )$, calcula el producto $(C = A \cdot B)$ y determina su error relativo.
 
 22. **Producto Compuesto:**
-   Con $( X = 5.0 \pm 0.3 )$ y 4( Y = 2.2 \pm 0.05 )$, encuentra $( Z = X \cdot Y^2 )$ y su error relativo.
+   Con $( X = 5.0 \pm 0.3 )$ y $( Y = 2.2 \pm 0.05 )$, encuentra $( Z = X \cdot Y^2 )$ y su error relativo.
 
 23. **Producto con Potencia:**
-   Si $( P = 4.8 \pm 0.4 )$ y  $Q = 3.0 \pm 0.2 )$, evalúa $( R = P^2 \cdot Q )$ y encuentra su error relativo.
+   Si $( P = 4.8 \pm 0.4 )$ y  $(Q = 3.0 \pm 0.2 )$, evalúa $( R = P^2 \cdot Q )$ y encuentra su error relativo.
 
 24. **Producto de Varias Variables:**
    Dadas $( M = 1.5 \pm 0.1 )$, $(N = 2.0 \pm 0.3)$, y $( O = 3.2 \pm 0.2)$ , calcula $( P = M \cdot N \cdot O )$ y su error relativo.
@@ -305,7 +305,7 @@ version = "5.8.0+1"
 
 # ╔═╡ Cell order:
 # ╠═10166b16-91dc-4ff1-94b5-37c759c4121b
-# ╠═72a753d8-b6ea-11ee-3203-235468905873
+# ╟─72a753d8-b6ea-11ee-3203-235468905873
 # ╟─87135584-d489-4646-ac82-53e4b471f019
 # ╟─16020e1f-88c0-40fc-8ad8-673f151e860b
 # ╠═c815fedf-a5f6-4e10-905b-fa7e201be9b2
