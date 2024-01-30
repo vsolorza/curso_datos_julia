@@ -17,6 +17,36 @@ end
 # ╔═╡ 85b6d6ab-5c52-41f0-b2e9-7e6373cf43b2
 using Distributions,Measurements,Plots, PlutoUI, Unitful, StatsPlots, DataFrames, LinearAlgebra, Latexify
 
+# ╔═╡ 8be6ad87-d63b-472b-8666-58e6b14f019d
+using Combinatorics, StatsBase
+
+# ╔═╡ 7b7ddff0-087c-4205-bf82-5b9199b1aaac
+begin
+
+	using Random
+Random.seed!(1)
+
+function chabelo(cambia)
+    regalo, escoge = rand(1:3), rand(1:3)
+    if regalo == escoge
+        revelap = rand(setdiff(1:3,escoge))
+    else
+        revelap = rand(setdiff(1:3,[regalo,escoge]))
+    end
+
+    if cambia
+        escoge = setdiff(1:3,[revelap,escoge])[1]
+    end
+    return escoge == regalo
+end
+
+NP = 10^6
+println("probabilidad de éxito si no cambias I (quedas): ", 
+	sum([chabelo(false) for _ in 1:NP])/NP)
+println("Probabilidad de éxito si cambias  II (cambias): ", 
+	sum([chabelo(true) for _ in 1:NP])/NP)
+end
+
 # ╔═╡ ab3bd1bb-412a-4395-aa16-6c27fa825600
 md"""
 ### CIFRAS SIGNIFICATIVAS, EXACTITUD,PRECISIÓN, INCERTIDUMBRES Y PROPAGACIÓN DE ERRORES
@@ -578,7 +608,7 @@ $\frac{1}{N}\sum\limits^N_{i=1} y_i = \bar{y}$
 
 Ahora usamos el subíndice $i$ para denotar cada una de nuestras $N$ mediciones:
 
-$x_i \, y_i, => q_i = q(x_i,y_i)$ 
+$x_i ,\, y_i => q_i = q(x_i,y_i)$ 
 
 De acuerdo a la fórmula para estimar la varianza o desviación estandar con base a N mediciones tenemos:
 
@@ -586,7 +616,7 @@ $s_q^2=\frac{1}{N-1}\sum\limits^N_{i=1} (q_i - \bar{q})^2$
 
 $s_q^2 = \frac{1}{N-1}\sum\limits^N_{i=1} \biggl[(\frac{\partial q}{\partial x}) \biggr\rvert_{\bar{x},\bar{y}} (x_i-\bar{x}) + (\frac{\partial q}{\partial y}) \biggr\rvert_{\bar{x},\bar{y}} (y_i-\bar{y}) \biggr]^2$
 
-$s_q^2 = \biggl(\frac{\partial q}{\partial x} \biggr\rvert_{\bar{x},\bar{y}} \biggr)^2 \frac{1}{N-1}\sum\limits^N_{i=1} (x_i-\bar{x})^2  
+$s_q^2 = \biggl(\frac{\partial q}{\partial x} \biggr\rvert_{\bar{x},\bar{y}} \biggr)^2 \frac{1}{N-1}\sum\limits^N_{i=1} (x_i-\bar{x})^2  \\
  + \biggl(\frac{\partial q}{\partial y} \biggr\rvert_{\bar{x},\bar{y}}\biggr)^2 \frac{1}{N-1}\sum\limits^N_{i=1} (y_i-\bar{y})^2 +$
 
 
@@ -632,10 +662,10 @@ El desarrollo de Taylor a primer orden de la función $q$ alrededor
 de la media $(\bar{q})$ se puede escribir:
 
 ```math 
-[q - \bar{q}] \approx [(x_1 - \bar{x}_1)\frac{\partial{q}}{\partial{x_1}} \\
+[q - \bar{q}] \approx  [(x_1 - \bar{x}_1)\frac{\partial{q}}{\partial{x_1}}
     + (x_2 - \bar{x}_2) \frac{\partial{q}}{\partial{x_2}} + \\ 
-\ldots  \\
-            + (x_M - \bar{x}_M) \frac{\partial{q}}{\partial{x_M}}\,.]
+\ldots  + (x_M - \bar{x}_M) \frac{\partial{q}}{\partial{x_M}}\,.]
+
 ```
 La varianza de la función $q$ es:
 
@@ -644,14 +674,14 @@ La varianza de la función $q$ es:
 
 \begin{eqnarray}
 
-s^2_q &=& \sum\limits^M_{i=1}E( q_i-\bar{q})^2 \\
+s^2_q = \sum\limits^M_{i=1}E( q_i-\bar{q})^2 \\
 
 
-s^2_q &=& E(\biggl[ (x_1 - \bar{x}_1) \frac{\partial{q}}{\partial{x_1}} + 
+s^2_q = E(\biggl[ (x_1 - \bar{x}_1) \frac{\partial{q}}{\partial{x_1}} +
 
-(x_2 - \bar{x}_2) \frac{\partial{q}}{\partial{x_2}} 
+(x_2 - \bar{x}_2) \frac{\partial{q}}{\partial{x_2}} \\
 
-+ \dots + 
++ \dots + \\
 
 (x_M - \bar{x}_M) \frac{\partial{q}}{\partial{x_M}} \biggr]^2)
 
@@ -662,18 +692,18 @@ s^2_q &=& E(\biggl[ (x_1 - \bar{x}_1) \frac{\partial{q}}{\partial{x_1}} +
 
 \begin{eqnarray}
 
-s^2_q &=& E(x_1 - \bar{x}_1)^2 (\frac{\partial{q}}{\partial{x_1}})^2 +
-E(x_2 - \bar{x}_2)^2 (\frac{\partial{q}}{\partial{x_2}})^2 +
+s^2_q = E(x_1 - \bar{x}_1)^2 (\frac{\partial{q}}{\partial{x_1}})^2 + 
+E(x_2 - \bar{x}_2)^2 (\frac{\partial{q}}{\partial{x_2}})^2 + \\
 2 E((x_1 - \bar{x}_1) (x_2 - \bar{x}_2) )
-\frac{\partial{q}}{\partial{x_1}}\frac{\partial{q}}{\partial{x_2}} + \ldots ]
+\frac{\partial{q}}{\partial{x_1}}\frac{\partial{q}}{\partial{x_2}} + \ldots ] \\
 
 
-s^2_q &=& [s^2_{x_1}\left(\frac{\partial{q}}{\partial{x_1}}\right)^2 +
 
-   s^2_{x_2}\left(\frac{\partial{q}}{\partial{x_2}}\right)^2+
+s^2_q = [s^2_{x_1}(\frac{\partial{q}}{\partial{x_1}})^2 + 
+   
+s^2_{x_2}(\frac{\partial{q}}{\partial{x_2}})^2 + 
 
-   2 s_{{x_1}{x_2}}\frac{\partial{q}}{\partial{x_1}}\frac{\partial{q}}{\partial{x_2}} 
-
+2 s_{{x_1}{x_2}}\frac{\partial{q}}{\partial{x_1}}\frac{\partial{q}}{\partial{x_2}} 
 + \ldots ]
 
 \end{eqnarray}
@@ -682,11 +712,17 @@ s^2_q &=& [s^2_{x_1}\left(\frac{\partial{q}}{\partial{x_1}}\right)^2 +
 
 Para  dos variables recuperamos la expresión para la propagación del error obtenida enteriormente si nuestros estimadores de media y varianza corresponden a los de la muestra:
 
-$s_{q}=\sqrt{s^2_{x_1}\left(\frac{\partial{q}}{\partial{x_1}}\right)^2 +
-               s^2_{x_2}\left(\frac{\partial{q}}{\partial{x_2}}\right)^2+
-                2 s_{{x_1}{x_2}}
-                \frac{\partial{q}}{\partial{x_1}}\frac{\partial{q}}{\partial{x_2}}+\,.\,.\,.}$
+```math
 
+\begin{eqnarray}
+
+s_{q} = \sqrt{s^2_{x_1}(\frac{\partial{q}}{\partial{x_1}})^2 +
+    s^2_{x_2}(\frac{\partial{q}}{\partial{x_2}})^2+ 
+    2s_{{x_1}{x_2}}\frac{\partial{q}}{\partial{x_1}}\frac{\partial{q}}{\partial{x_2}}  + \ldots}
+
+\end{eqnarray}
+
+```
 #### PERO OJO!
 
 Con $M$ variables podemos tener covarianza entre todas ellas de manera que a diferencia de dos variables donde hay un solo valor de la covarianza, con M variables ahora tenemos lo que se denomina la "Matriz de Covarianza" en la que nos aparece la covarianza de cada variable con todas las demás. Esta es una matriz simétrica porque la covarianza entre la variable $x_i$ y $x_j$  es igual a la que hay entre $x_j$ y $x_i$
@@ -834,6 +870,7 @@ begin
 	)
 	vline!([mu])
 	vline!([mu+sigma, mu-sigma])
+	vline!([mu+2sigma, mu-2sigma])
 end
 
 # ╔═╡ 690b2f82-69da-4420-ac87-b25ce10bbfa6
@@ -844,6 +881,11 @@ md"alpha (α): $(@bind alpha Slider(0.1:0.1:5.0, 1.0, true))"
 
 # ╔═╡ 786bb65f-fc11-4e54-9577-58cbae0abe91
 md"beta (β): $(@bind beta Slider(0.1:0.1:5.0, 1.0, true))"
+
+# ╔═╡ e2192613-78a6-4266-9cd1-cce417aeb25a
+	#print(quantile.(Normal(mu,sigma), [0.5, .75]))
+#median(Normal(mu,sigma))
+	median(Beta(alpha,beta))
 
 # ╔═╡ e29357ed-2e57-48cb-b788-d3069401096f
 plot(Beta(alpha, beta),
@@ -881,9 +923,260 @@ begin
 	)
 end
 
+# ╔═╡ 79cad4dd-107a-429a-a10f-2c8dfc6c9b33
+md"nu (ν): $(@bind nu Slider(1:20, 2, true))"
+
+# ╔═╡ 0f017343-6c40-4149-829a-1ef9f3f9e917
+plot(Chisq(nu),
+	legend = false,
+	xlims = (0, 20),
+	ylims = (0, 0.5),
+	linewidth = 2,
+	fill = true,
+	alpha = 0.3,
+	title = "Función de Densidad de Probabilidad"
+)
+
+# ╔═╡ fe1e3bd5-800a-481d-a3fe-ec7bf0c25b5a
+begin
+	N1, faces = 10^6, 1:6
+
+numSol = sum([iseven(i+j) for i in faces, j in faces]) / length(faces)^2
+mcEst  = sum([iseven(rand(faces) + rand(faces)) for i in 1:N1]) / N1
+println("Numerical solution = $numSol \nMonte Carlo estimate = $mcEst")
+end
+
+# ╔═╡ 898b8ab4-f384-4898-943c-35f6a7e264b1
+begin
+matchE1(n) = 1 - prod([k/365 for k in 365:-1:365-n+1])
+matchE2(n) = 1- factorial(365,365-big(n))/365^big(n)
+m1=matchE1(20)
+m2=matchE2(20)
+#println("matchExists1 = $m1 \nmatchExists2 = $m2")
+function cumpEv(n)
+	#escoge n num de 1:365 en forma aleatoria
+    cumples = rand(1:365,n)
+	 
+	#lo mismo que diasCs = counts(cumples,1:365)
+    diasCs = counts(cumples,365)
+    #compara y cuenta las veces que se repite mismo num mas de una vex
+    return maximum(diasCs) > 1
+end
+probEst(n,N) = sum([cumpEv(n) for _ in 1:N])/N
+npers=1:50
+mcEst1 = [probEst(n,10^4) for n in npers]
+sol1=[matchE1(n) for n in npers]
+plot(npers,sol1)
+scatter!(npers,mcEst1, shape=:xcross,c=:red, #ms=6, msw=0, shape=:xcross, 
+	label="MC", xlims=(0,50), ylims=(0, 1), 
+	xlabel="Num de personas", 
+	ylabel="Probabilidad de mismo cumple", 
+	legend=:topleft)
+end
+
+# ╔═╡ 157302a9-1e7c-4c35-865f-626a9d2afd33
+begin
+comb(n,r)=factorial(big(n))/(factorial(big(r))*factorial(big(n-r)))
+comb(50,2)
+end
+
+# ╔═╡ 79ed327b-8f5e-469f-8149-b9026ed19044
+begin
+n1 =10 ; p1=0.5
+binomialRV(n,p) = sum(rand(n) .< p)
+n1n=rand(n1)
+sn1n=sum(n1n .< p1)
+println("Random Numbers = $n1n \nCuantos, $sn1n")
+#println(sum(rand(n1) .< p1)
+#binomialRV(10,0.5)
+end
+
+# ╔═╡ 51a304e9-3983-4f5c-a103-6e1d1aa77ee4
+begin
+r1=rand(1:6,3)
+	sr1=(r1 .<= 4)
+	s1=sum(r1[sr1])
+#s1=sum(r1 .<= 4)
+println("numbers $r1 \nsumr1 = $s1" )
+end
+
+# ╔═╡ bf179bd1-4ee9-4dea-ad72-8a502c826354
+begin
+pp, nn, N = 0.5, 10, 10^6
+
+bDist = Binomial(nn,pp)
+xGrid = 0:nn
+bPmf = [pdf(bDist,i) for i in xGrid]
+data = [binomialRV(nn,pp) for _ in 1:N]
+pmfEst = counts(data,0:nn)/N
+
+plot( xGrid, pmfEst, 
+	line=:stem, marker=:circle, 
+	c=:blue, ms=10, msw=0, lw=4, label="MC estimate")
+plot!( xGrid, bPmf, 
+	 line=:stem, marker=:xcross, c=:red, 
+	 ms=6, msw=1, lw=2, label="PMF", xticks=(0:1:10),
+	 ylims=(0,0.3), xlabel="x", ylabel="Probability")
+end
+
+# ╔═╡ 2aa0813c-0129-40c9-bcd9-790ea3915365
+data
+
+# ╔═╡ 70313dca-3a16-4fe0-8c83-aee2705b335d
+md"### Poisson"
+
+# ╔═╡ 23112c98-43f5-47be-b48f-308bc9be40db
+begin
+function prn(lambda)
+    k, p = 0, 1
+    while p > MathConstants.e^(-lambda)
+        k += 1
+        p *= rand()
+    end
+    return k-1
+end
+
+xGridL, lambda, NL = 0:16, 5.5, 10^6
+
+pDistL = Poisson(lambda)
+bPmfL = pdf.(pDistL,xGridL)
+dataL = counts([prn(lambda) for _ in 1:NL],xGridL)/NL
+
+plot( xGridL, dataL, 
+	line=:stem, marker=:circle, 
+	c=:blue, ms=10, msw=0, lw=4, label="MC estimate")
+plot!( xGridL, bPmfL, line=:stem, 
+	marker=:xcross, c=:red, ms=6, msw=0, lw=2, label="PMF",
+	ylims=(0,0.2), xlabel="x", ylabel="Probability of x events")
+end
+
+# ╔═╡ 5481c532-c4b6-426d-8ccf-f3695b758b6d
+begin
+#using Random, StatsBase
+#Random.seed!(1)
+
+A = Set(['a','e','i','o','u'])
+#B = Set(['x','y','z'])
+B = Set(['a','b','c'])
+omega = 'a':'z'
+AunionB = union(A, B)
+AintersectionB = intersect(A, B)
+BdifferenceA = setdiff(B,A)
+Bcomplement = setdiff(omega,B)
+AsymDifferenceB = union(setdiff(A,B),setdiff(B,A))
+AsymDifferenceB2 = symdiff(A,B)
+println("A = $A, B = $B")
+println("A union B = $AunionB")
+println("A intersección B = $AintersectionB")
+println("B diff A = $BdifferenceA")
+println("B complemento = $Bcomplement")
+println("A Simdif B = $AsymDifferenceB")
+println("A Symdif B = $AsymDifferenceB2")
+
+println("The element ’c’ is an element of A: $(in("c",A))")
+Nb = 10^6
+
+println("mcEst1 \t \tmcEst2")
+for _ in 1:5
+    mcEst1 = sum([in(sample(omega),A) || in(sample(omega),B) for _ in 1:Nb])/Nb
+    mcEst2 = sum([in(sample(omega),union(A,B)) for _ in 1:Nb])/Nb
+    println(mcEst1,"\t",mcEst2)
+end
+end
+
+# ╔═╡ 71d4f8d6-1e9c-4ca2-8699-bfb744049b3a
+md"""" 
+## USO TEOREMA BAYES
+
+Considera $E_k$ disjuntos tales que $S = \bigcup_{0}^{\infty}{E_k}$
+
+$P(B) = \sum{P(B ∩ E_k) } = \sum {P(B | E_k) P(E_k)}$
+
+$P(E_k|B)=\frac{P(E_k|B)*P(E_k)}{P(B)}$ 
+
+$P(B)=\sum {P(B | E_k) P(E_k)}$
+
+"""
+
+# ╔═╡ 1ba39eee-eb40-4fcf-9584-232b346b142d
+md"### CHABELO"
+
+# ╔═╡ a845eafb-6a5e-4a6a-85ee-123e7129547b
+md"#### Pruebas Médicas"
+
+# ╔═╡ 9c8b5503-628d-4e05-898e-52494bc1dd38
+md"prob de enfermedad en la población (Penf): $(@bind Penf Slider(0.001:0.001:0.01, 0.001, true))"
+
+# ╔═╡ 8b1137f0-debc-4d4b-a396-2a48cacaed36
+md"prob de enfermedad en la poblacion (Ptestnenf): $(@bind Ptestnenf Slider(0.01:0.01:0.05, 0.01, true))"
+
+# ╔═╡ f10da811-6e52-412d-9ad3-957059e93495
+begin
+#Penf=0.001
+Pnoenf=1 - Penf
+Ptest_enf=1.0
+Pntest_enf=0.0
+#Ptest_nenf=0.05
+Penf_test=Ptest_enf*Penf/(Ptest_enf*Penf + Ptestnenf*Pnoenf)
+println("probabilidad de tener enfermedad si test posotivo $Penf_test")
+end
+
+
+# ╔═╡ a74f6819-3520-4d7a-a1fd-a5577380048f
+md"### TEOREMA LÍMITE CENTRAL"
+
+# ╔═╡ dfa53385-d100-4b53-b04c-759b2955b8c2
+begin
+nc, Nc = 30, 10^6
+
+dist1 = Uniform(1-sqrt(3),1+sqrt(3))
+dist2 = Exponential(1)
+dist3 = Normal(1,1)
+
+data1 = [mean(rand(dist1,nc)) for _ in 1:Nc]
+data2 = [mean(rand(dist2,nc)) for _ in 1:Nc]
+data3 = [mean(rand(dist3,nc)) for _ in 1:Nc]
+
+stephist([data1 data2 data3], bins=100, 
+    c=[:blue :red :green], xlabel = "x", ylabel = "Density",
+    label=["Average of Uniforms" "Average of Exponentials" "Average of Normals"], 
+    normed=true, xlims=(0,2), ylims=(0,2.5))
+end
+
+# ╔═╡ c18fc658-27be-41a9-8fb6-2bc5b777b483
+
+
+# ╔═╡ c06d581e-7e73-4524-be32-fed0518ca5ed
+md"### Funciones de distribución bidimensional"
+
+# ╔═╡ f01553ce-4999-40fb-9316-ba9d96f90bda
+begin
+meanVect = [27.155405405405407, 26.163835263835264] 
+covMat = [16.1253895583728 13.046961200891614; 13.046961200891614 12.367253570765161]
+
+biNorm = MvNormal(meanVect,covMat)
+
+NB = 10^3
+points = rand(MvNormal(meanVect,covMat),NB)
+
+support = 15:0.5:40
+z = [ pdf(biNorm,[x,y]) for y in support, x in support ]
+
+p1b = scatter(points[1,:], points[2,:], ms=0.5, c=:black, legend=:none)
+p1b = contour!(support, support, z, 
+		levels=[0.001, 0.005, 0.02], c=[:blue, :red, :green], 
+		xlims=(15,40), ylims=(15,40), ratio=:equal, legend=:none, 
+		xlabel="x", ylabel="y")
+p2b = surface(support, support, z, lw=0.1, c=cgrad([:blue, :red]),
+		 legend=:none, xlabel="x", ylabel="y",camera=(-35,20))
+
+plot(p1b, p2b, size=(800, 400))
+end
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 Latexify = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
@@ -891,16 +1184,20 @@ LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
+Random = "9a3f8284-a2c9-5f02-9a11-845980a1fd5c"
+StatsBase = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
 StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
+Combinatorics = "~1.0.2"
 DataFrames = "~1.6.1"
 Distributions = "~0.25.107"
 Latexify = "~0.16.1"
 Measurements = "~2.11.0"
 Plots = "~1.39.0"
 PlutoUI = "~0.7.54"
+StatsBase = "~0.34.2"
 StatsPlots = "~0.15.6"
 Unitful = "~1.19.0"
 """
@@ -911,7 +1208,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.9.4"
 manifest_format = "2.0"
-project_hash = "328a9bbf3650bcb6b420ed1286c11afbf6e2f035"
+project_hash = "a6714c16958a7554d90c51107b7b314af4300b37"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -1040,6 +1337,11 @@ deps = ["ColorTypes", "FixedPointNumbers", "Reexport"]
 git-tree-sha1 = "fc08e5930ee9a4e03f84bfb5211cb54e7769758a"
 uuid = "5ae59095-9a9b-59fe-a467-6f913c188581"
 version = "0.12.10"
+
+[[deps.Combinatorics]]
+git-tree-sha1 = "08c8b6831dc00bfea825826be0bc8336fc369860"
+uuid = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
+version = "1.0.2"
 
 [[deps.Compat]]
 deps = ["TOML", "UUIDs"]
@@ -1940,9 +2242,9 @@ version = "1.7.0"
 
 [[deps.StatsBase]]
 deps = ["DataAPI", "DataStructures", "LinearAlgebra", "LogExpFunctions", "Missings", "Printf", "Random", "SortingAlgorithms", "SparseArrays", "Statistics", "StatsAPI"]
-git-tree-sha1 = "d1bf48bfcc554a3761a133fe3a9bb01488e06916"
+git-tree-sha1 = "1d77abd07f617c4868c33d4f5b9e1dbb2643c9cf"
 uuid = "2913bbd2-ae8a-5f71-8c99-4fb6c76f3a91"
-version = "0.33.21"
+version = "0.34.2"
 
 [[deps.StatsFuns]]
 deps = ["HypergeometricFunctions", "IrrationalConstants", "LogExpFunctions", "Reexport", "Rmath", "SpecialFunctions"]
@@ -2399,26 +2701,52 @@ version = "1.4.1+1"
 # ╠═71f6c7c4-bc22-41f8-8f60-a5cf32012293
 # ╠═6bd1ab2f-48e3-486e-80c5-055ea25404c5
 # ╠═22f6fe10-ac4d-4063-84a6-67601f61da38
-# ╠═29dbf31b-82eb-456e-9957-5172ad24b6c3
-# ╠═2845e243-684e-4703-a9f3-a8098e61e204
-# ╠═f6ee567a-45ea-43dc-ae86-ac1c7e530cfd
-# ╠═56a415b4-1811-4f8c-8f0a-55defeec8d10
+# ╟─29dbf31b-82eb-456e-9957-5172ad24b6c3
+# ╟─2845e243-684e-4703-a9f3-a8098e61e204
+# ╟─f6ee567a-45ea-43dc-ae86-ac1c7e530cfd
+# ╟─56a415b4-1811-4f8c-8f0a-55defeec8d10
 # ╠═90779043-df48-4374-ae1f-c7861a72f96c
 # ╠═c23fc7a8-85d6-4b3f-a5da-8e21caff006e
 # ╠═586fac47-31c8-41f0-a046-15599aa5bbda
 # ╟─7c97760b-0b64-440e-bd89-d71a17a9243b
 # ╟─b659ae06-3180-4c22-bdda-419444458ae3
 # ╟─fca5675a-0063-45aa-8af9-f13069c4cff0
-# ╟─18567e0d-8f29-4ea4-92fc-6fabab0d5bac
-# ╟─b7c2233a-7957-4347-83d9-6f87d521eb3b
+# ╠═18567e0d-8f29-4ea4-92fc-6fabab0d5bac
+# ╠═b7c2233a-7957-4347-83d9-6f87d521eb3b
 # ╠═c25a9157-60e8-4309-b1e8-82f95453cd95
+# ╠═e2192613-78a6-4266-9cd1-cce417aeb25a
 # ╠═690b2f82-69da-4420-ac87-b25ce10bbfa6
 # ╠═e599ffd3-2ca7-42ee-b08f-7cf980d5a9be
 # ╠═786bb65f-fc11-4e54-9577-58cbae0abe91
-# ╟─e29357ed-2e57-48cb-b788-d3069401096f
+# ╠═e29357ed-2e57-48cb-b788-d3069401096f
 # ╟─759f4a2b-b7a1-49e4-99a6-03eebf4d0573
-# ╟─4b0456cf-29ae-4551-a704-7f5fa906df89
-# ╟─144a4161-0a84-42f1-b674-946f0200101f
-# ╟─0901abad-c184-436d-910f-ae429c15d122
+# ╠═4b0456cf-29ae-4551-a704-7f5fa906df89
+# ╠═144a4161-0a84-42f1-b674-946f0200101f
+# ╠═0901abad-c184-436d-910f-ae429c15d122
+# ╠═79cad4dd-107a-429a-a10f-2c8dfc6c9b33
+# ╠═0f017343-6c40-4149-829a-1ef9f3f9e917
+# ╠═fe1e3bd5-800a-481d-a3fe-ec7bf0c25b5a
+# ╠═8be6ad87-d63b-472b-8666-58e6b14f019d
+# ╠═898b8ab4-f384-4898-943c-35f6a7e264b1
+# ╠═157302a9-1e7c-4c35-865f-626a9d2afd33
+# ╠═79ed327b-8f5e-469f-8149-b9026ed19044
+# ╠═51a304e9-3983-4f5c-a103-6e1d1aa77ee4
+# ╠═bf179bd1-4ee9-4dea-ad72-8a502c826354
+# ╠═2aa0813c-0129-40c9-bcd9-790ea3915365
+# ╠═70313dca-3a16-4fe0-8c83-aee2705b335d
+# ╠═23112c98-43f5-47be-b48f-308bc9be40db
+# ╠═5481c532-c4b6-426d-8ccf-f3695b758b6d
+# ╠═71d4f8d6-1e9c-4ca2-8699-bfb744049b3a
+# ╠═1ba39eee-eb40-4fcf-9584-232b346b142d
+# ╠═7b7ddff0-087c-4205-bf82-5b9199b1aaac
+# ╠═a845eafb-6a5e-4a6a-85ee-123e7129547b
+# ╠═9c8b5503-628d-4e05-898e-52494bc1dd38
+# ╠═8b1137f0-debc-4d4b-a396-2a48cacaed36
+# ╠═f10da811-6e52-412d-9ad3-957059e93495
+# ╠═a74f6819-3520-4d7a-a1fd-a5577380048f
+# ╠═dfa53385-d100-4b53-b04c-759b2955b8c2
+# ╠═c18fc658-27be-41a9-8fb6-2bc5b777b483
+# ╠═c06d581e-7e73-4524-be32-fed0518ca5ed
+# ╠═f01553ce-4999-40fb-9316-ba9d96f90bda
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
