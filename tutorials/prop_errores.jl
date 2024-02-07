@@ -1,5 +1,9 @@
 ### A Pluto.jl notebook ###
+<<<<<<< HEAD
 # v0.19.37
+=======
+# v0.17.7
+>>>>>>> 52ed3c32d20b24c6c4704969f567017981bf84d8
 
 using Markdown
 using InteractiveUtils
@@ -911,6 +915,16 @@ plot(Beta(alpha, beta),
 # ╔═╡ 759f4a2b-b7a1-49e4-99a6-03eebf4d0573
 md"## Distribución Binomial"
 
+# ╔═╡ 70d39fb8-58d5-4a32-842d-4067ed205dbb
+md"""
+#### Distribución Binomial
+
+$P(X=x) = \binom{n}{x} p^x (1-p)^{n-x}$
+
+$\binom{n}{x}=\frac{n!}{x!(n-x)!}$ 
+
+"""
+
 # ╔═╡ 4b0456cf-29ae-4551-a704-7f5fa906df89
 md"Número de intentos (n): $(@bind n Slider(1:1:10, 1, true))"
 
@@ -983,6 +997,9 @@ mcEst  = sum([iseven(rand(faces) + rand(faces)) for i in 1:N1]) / N1
 println("Sol Numérica = $numSol \nMonte Carlo  = $mcEst")
 end
 
+# ╔═╡ c307842a-2ca7-48d1-bd31-5621817859b6
+rand(faces)
+
 # ╔═╡ 38264f42-600b-47cd-9e37-59bdde161045
 md"""
 
@@ -1037,6 +1054,9 @@ println("Random Numbers = $n1n \nCuantos, $sn1n")
 #binomialRV(10,0.5)
 end
 
+# ╔═╡ 61aba791-2bad-4504-8cdb-67024c66bdc5
+rand(1:365,50)
+
 # ╔═╡ 51a304e9-3983-4f5c-a103-6e1d1aa77ee4
 begin
 r1=rand(1:6,3)
@@ -1045,6 +1065,9 @@ r1=rand(1:6,3)
 #s1=sum(r1 .<= 4)
 println("numbers $r1 \nsumr1 = $s1" )
 end
+
+# ╔═╡ d2606533-fade-4478-867b-63faad507cc7
+
 
 # ╔═╡ bc1fb022-1a67-421f-9244-fe9043e6de6a
 md"""
@@ -1140,11 +1163,23 @@ for _ in 1:5
 end
 end
 
+# ╔═╡ 56bd487f-1407-46d0-906f-1e3b43cf5d07
+md"""
+#### BAYES
+
+$P(A | B) = \frac{P(B | A)P(A)}{P(B)}$
+
+$P(A | B){P(B)} = P(B | A)P(A)$
+
+"""
+
 # ╔═╡ 71d4f8d6-1e9c-4ca2-8699-bfb744049b3a
 md"""" 
 ## USO TEOREMA BAYES
 
-Considera $E_k$ disjuntos tales que $S = \bigcup_{0}^{\infty}{E_k}$
+Considera $E_k$ disjuntos tales que 
+
+$S = \bigcup_{0}^{N}{E_k}, B= B ∩ S = \bigcup_{0}^{N} B ∩ E_k$
 
 $P(B) = \sum{P(B ∩ E_k) } = \sum {P(B | E_k) P(E_k)}$
 
@@ -1165,7 +1200,16 @@ $P(A3 | B2) = \frac{P(B2 | A3)P(A3)}{P(B2)}=\frac{(1)\frac{1}{3})}{(\frac{1}{2})
 """
 
 # ╔═╡ a845eafb-6a5e-4a6a-85ee-123e7129547b
-md"#### Pruebas Médicas"
+md"#### Pruebas Médicas
+
+$P(B)=\sum {P(B | E_k) P(E_k)}$
+
+$P(A | B) = \frac{P(B | A)P(A)}{P(B)}$
+
+"
+
+# ╔═╡ 9a185d9e-a427-4f33-8d01-01f590a44073
+
 
 # ╔═╡ 9c8b5503-628d-4e05-898e-52494bc1dd38
 md"prob de enfermedad en la población (Penf): $(@bind Penf Slider(0.001:0.001:0.01, 0.001, true))"
@@ -1184,6 +1228,9 @@ Penf_test=Ptest_enf*Penf/(Ptest_enf*Penf + Ptestnenf*Pnoenf)
 println("probabilidad de tener enfermedad si test posotivo $Penf_test")
 end
 
+
+# ╔═╡ 38106489-9095-4f43-90e5-a95b65178d2d
+println("probabilidad de tener enfermedad si test posotivo $Penf_test")
 
 # ╔═╡ a74f6819-3520-4d7a-a1fd-a5577380048f
 md"### TEOREMA LÍMITE CENTRAL"
@@ -3308,6 +3355,7 @@ version = "1.4.1+1"
 # ╠═786bb65f-fc11-4e54-9577-58cbae0abe91
 # ╠═e29357ed-2e57-48cb-b788-d3069401096f
 # ╟─759f4a2b-b7a1-49e4-99a6-03eebf4d0573
+# ╠═70d39fb8-58d5-4a32-842d-4067ed205dbb
 # ╠═4b0456cf-29ae-4551-a704-7f5fa906df89
 # ╠═144a4161-0a84-42f1-b674-946f0200101f
 # ╠═0901abad-c184-436d-910f-ae429c15d122
@@ -3318,25 +3366,31 @@ version = "1.4.1+1"
 # ╠═d27fcf8f-b9d8-43b5-ae4f-4ff6499f30d6
 # ╠═c6832168-9ed9-4759-b8d6-c335ffc7b68f
 # ╠═fe1e3bd5-800a-481d-a3fe-ec7bf0c25b5a
+# ╠═c307842a-2ca7-48d1-bd31-5621817859b6
 # ╠═8be6ad87-d63b-472b-8666-58e6b14f019d
 # ╠═38264f42-600b-47cd-9e37-59bdde161045
 # ╠═898b8ab4-f384-4898-943c-35f6a7e264b1
 # ╠═157302a9-1e7c-4c35-865f-626a9d2afd33
 # ╠═79ed327b-8f5e-469f-8149-b9026ed19044
+# ╠═61aba791-2bad-4504-8cdb-67024c66bdc5
 # ╠═51a304e9-3983-4f5c-a103-6e1d1aa77ee4
+# ╠═d2606533-fade-4478-867b-63faad507cc7
 # ╠═bc1fb022-1a67-421f-9244-fe9043e6de6a
 # ╠═bf179bd1-4ee9-4dea-ad72-8a502c826354
 # ╠═2aa0813c-0129-40c9-bcd9-790ea3915365
 # ╠═70313dca-3a16-4fe0-8c83-aee2705b335d
 # ╠═23112c98-43f5-47be-b48f-308bc9be40db
 # ╠═5481c532-c4b6-426d-8ccf-f3695b758b6d
+# ╠═56bd487f-1407-46d0-906f-1e3b43cf5d07
 # ╠═71d4f8d6-1e9c-4ca2-8699-bfb744049b3a
 # ╠═1ba39eee-eb40-4fcf-9584-232b346b142d
 # ╠═7b7ddff0-087c-4205-bf82-5b9199b1aaac
 # ╠═a845eafb-6a5e-4a6a-85ee-123e7129547b
+# ╠═9a185d9e-a427-4f33-8d01-01f590a44073
 # ╠═9c8b5503-628d-4e05-898e-52494bc1dd38
 # ╠═8b1137f0-debc-4d4b-a396-2a48cacaed36
 # ╠═f10da811-6e52-412d-9ad3-957059e93495
+# ╠═38106489-9095-4f43-90e5-a95b65178d2d
 # ╠═a74f6819-3520-4d7a-a1fd-a5577380048f
 # ╠═dfa53385-d100-4b53-b04c-759b2955b8c2
 # ╠═b727ce35-88ee-4d8b-9f9d-f8520fab99ec
