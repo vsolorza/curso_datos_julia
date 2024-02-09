@@ -1,9 +1,5 @@
 ### A Pluto.jl notebook ###
-<<<<<<< HEAD
 # v0.19.37
-=======
-# v0.17.7
->>>>>>> 52ed3c32d20b24c6c4704969f567017981bf84d8
 
 using Markdown
 using InteractiveUtils
@@ -748,6 +744,8 @@ $s_q^2 = \sum\limits^M_{i,j=1}\frac{\partial{q}}{\partial{x_i}}\frac{\partial{q}
 """
 
 # ╔═╡ 586fac47-31c8-41f0-a046-15599aa5bbda
+# ╠═╡ disabled = true
+#=╠═╡
 md"""
 ## Ejemplo:
 
@@ -841,6 +839,7 @@ $({\delta{S}}/{\delta{C}})$ y obtener la desviación estándar asociado al
 cálculo de la salinidad $(\delta{S})$.
 
 """
+  ╠═╡ =#
 
 # ╔═╡ 7c97760b-0b64-440e-bd89-d71a17a9243b
 md"# Distribuciones de Probabilidad "
@@ -3332,7 +3331,7 @@ version = "1.4.1+1"
 # ╠═42db76e4-1bd0-4e94-b741-2fda5f9510e3
 # ╠═05aedf3d-bf7f-4d64-a2b1-a039715d23ea
 # ╠═db095cec-628b-4cc6-85c5-7d41fdfffe62
-# ╠═71f6c7c4-bc22-41f8-8f60-a5cf32012293
+# ╟─71f6c7c4-bc22-41f8-8f60-a5cf32012293
 # ╠═6bd1ab2f-48e3-486e-80c5-055ea25404c5
 # ╠═22f6fe10-ac4d-4063-84a6-67601f61da38
 # ╟─29dbf31b-82eb-456e-9957-5172ad24b6c3
@@ -3341,7 +3340,7 @@ version = "1.4.1+1"
 # ╟─56a415b4-1811-4f8c-8f0a-55defeec8d10
 # ╠═90779043-df48-4374-ae1f-c7861a72f96c
 # ╠═c23fc7a8-85d6-4b3f-a5da-8e21caff006e
-# ╠═586fac47-31c8-41f0-a046-15599aa5bbda
+# ╟─586fac47-31c8-41f0-a046-15599aa5bbda
 # ╟─7c97760b-0b64-440e-bd89-d71a17a9243b
 # ╠═b659ae06-3180-4c22-bdda-419444458ae3
 # ╠═830d5a24-8537-4e3d-b7f8-80caa7bf2236
