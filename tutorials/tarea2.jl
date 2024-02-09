@@ -5,13 +5,10 @@ using Markdown
 using InteractiveUtils
 
 # ╔═╡ fa055827-822f-425b-9a4e-c9d3e9a7288d
-using Distributions, StatsBase, Plots, Random
+using Distributions, StatsBase, Plots, Random, StatsPlots
 
 # ╔═╡ cbf52225-81be-4c97-b33b-145573960aa8
 using MAT
-
-# ╔═╡ 1eec4bef-ee10-4aa8-9d9e-aec9b09736ab
-using StatsPlots
 
 # ╔═╡ 819f16cc-c1db-11ee-1bc5-fd1c0e26c307
 md"# TAREA 2"
@@ -145,43 +142,57 @@ md"""
 
 
 
+# ╔═╡ 66b0a5ee-61eb-4e5d-8918-b66134826199
+md"### Chequen Distributions.jl o el help de Pluto para la función fit para ajustar una distribución a los datos, tomen el caso de los que se grafican y comparen sus histogramas con el ajuste"
+
 # ╔═╡ 3a9c308e-7fe5-4e99-b69e-09faee0cb9f8
 scatter(u[:,18] .-mean(u[:,18]),v[:,18] .- mean(v[:,18]))
 
 # ╔═╡ 03e7302a-4243-4dd5-8632-1f97db0158a9
-histogram(v[:,20].- mean(v[:,20]))
-
-# ╔═╡ 68631139-b5b8-4c45-82f0-c4b2cbb1abc6
 begin
-v_fit= fit(Normal,v)
-plot(v_fit)
+vc_fit= fit(Normal,v[:,20].- mean(v[:,20]))
+histogram(v[:,20].- mean(v[:,20]),normalize=true)
+plot!(vc_fit, title="Ajuste del histograma a distribución normal (V)")
 end
+
+# ╔═╡ 0cb29504-9dde-46c1-a632-c65b7300099c
+md"""
+##### El histograma de las velocidades en la componente V (centrados), muestran que los valores negativos son los que tienen mayor variabilidad. Esto cambia en los ajustes cambiando la media μ.
+"""
 
 # ╔═╡ 91307d3e-2f26-49a8-af2e-f80fd15f974e
 histogram(u[:,20].-mean(u[:,20]))
 
+# ╔═╡ 29f7cbaa-d205-4980-983b-03d8cd4a226c
+md"""
+##### El histograma de las velocidades en la componente U (centrados), están relativamente bien distribuidas, por lo que ocupó un ajuste menor en la media μ.
+"""
+
+# ╔═╡ 5a7eb868-1cc4-4d27-a4e8-87b3b01b03da
+begin
+uc=u[:,20].- mean(u[:,20])
+uc_fit= fit_mle(Normal,uc)
+plot(uc_fit, title="Ajuste del histograma a distribución normal (U)")
+end
+
 # ╔═╡ d6e49f94-0364-4636-a034-20aefffa46c9
 histogram(temp .-mean(temp))
 
-# ╔═╡ d4fe198b-2b71-4809-8cb1-8f74783881e3
-plot(time,v[:,18] .- mean(v[:,18]))
-
-# ╔═╡ b6aa9d9c-3957-405b-a38e-62ea98e4ef7e
-md"### Chequen Distributions.jl o el help de Pluto para la función fit para ajustar una distribución a los datos, tomen el caso de los que se grafican y comparen sus histogramas con el ajuste"
-
-# ╔═╡ ee2c66d6-594e-489d-bbfc-25aaf134dd02
-F=fit(Normal,v[:,18] .- mean(v[:,18]))
-
-# ╔═╡ ac79b156-048e-4e11-bbe1-a77dc9fbac78
-md"""
-### Investigar que hace la fucnuín fit  para tratar de comparar el ajuste con el histograma
-"""
-
-# ╔═╡ a14c1630-4e87-428f-bf69-736eaa696743
+# ╔═╡ 8f1fb5a4-abe3-4452-80ee-6498a2375685
 begin
-#histogram(v[:,18] .- mean(v[:,18]))
-plot(v_fit)
+tempc=temp.- mean(temp)
+tempc_fit= fit_mle(Normal,tempc)
+plot(tempc_fit, title="Ajuste del histograma a distribución normal \n(Temperatura)")
 end
+
+# ╔═╡ d4fe198b-2b71-4809-8cb1-8f74783881e3
+plot(time,v[:,18] .- mean(v[:,18]),title="Anomalias de la componente V", xlabel="Tiempo", ylabel="m/s", label="datos")
+
+# ╔═╡ f7afcfbe-c82b-45b2-bf1a-c044e53e9338
+plot(time,u[:,20] .- mean(u[:,20]),title="Anomalias de la componente U", xlabel="Tiempo", ylabel="m/s", label="datos")
+
+# ╔═╡ d4b4f25d-8e61-4192-82c1-cb2a14a6ab00
+plot(time,temp.- mean(temp),title="Anomalias de la temperatura", xlabel="Tiempo", ylabel="°C", label="datos")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -288,9 +299,9 @@ version = "0.5.1"
 
 [[deps.ChainRulesCore]]
 deps = ["Compat", "LinearAlgebra"]
-git-tree-sha1 = "1287e3872d646eed95198457873249bd9f0caed2"
+git-tree-sha1 = "ab79d1f9754a3988a7792caec43bfdc03996020f"
 uuid = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-version = "1.20.1"
+version = "1.21.0"
 weakdeps = ["SparseArrays"]
 
     [deps.ChainRulesCore.extensions]
@@ -1656,18 +1667,19 @@ version = "1.4.1+1"
 # ╠═e6a6e50a-ebba-4a8f-9c09-4c8f73d7738a
 # ╠═030c5b4e-3761-42ee-9e86-68eeb7690d1e
 # ╟─831cc262-b6b9-41a7-8d65-87c26d54d542
-# ╠═d09de258-9930-45fd-9b75-938fe20dec3a
+# ╟─d09de258-9930-45fd-9b75-938fe20dec3a
 # ╟─884d88c1-d4c2-4c82-a8b6-6c6e7f52dc1c
+# ╠═66b0a5ee-61eb-4e5d-8918-b66134826199
 # ╠═3a9c308e-7fe5-4e99-b69e-09faee0cb9f8
 # ╠═03e7302a-4243-4dd5-8632-1f97db0158a9
-# ╠═68631139-b5b8-4c45-82f0-c4b2cbb1abc6
+# ╟─0cb29504-9dde-46c1-a632-c65b7300099c
 # ╠═91307d3e-2f26-49a8-af2e-f80fd15f974e
+# ╟─29f7cbaa-d205-4980-983b-03d8cd4a226c
+# ╠═5a7eb868-1cc4-4d27-a4e8-87b3b01b03da
 # ╠═d6e49f94-0364-4636-a034-20aefffa46c9
+# ╠═8f1fb5a4-abe3-4452-80ee-6498a2375685
 # ╠═d4fe198b-2b71-4809-8cb1-8f74783881e3
-# ╟─b6aa9d9c-3957-405b-a38e-62ea98e4ef7e
-# ╠═ee2c66d6-594e-489d-bbfc-25aaf134dd02
-# ╠═1eec4bef-ee10-4aa8-9d9e-aec9b09736ab
-# ╟─ac79b156-048e-4e11-bbe1-a77dc9fbac78
-# ╠═a14c1630-4e87-428f-bf69-736eaa696743
+# ╠═f7afcfbe-c82b-45b2-bf1a-c044e53e9338
+# ╠═d4b4f25d-8e61-4192-82c1-cb2a14a6ab00
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
