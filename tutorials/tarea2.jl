@@ -148,51 +148,70 @@ md"### Chequen Distributions.jl o el help de Pluto para la función fit para aju
 # ╔═╡ 3a9c308e-7fe5-4e99-b69e-09faee0cb9f8
 scatter(u[:,18] .-mean(u[:,18]),v[:,18] .- mean(v[:,18]))
 
+# ╔═╡ c97a07cc-c28b-491b-bcc1-b522171038ad
+md"""
+##### El histograma de las velocidades en la componente V (centrados), muestran que los valores negativos son los que tienen mayor variabilidad y los valores centrados están ligeramente sesgados a los positivos.
+"""
+
 # ╔═╡ 03e7302a-4243-4dd5-8632-1f97db0158a9
 begin
 vc_fit= fit(Normal,v[:,20].- mean(v[:,20]))
-histogram(v[:,20].- mean(v[:,20]),normalize=true)
-plot!(vc_fit, title="Ajuste del histograma a distribución normal (V)")
+histogram(v[:,20].- mean(v[:,20]),normalize=true,label="Datos Medidos")
+plot!(vc_fit, 
+	title="Datos de velocidad V ajustados a distribución normal",
+	linewidth=3,
+	linecolor="Black",
+	label="Ajuste Normal"
+)
 end
 
-# ╔═╡ 0cb29504-9dde-46c1-a632-c65b7300099c
+# ╔═╡ 1b35f7f0-614e-41be-9739-9733f6881967
 md"""
-##### El histograma de las velocidades en la componente V (centrados), muestran que los valores negativos son los que tienen mayor variabilidad. Esto cambia en los ajustes cambiando la media μ.
+##### El histograma de las velocidades en la componente U (centrados), están relativamente bien distribuidas, ligeralmente sesgado a los positivos los valores centrales.
 """
 
 # ╔═╡ 91307d3e-2f26-49a8-af2e-f80fd15f974e
-histogram(u[:,20].-mean(u[:,20]))
+begin
+uc_fit=fit(Normal,u[:,20].-mean(u[:,20]))
+histogram(u[:,20].-mean(u[:,20]),normalize=true, label="Datos Medidos")
+plot!(uc_fit,
+	title="Datos de velocidad U ajustados a distribución normal",
+	linewidth=3,
+	linecolor="Black",
+	label="Ajuste Normal"	
+)
+end
 
-# ╔═╡ 29f7cbaa-d205-4980-983b-03d8cd4a226c
+# ╔═╡ 7089dc40-58ae-48d8-a5f0-b090800f5ab4
 md"""
-##### El histograma de las velocidades en la componente U (centrados), están relativamente bien distribuidas, por lo que ocupó un ajuste menor en la media μ.
+##### El histograma de las temperaturas (centrados), están bien distribuidos dentro de la campana de Gauss. 
 """
 
-# ╔═╡ 5a7eb868-1cc4-4d27-a4e8-87b3b01b03da
-begin
-uc=u[:,20].- mean(u[:,20])
-uc_fit= fit_mle(Normal,uc)
-plot(uc_fit, title="Ajuste del histograma a distribución normal (U)")
-end
-
 # ╔═╡ d6e49f94-0364-4636-a034-20aefffa46c9
-histogram(temp .-mean(temp))
-
-# ╔═╡ 8f1fb5a4-abe3-4452-80ee-6498a2375685
 begin
-tempc=temp.- mean(temp)
-tempc_fit= fit_mle(Normal,tempc)
-plot(tempc_fit, title="Ajuste del histograma a distribución normal \n(Temperatura)")
+tempc_fit=fit(Normal,temp .-mean(temp))
+histogram(temp .-mean(temp),normalize=true,label="Datos medidos")
+plot!(tempc_fit,
+	title="Datos de temperatura ajustados a distribución normal",
+	linewidth=3,
+	linecolor="Black",
+	label="Ajuste Normal"
+)
 end
+
+# ╔═╡ 8c9c3e68-0e87-43d1-aa20-98fdd390c728
+md"""
+#### Series de tiempo de las anomalías de las componentes U, V, y la temperatura.  
+"""
 
 # ╔═╡ d4fe198b-2b71-4809-8cb1-8f74783881e3
-plot(time,v[:,18] .- mean(v[:,18]),title="Anomalias de la componente V", xlabel="Tiempo", ylabel="m/s", label="datos")
+plot(time,v[:,18] .- mean(v[:,18]),title="Anomalias de la componente V", xlabel="Tiempo", ylabel="m/s", label="Anomalías de velocidad")
 
 # ╔═╡ f7afcfbe-c82b-45b2-bf1a-c044e53e9338
-plot(time,u[:,20] .- mean(u[:,20]),title="Anomalias de la componente U", xlabel="Tiempo", ylabel="m/s", label="datos")
+plot(time,u[:,20] .- mean(u[:,20]),title="Anomalias de la componente U", xlabel="Tiempo", ylabel="m/s", label="Anomalías de velocidad")
 
 # ╔═╡ d4b4f25d-8e61-4192-82c1-cb2a14a6ab00
-plot(time,temp.- mean(temp),title="Anomalias de la temperatura", xlabel="Tiempo", ylabel="°C", label="datos")
+plot(time,temp.- mean(temp),title="Anomalias de la temperatura", xlabel="Tiempo", ylabel="°C", label="Anomalías de temperatura")
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
@@ -1669,15 +1688,15 @@ version = "1.4.1+1"
 # ╟─831cc262-b6b9-41a7-8d65-87c26d54d542
 # ╟─d09de258-9930-45fd-9b75-938fe20dec3a
 # ╟─884d88c1-d4c2-4c82-a8b6-6c6e7f52dc1c
-# ╠═66b0a5ee-61eb-4e5d-8918-b66134826199
+# ╟─66b0a5ee-61eb-4e5d-8918-b66134826199
 # ╠═3a9c308e-7fe5-4e99-b69e-09faee0cb9f8
+# ╟─c97a07cc-c28b-491b-bcc1-b522171038ad
 # ╠═03e7302a-4243-4dd5-8632-1f97db0158a9
-# ╟─0cb29504-9dde-46c1-a632-c65b7300099c
+# ╟─1b35f7f0-614e-41be-9739-9733f6881967
 # ╠═91307d3e-2f26-49a8-af2e-f80fd15f974e
-# ╟─29f7cbaa-d205-4980-983b-03d8cd4a226c
-# ╠═5a7eb868-1cc4-4d27-a4e8-87b3b01b03da
+# ╟─7089dc40-58ae-48d8-a5f0-b090800f5ab4
 # ╠═d6e49f94-0364-4636-a034-20aefffa46c9
-# ╠═8f1fb5a4-abe3-4452-80ee-6498a2375685
+# ╟─8c9c3e68-0e87-43d1-aa20-98fdd390c728
 # ╠═d4fe198b-2b71-4809-8cb1-8f74783881e3
 # ╠═f7afcfbe-c82b-45b2-bf1a-c044e53e9338
 # ╠═d4b4f25d-8e61-4192-82c1-cb2a14a6ab00
