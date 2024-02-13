@@ -100,12 +100,77 @@ $\lambda$ (tasa de decaimiento)
 md"Usar Distributions.jl para calcular las medias y varianzas de las pdf anteriores usando instrucciones como las que siguen y checar con resultado analítico"
 
 # ╔═╡ 87dfd4df-0e43-4a09-91fe-4f7a516d03da
+# Binomial
 begin
-pp, nn = 0.5, 10
+pp, nn= 0.5, 10
 bDist = Binomial(nn,pp)
 mbDist=mean(bDist);
 vbDist=var(bDist);
-println("media binomial= $mbDist, varianza $vbDist")
+
+medBin=nn*pp
+varBin=nn*pp*(1-pp)
+	
+println("Media Binomial= $mbDist, Varianza $vbDist\nMedia Analitica= $medBin, Varianza Analitica= $varBin")
+end
+
+# ╔═╡ e3e9bc23-f085-4d9d-8d28-a028fe094071
+# Poisson
+begin
+λ=10
+pDist = Poisson(λ)
+mpDist=mean(pDist);
+vpDist=var(pDist);
+
+medPoi=λ
+varPoi=λ
+	
+println("Media Poisson= $mpDist, Varianza $vpDist\nMedia Analitica= $medPoi, Varianza Analitica= $varPoi")
+end
+
+# ╔═╡ 08e4f268-2dc7-4b6a-b3b2-5ed71de9445c
+# Uniforme
+begin
+a=0
+b=5
+uDist = Uniform(a,b)
+muDist=mean(uDist);
+vuDist=var(uDist);
+
+medUni=(b+a)/2
+varUni=(b-a)^2 / 12
+	
+println("Media Uniforme= $muDist, Varianza $vuDist\nMedia Analitica= $medUni, Varianza Analitica= $varUni")
+end
+
+# ╔═╡ 54170529-f397-47a6-827c-5de5f079e369
+# Gaussiana
+begin
+μ=5
+σ=1
+
+nDist = Normal(μ,σ)
+mnDist=mean(nDist);
+vnDist=var(nDist);
+
+medNor=μ
+varNor=σ^2
+	
+println("Media Gaussiana= $mnDist, Varianza $vnDist\nMedia Analitica= $medNor, Varianza Analitica= $varNor")
+end
+
+# ╔═╡ e7f618fd-0e2a-4210-a8eb-46459fe6eb86
+# Exponencial
+begin
+Θ=5
+	
+eDist = Exponential(Θ)
+meDist=mean(eDist);
+veDist=var(eDist);
+
+medEXP=Θ
+varEXP=Θ^2
+	
+println("Media Exponencial= $meDist, Varianza $veDist\nMedia Analitica= $medEXP, Varianza Analitica= $varEXP")
 end
 
 # ╔═╡ b7380d31-8a06-4199-a4be-5d6198a28a60
@@ -1679,6 +1744,10 @@ version = "1.4.1+1"
 # ╟─430b4f63-edbe-4019-ac6f-9c9aa2d60aa3
 # ╟─5c3f26b6-b74a-4359-a71e-908da9e7f850
 # ╠═87dfd4df-0e43-4a09-91fe-4f7a516d03da
+# ╠═e3e9bc23-f085-4d9d-8d28-a028fe094071
+# ╠═08e4f268-2dc7-4b6a-b3b2-5ed71de9445c
+# ╠═54170529-f397-47a6-827c-5de5f079e369
+# ╠═e7f618fd-0e2a-4210-a8eb-46459fe6eb86
 # ╟─b7380d31-8a06-4199-a4be-5d6198a28a60
 # ╟─f2280695-c4c3-43e1-a724-d15f9b4d52b1
 # ╠═cbf52225-81be-4c97-b33b-145573960aa8
