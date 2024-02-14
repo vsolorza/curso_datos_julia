@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.17.7
+# v0.19.36
 
 using Markdown
 using InteractiveUtils
@@ -137,7 +137,7 @@ Si consideramos errores aleatorios sumamos en cuadratura
 ```math
 \begin{eqnarray}
 	p&=&x \pm y \\
-	\delta q &=& \sqrt{(\delta x)^2 + (\delta y)^2}\\
+	\delta p &=& \sqrt{(\delta x)^2 + (\delta y)^2}\\
     q&=&x*y \\
     o\\
     q&=&\frac{y}{x} \\
@@ -752,10 +752,11 @@ conductividad $(C)$ y temperatura $(T)$ es (Unesco EOS-80)
 
 $[S=a_0+a_1 R_T^{1/2}+a_2 R_T+a_3 R_T^{3/2}+a_4 R_T^{2}+a_5 R_T^{5/2}+\Delta{S}\,]$
 
+\
 donde
-
+\
 $[R_T=\frac{R}{R_p r_t}\,\,\,,\,\,R=\frac{C(S,T,0)}{C(35,15,0)}]$
-
+\
 $(C(35,15,0))$ es la conductividad de un agua de salinidad práctica 35 a los $(15^\circ{C})$,
 
 \
@@ -763,29 +764,33 @@ $(C(35,15,0))$ es la conductividad de un agua de salinidad práctica 35 a los $(
 $[r_t=c_0 + c_1 T + c_2 T^2 + c_3T^3 + c_4T^4]$
 
 $[R_p=1+\frac{P(e_1+e_2P+e_3P^2)}{(1+d_1T+d_2T^2+(d_3 + d_4T)R)}]$
-
+\
 y
-
+\
 $[\Delta{S}=\frac{T-15}{1+k(T-15)}(b_0+b_1 R_T^{1/2}+b_2 R_T+b_3 R_T^{3/2}+b_4 R_T^{2}+b_5 R_T^{5/2})]$
-
+\
 con los coeficientes $(a_i\,,b_i\,,c_i\,,d_i)\,$ y $e_i~$
 
-\
-
-$(a_0=0.0080\,\,\,\,\,\,\,\,\,\,\,\,\,\,b_0=0.0005\,\,\,\,\,\,\,\,\,\,\,\,\,\,c_0=0.6766097\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,d_1=3.426\,e^{-2}\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,e_1=2.070\,e^{-5})$
 
 \
 
-$(a_1=-0.1692\,\,\,\,\,\,\,\,\,\,b_1=-0.0056\,\,\,\,\,\,\,\,\,c_1=2.00564\,e^{-2}\,\,\,\,\,\,\,\,\,\,\,d_2=4.464\,e^{-4}\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,e_2=-6.370\,e^{-10})$
-
-
-$(a_2=25.3851\,\,\,\,\,\,\,\,\,\,\,\,b=-0.0066\,\,\,\,\,\,\,\,\,\,\,c_2=1.104259\,e^{-4}\,\,\,\,\,\,\,\,\,d_3=4.215\,e^{-1}\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,e_3=3.989\,e^{-15})$
+$(a_0=0.0080\,\,\,\,\,\,\,\,\,\,\,\,\,\,b_0=0.0005\,\,\,\,\,\,\,\,\,\,\,\,\,\,c_0=0.6766097\,\,\,\,\,\,\,\,\,\,\,\,\,\,\,d_1=3.426\,e^{-2}\,\,\,\,\,\,\,\,\,e_1=2.070\,e^{-5})$
 
 \
 
-$(a_3=14.0941\,\,\,\,\,\,\,\,\,\,\,\,b=-0.0375\,\,\,\,\,\,\,\,\,\,\,c_3=-6.9698,e^{-7}\,\,\,\,\,\,\,\,\,\,\,d_4=-3.107,e^{-3})$
-~
-$(a_4=-7.0261\,\,\,\,\,\,\,\,\,\,b_4=0.0636\,\,\,\,\,\,\,\,\,\,\,\,\,\,c_4=1.0031\,e^{-9})$
+$(a_1=-0.1692\,\,\,\,\,\,\,\,\,\,b_1=-0.0056\,\,\,\,\,\,\,\,\,c_1=2.00564\,e^{-2}\,\,\,\,\,\,\,\,\,\,\,d_2=4.464\,e^{-4}\,\,\,e_2=-6.370\,e^{-10})$
+
+
+$(a_2=25.3851\,\,\,\,\,\,\,\,\,\,\,\,b_2=-0.0066\,\,\,\,\,\,\,\,\,\,\,c_2=1.104259\,e^{-4}\,\,\,\,\,\,\,\,\,d_3=4.215\,e^{-1}\,\,\,\,e_3=3.989\,e^{-15})$
+
+\
+
+$(a_3=14.0941\,\,\,\,\,\,\,\,\,\,\,\,b_3=-0.0375\,\,\,\,\,\,\,\,\,\,\,c_3=-6.9698,e^{-7}\,\,\,\,\,\,\,\,\,\,\,d_4=-3.107,e^{-3})$
+
+\
+
+$(a_4=-7.0261\,\,\,\,\,\,\,\,\,\,b_4=0.0636\,\,\,\,\,\,\,\,c_4=1.0031\,e^{-9})$
+
 \
 
 $(a_5=2.7081\,\,\,\,\,\,\,\,\,\,\,\,\,\,b_5=-0.0144\,\,\,\,\,\,\,\,\,\,)$
@@ -794,7 +799,7 @@ $(a_5=2.7081\,\,\,\,\,\,\,\,\,\,\,\,\,\,b_5=-0.0144\,\,\,\,\,\,\,\,\,\,)$
 
 $(\sum a_i=35.0000\,\,\,\,\sum b_i=0.0000)$ $(k=0.0162)$
 
-Si el error de precisión del termistor y de la celda de
+Si el error de medición del termistor y de la celda de
 conductividad del CTD es $(\delta{T}=0.001^\circ{C})$ y
 $(\delta{C}=0.001,{S}{ m}^{-1})$, respectivamente, calcule la
 incertidumbre asociada al cálculo de la salinidad $S$ a partir de la
@@ -803,39 +808,70 @@ $(C=5,{\rm S}\,{\rm m}^{-1})$, $(T=28\,^\circ{C})$, y
 $(P=50 \, {dbar})$. Suponga que $(\delta{P}=0)$, es decir, el
 altímetro no tiene errores de precisión.\
 
+\
+\
 **Resultado**:
 
 El error asociado a la salinidad es
 
-$[\delta{S}=\sqrt{\left( \frac{\partial{S}}{\partial{T}}\delta{T} \right)^2 + \left( \frac{\partial{S}}{\partial{C}}\delta{C}\right)^2}]$
+$[\delta{S}=\sqrt{( \frac{\partial{S}}{\partial{T}}\delta{T})^2 + ( \frac{\partial{S}}{\partial{C}}\delta{C})^2}]$
 
 donde
 
-$[\frac{\delta{S}}{\delta{T}}=
-      \left[(1+k(T-15))^{-1} - (k(T-15))(1+k(T-15))^{-2}\right]
-[\left (b_0+b_1 R_T^{1/2}+b_2 R_T+b_3 R_T^{3/2}+b_4 R_T^{2}+b_5 R_T^{5/2}\right)]$
+\
 
+```math
+\begin{equation}
+
+\frac{\delta{S}}{\delta{T}}=[(1+k(T-15))^{-1} - (k(T-15))(1+k(T-15))^{-2}] \ldots
+\end{equation}
+```
+
+```math
+\begin{equation}
+\ldots [(b_0+b_1 R_T^{1/2}+b_2 R_T+b_3 R_T^{3/2}+b_4 R_T^{2}+b_5 R_T^{5/2})]
+\end{equation}
+```
+\
 y
+\
 
-$[\frac{\delta{S}}{\delta{C}}=
-                 \frac{1}{2} a_1 \frac{R_T^{-1/2}}{C(35,T,0)} +
-         a_2 \frac{1}{C(35,T,0)} +
-             \frac{3}{2}a_3 \frac{R_T^{1/2}}{C(35,T,0)}+ ]
+```math
+\begin{equation}
+\frac{\delta{S}}{\delta{C}}=[
+                 \frac{1}{2} a_1 \frac{R_T^{-1/2}}{C(35,T,0)} + 
+a_2 \frac{1}{C(35,T,0)} +
+             \frac{3}{2}a_3 \frac{R_T^{1/2}}{C(35,T,0)}+ \ldots ]
+\end{equation}
+```
 
-[+2 a_4 \frac{R_T}{C(35,T,0)} +\frac{5}{2} a_5 \frac{R_T^{3/2}}{C(35,T,0)}+\frac{T-15}{(1+k(T-15))}]
+\
 
-[\left(b_1 \frac{R_T^{-1/2}}{C(35,T,0)} +
-         b_2 \frac{1}{C(35,T,0)} +
-             \frac{3}{2}b_3 \frac{R_T^{1/2}}{C(35,T,0)}+
-               2 b_4 \frac{R_T}{C(35,T,0)} +
-     \frac{5}{2} b_5 \frac{R_T^{3/2}}{C(35,T,0)}
-     \right)\,]$
+```math
+\begin{equation}
+[+2 a_4 \frac{R_T}{C(35,T,0)} +\frac{5}{2} a_5 \frac{R_T^{3/2}}{C(35,T,0)}+\frac{T-15}{(1+k(T-15))}] \ldots
 
+\end{equation}
+```
+
+\
+
+```math
+\begin{equation}
+[(b_1 \frac{R_T^{-1/2}}{C(35,T,0)} + b_2 \frac{1}{C(35,T,0)} +
+\frac{3}{2}b_3 \frac{R_T^{1/2}}{C(35,T,0)}+ 2 b_4 \frac{R_T}{C(35,T,0)} +
+\frac{5}{2} b_5 \frac{R_T^{3/2}}{C(35,T,0)}]
+\end{equation}
+```
+
+\
 Por lo tanto, dada una medida de conductividad $(C)$ y
 temperatura $(T)$ podemos calcular $({\delta{S}}/{\delta{T}})$ y
 $({\delta{S}}/{\delta{C}})$ y obtener la desviación estándar asociado al
 cálculo de la salinidad $(\delta{S})$.
 
+\
+\
 """
 
 # ╔═╡ 7c97760b-0b64-440e-bd89-d71a17a9243b
@@ -1062,6 +1098,29 @@ r1=rand(1:6,3)
 println("numbers $r1 \nsumr1 = $s1" )
 end
 
+# ╔═╡ 505b2041-99af-48c1-a350-961f091a0447
+begin
+using CSV, HypothesisTests, MAT
+vars=matread("LR5309_PM11_489m_h.mat")
+v=vars["v"];u=vars["u"];time=vars["t"];prof=vars["pb"];temp=vars["tem"];
+data11=v[:,20];data12=v[:,20]+randn(length(v[:,20])).*1.e-0;
+xBar1, xBar2 = mean(data11), mean(data12)
+n11, n12 = length(data11), length(data12)
+alpha1 = 0.05
+t11 = quantile(TDist(n11+n12-2),1-alpha1/2)
+
+s11, s12 = std(data11), std(data12)
+sP = sqrt(((n11-1)*s1^2 + (n12-1)*s12^2) / (n11+n12-2))
+a11=((s11^2/n11)+(s12^2/n12))^2
+a12=(((s11^2/n11))^2)/(n11-1)+((s12^2/(n12))^2)/(n12-1)
+ν12=a11/a12
+t11 = quantile(TDist(ν12),1-alpha1/2)
+println("Calculando formula: ", (xBar1 - xBar2 - t11*sqrt(s11^2/n11 + s12^2/n12),
+				  xBar1 - xBar2 + t11*sqrt(s11^2/n11 + s12^2/n12)))
+#println("Usando confint(): ", 
+
+end
+
 # ╔═╡ d2606533-fade-4478-867b-63faad507cc7
 
 
@@ -1202,6 +1261,7 @@ $P(B)=\sum {P(B | E_k) P(E_k)}$
 
 $P(A | B) = \frac{P(B | A)P(A)}{P(B)}$
 
+## Prob a Posteriori (Posterior) = Likelihood * Prob a Priori
 "
 
 # ╔═╡ 9a185d9e-a427-4f33-8d01-01f590a44073
@@ -1211,7 +1271,7 @@ $P(A | B) = \frac{P(B | A)P(A)}{P(B)}$
 md"prob de enfermedad en la población (Penf): $(@bind Penf Slider(0.001:0.001:0.01, 0.001, true))"
 
 # ╔═╡ 8b1137f0-debc-4d4b-a396-2a48cacaed36
-md"prob de enfermedad en la poblacion (Ptestnenf): $(@bind Ptestnenf Slider(0.01:0.01:0.05, 0.01, true))"
+md"prob de falso positivo en test (Ptestnenf): $(@bind Ptestnenf Slider(0.01:0.01:0.05, 0.01, true))"
 
 # ╔═╡ f10da811-6e52-412d-9ad3-957059e93495
 begin
@@ -1233,7 +1293,7 @@ md"### TEOREMA LÍMITE CENTRAL"
 
 # ╔═╡ dfa53385-d100-4b53-b04c-759b2955b8c2
 begin
-nc, Nc = 30, 10^6
+nc, Nc = 30, 10^5
 
 dist1 = Uniform(1-sqrt(3),1+sqrt(3))
 dist2 = Exponential(1)
@@ -1247,6 +1307,18 @@ stephist([data1 data2 data3], bins=100,
     c=[:blue :red :green], xlabel = "x", ylabel = "Density",
     label=["Average of Uniforms" "Average of Exponentials" "Average of Normals"], 
     normed=true, xlims=(0,2), ylims=(0,2.5))
+Ftest=Normal(1.0,0.183)
+Fest2=Exponential(1.0)
+plot!(Ftest,width=5)
+plot!(Fest2,width=3)
+end
+
+# ╔═╡ 45d39348-0197-45c1-beaa-d174dfbbfa14
+begin
+ss1=std(data1);ss2=std(data2);ss3=std(data3);
+mm1=mean(data1);mm2=mean(data2);mm3=mean(data3);
+println("std1= $ss1, std2= $ss2, std3=$ss3")
+println("mm1= $mm1, mm2= $mm2, mm3=$mm3")
 end
 
 # ╔═╡ b727ce35-88ee-4d8b-9f9d-f8520fab99ec
@@ -1267,7 +1339,7 @@ sMeanst = Array{Float64}(undef, Nt)
 sVarst  = Array{Float64}(undef, Nt)
 tStatst = Array{Float64}(undef, Nt)
 
-for i in 1:N
+for i in 1:Nt
     datat       = rand(Normal(mut,sigmat),nt)
     sampleMeant = mean(datat)
     sampleVarst = var(datat)
@@ -1281,20 +1353,53 @@ xRangeVart = 0.0:0.1:60
 xRangeTStatt = -5:0.1:5
 
 p1t = stephist(sMeanst, bins=50, c=:blue, normed=true, legend=false)
-p1t = plot!(xRangeMeant, pdf.(Normal(mut,sigmat/sqrt(n)), xRangeMeant),
+p1t = plot!(xRangeMeant, pdf.(Normal(mut,sigmat/sqrt(nt)), xRangeMeant),
     c=:red, xlims=(5,15), ylims=(0,0.35), xlabel="Sample mean",ylabel="Density")
 
 p2t = stephist(sVarst, bins=50, c=:blue, normed=true, label="Simulated")
-p2t = plot!(xRangeVart, (n-1)/sigmat^2*pdf.(Chisq(n-1), xRangeVart*(n-1)/sigmat^2),
+p2t = plot!(xRangeVart, (nt-1)/sigmat^2*pdf.(Chisq(nt-1), xRangeVart*(nt-1)/sigmat^2),
     c=:red, label="Analytic", xlims=(0,60), ylims=(0,0.06),
     xlabel="Sample Variance",ylabel="Density")
 
 p3t = stephist(tStatst, bins=100, c=:blue, normed=true, legend=false)
-p3t = plot!(xRangeTStatt, pdf.(TDist(n-1), xRangeTStatt), 
+p3t = plot!(xRangeTStatt, pdf.(TDist(nt-1), xRangeTStatt), 
     c=:red, xlims=(-5,5), ylims=(0,0.4), xlabel="t-statistic",ylabel="Density")
 
 plot(p1t, p2t, p3t, layout = (1,3), size=(1200, 400))
 end
+
+# ╔═╡ b3b4de56-c137-45a9-a89a-f59f79833e77
+md"""
+
+## Intervalos de Confianza
+"""
+
+
+# ╔═╡ 888b04c3-d581-4781-aecb-b18aa2572611
+begin
+int68=round((cdf(Normal(0,1),1) - cdf(Normal(0,1),-1))*100,digits=2)
+int95=round((cdf(Normal(0,1),2) - cdf(Normal(0,1),-2))*100,digits=2)
+int99=round((cdf(Normal(0,1),3) - cdf(Normal(0,1),-3))*100,digits=2)
+println("int1σ = $int68 , int2σ = $int95  ,int3σ = $int99")
+end
+
+# ╔═╡ 9ec85354-f16f-41b9-b7e3-931b81b8da02
+begin
+qq=quantile(Normal(0,1),.975)
+cq=cquantile(Normal(0,1),.025)
+println("quantiles = $qq , $cq")
+end
+
+# ╔═╡ 628e8901-f0ba-4089-8013-b6c9a7c70468
+begin
+println("degress of freedom = $ν12")
+end
+
+# ╔═╡ 191422dc-46ae-4193-803f-93a63d1d30a5
+UnequalVarianceTTest(data11,data12)#EqualVarianceTTest(data11,data12)
+
+# ╔═╡ 08e2f958-c428-4f55-93ff-1ae85222e971
+x1=randn(1000);histogram(x1,norm=true)
 
 # ╔═╡ 75faefd2-f630-4d8f-87f0-055f88a5b9e9
 image=load("/Users/julios/JULIA/curso_datos_julia/tutorials/bivariate.jpg")
@@ -1332,15 +1437,21 @@ p2b = surface(support, support, z, lw=0.1, c=cgrad([:blue, :red]),
 plot(p1b, p2b, size=(800, 400))
 end
 
+# ╔═╡ b81d75ca-ca30-4eef-996b-443d7b6e7f5b
+
+
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """
 [deps]
+CSV = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
 Combinatorics = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
+HypothesisTests = "09f84164-cd44-5f33-b23f-e6b0d136a0d5"
 Images = "916415d5-f1e6-5110-898d-aaa5f9f070e0"
 Latexify = "23fbe1c1-3f47-55db-b15f-69d7ec21a316"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
+MAT = "23992714-dd62-5051-b70f-ba57cb901cac"
 Measurements = "eff96d63-e80a-5855-80a2-b1b0885c5ab7"
 Plots = "91a5bcdd-55d7-5caf-9e0b-520d859cae80"
 PlutoUI = "7f904dfe-b85e-4ff6-b463-dae2292396a8"
@@ -1350,11 +1461,14 @@ StatsPlots = "f3b207a7-027a-5e70-b257-86293d7955fd"
 Unitful = "1986cc42-f94f-5a68-af5c-568840ba703d"
 
 [compat]
+CSV = "~0.10.12"
 Combinatorics = "~1.0.2"
 DataFrames = "~1.6.1"
 Distributions = "~0.25.107"
+HypothesisTests = "~0.11.0"
 Images = "~0.26.0"
 Latexify = "~0.16.1"
+MAT = "~0.10.6"
 Measurements = "~2.11.0"
 Plots = "~1.39.0"
 PlutoUI = "~0.7.54"
@@ -1369,7 +1483,7 @@ PLUTO_MANIFEST_TOML_CONTENTS = """
 
 julia_version = "1.9.4"
 manifest_format = "2.0"
-project_hash = "4ec98997d3c1397f708eb1177804ed57bf8961e4"
+project_hash = "e02d435b4278e746f6c76f8c90c9f1a0fda25e09"
 
 [[deps.AbstractFFTs]]
 deps = ["LinearAlgebra"]
@@ -1387,6 +1501,25 @@ deps = ["Pkg"]
 git-tree-sha1 = "c278dfab760520b8bb7e9511b968bf4ba38b7acc"
 uuid = "6e696c72-6542-2067-7265-42206c756150"
 version = "1.2.3"
+
+[[deps.Accessors]]
+deps = ["CompositionsBase", "ConstructionBase", "Dates", "InverseFunctions", "LinearAlgebra", "MacroTools", "Test"]
+git-tree-sha1 = "cb96992f1bec110ad211b7e410e57ddf7944c16f"
+uuid = "7d9f7c33-5ae7-4f3b-8dc6-eff91059b697"
+version = "0.1.35"
+
+    [deps.Accessors.extensions]
+    AccessorsAxisKeysExt = "AxisKeys"
+    AccessorsIntervalSetsExt = "IntervalSets"
+    AccessorsStaticArraysExt = "StaticArrays"
+    AccessorsStructArraysExt = "StructArrays"
+
+    [deps.Accessors.weakdeps]
+    AxisKeys = "94b1ba4f-4ee9-5380-92f1-94cde586c3c5"
+    IntervalSets = "8197267c-284f-5f27-9208-e0e47529a953"
+    Requires = "ae029012-a4dd-5104-9daa-d747884805df"
+    StaticArrays = "90137ffa-7385-5640-81b9-e52037218182"
+    StructArrays = "09ab397b-f2b6-538f-b94a-2f83cf4a842a"
 
 [[deps.Adapt]]
 deps = ["LinearAlgebra", "Requires"]
@@ -1471,6 +1604,11 @@ git-tree-sha1 = "0c5f81f47bbbcf4aea7b2959135713459170798b"
 uuid = "62783981-4cbd-42fc-bca8-16325de8dc4b"
 version = "0.1.5"
 
+[[deps.BufferedStreams]]
+git-tree-sha1 = "4ae47f9a4b1dc19897d3743ff13685925c5202ec"
+uuid = "e1450e63-4bb3-523b-b2a4-4ffa8c0fd77d"
+version = "1.2.1"
+
 [[deps.Bzip2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Pkg"]
 git-tree-sha1 = "9e2a6b69137e6969bab0152632dcb3bc108c8bdd"
@@ -1487,6 +1625,12 @@ deps = ["CpuId", "IfElse", "PrecompileTools", "Static"]
 git-tree-sha1 = "601f7e7b3d36f18790e2caf83a882d88e9b71ff1"
 uuid = "2a0fbf3d-bb9c-48f3-b0a9-814d99fd7ab9"
 version = "0.2.4"
+
+[[deps.CSV]]
+deps = ["CodecZlib", "Dates", "FilePathsBase", "InlineStrings", "Mmap", "Parsers", "PooledArrays", "PrecompileTools", "SentinelArrays", "Tables", "Unicode", "WeakRefStrings", "WorkerUtilities"]
+git-tree-sha1 = "679e69c611fff422038e9e21e270c4197d49d918"
+uuid = "336ed68f-0bac-5ca0-87d4-7b16caf5d00b"
+version = "0.10.12"
 
 [[deps.Cairo_jll]]
 deps = ["Artifacts", "Bzip2_jll", "CompilerSupportLibraries_jll", "Fontconfig_jll", "FreeType2_jll", "Glib_jll", "JLLWrappers", "LZO_jll", "Libdl", "Pixman_jll", "Pkg", "Xorg_libXext_jll", "Xorg_libXrender_jll", "Zlib_jll", "libpng_jll"]
@@ -1567,6 +1711,11 @@ git-tree-sha1 = "08c8b6831dc00bfea825826be0bc8336fc369860"
 uuid = "861a8166-3701-5b0c-9a16-15d98fcdc6aa"
 version = "1.0.2"
 
+[[deps.CommonSolve]]
+git-tree-sha1 = "0eee5eb66b1cf62cd6ad1b460238e60e4b09400c"
+uuid = "38540f10-b2f7-11e9-35d8-d573e4eb0ff2"
+version = "0.2.4"
+
 [[deps.Compat]]
 deps = ["TOML", "UUIDs"]
 git-tree-sha1 = "75bd5b6fc5089df449b5d35fa501c846c9b6549b"
@@ -1582,6 +1731,15 @@ deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
 version = "1.0.5+0"
 
+[[deps.CompositionsBase]]
+git-tree-sha1 = "802bb88cd69dfd1509f6670416bd4434015693ad"
+uuid = "a33af91c-f02d-484b-be07-31d278c5ca2b"
+version = "0.1.2"
+weakdeps = ["InverseFunctions"]
+
+    [deps.CompositionsBase.extensions]
+    CompositionsBaseInverseFunctionsExt = "InverseFunctions"
+
 [[deps.ComputationalResources]]
 git-tree-sha1 = "52cb3ec90e8a8bea0e62e275ba577ad0f74821f7"
 uuid = "ed09eef8-17a6-5b46-8889-db040fac31e3"
@@ -1592,6 +1750,17 @@ deps = ["Serialization", "Sockets"]
 git-tree-sha1 = "8cfa272e8bdedfa88b6aefbbca7c19f1befac519"
 uuid = "f0e56b4a-5159-44fe-b623-3e5288b988bb"
 version = "2.3.0"
+
+[[deps.ConstructionBase]]
+deps = ["LinearAlgebra"]
+git-tree-sha1 = "c53fc348ca4d40d7b371e71fd52251839080cbc9"
+uuid = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
+version = "1.5.4"
+weakdeps = ["IntervalSets", "StaticArrays"]
+
+    [deps.ConstructionBase.extensions]
+    ConstructionBaseIntervalSetsExt = "IntervalSets"
+    ConstructionBaseStaticArraysExt = "StaticArrays"
 
 [[deps.Contour]]
 git-tree-sha1 = "d05d9e7b7aedff4e5b51a029dced05cfb6125781"
@@ -1754,6 +1923,12 @@ git-tree-sha1 = "c5c28c245101bd59154f649e19b038d15901b5dc"
 uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 version = "1.16.2"
 
+[[deps.FilePathsBase]]
+deps = ["Compat", "Dates", "Mmap", "Printf", "Test", "UUIDs"]
+git-tree-sha1 = "9f00e42f8d99fdde64d40c8ea5d14269a2e2c1aa"
+uuid = "48062228-2e41-5def-b9a4-89aafe57970f"
+version = "0.9.21"
+
 [[deps.FileWatching]]
 uuid = "7b1f6079-737a-58dc-b8bc-7a2ca5c1b5ee"
 
@@ -1856,6 +2031,24 @@ git-tree-sha1 = "53bb909d1151e57e2484c3d1b53e19552b887fb2"
 uuid = "42e2da0e-8278-4e71-bc24-59509adca0fe"
 version = "1.0.2"
 
+[[deps.HDF5]]
+deps = ["Compat", "HDF5_jll", "Libdl", "MPIPreferences", "Mmap", "Preferences", "Printf", "Random", "Requires", "UUIDs"]
+git-tree-sha1 = "26407bd1c60129062cec9da63dc7d08251544d53"
+uuid = "f67ccb44-e63f-5c2f-98bd-6dc0ccc4ba2f"
+version = "0.17.1"
+
+    [deps.HDF5.extensions]
+    MPIExt = "MPI"
+
+    [deps.HDF5.weakdeps]
+    MPI = "da04e1cc-30fd-572f-bb4f-1f8673147195"
+
+[[deps.HDF5_jll]]
+deps = ["Artifacts", "JLLWrappers", "LibCURL_jll", "Libdl", "OpenSSL_jll", "Pkg", "Zlib_jll"]
+git-tree-sha1 = "4cc2bb72df6ff40b055295fdef6d92955f9dede8"
+uuid = "0234f1f7-429e-5d53-9886-15a909be8d59"
+version = "1.12.2+2"
+
 [[deps.HTTP]]
 deps = ["Base64", "CodecZlib", "ConcurrentUtilities", "Dates", "ExceptionUnwrapping", "Logging", "LoggingExtras", "MbedTLS", "NetworkOptions", "OpenSSL", "Random", "SimpleBufferStream", "Sockets", "URIs", "UUIDs"]
 git-tree-sha1 = "abbbb9ec3afd783a7cbd82ef01dcd088ea051398"
@@ -1897,6 +2090,12 @@ deps = ["Tricks"]
 git-tree-sha1 = "7134810b1afce04bbc1045ca1985fbe81ce17653"
 uuid = "ac1192a8-f4b3-4bfe-ba22-af5b92cd3ab2"
 version = "0.9.5"
+
+[[deps.HypothesisTests]]
+deps = ["Combinatorics", "Distributions", "LinearAlgebra", "Printf", "Random", "Rmath", "Roots", "Statistics", "StatsAPI", "StatsBase"]
+git-tree-sha1 = "4b5d5ba51f5f473737ed9de6d8a7aa190ad8c72f"
+uuid = "09f84164-cd44-5f33-b23f-e6b0d136a0d5"
+version = "0.11.0"
 
 [[deps.IOCapture]]
 deps = ["Logging", "Random"]
@@ -2070,6 +2269,12 @@ weakdeps = ["Statistics"]
 
     [deps.IntervalSets.extensions]
     IntervalSetsStatisticsExt = "Statistics"
+
+[[deps.InverseFunctions]]
+deps = ["Test"]
+git-tree-sha1 = "68772f49f54b479fa88ace904f6127f0a3bb2e46"
+uuid = "3587e190-3f89-42d0-90ee-14403ec27112"
+version = "0.1.12"
 
 [[deps.InvertedIndices]]
 git-tree-sha1 = "0dc7b50b8d436461be01300fd8cd45aa0274b038"
@@ -2305,6 +2510,12 @@ version = "0.12.166"
     ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
     SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 
+[[deps.MAT]]
+deps = ["BufferedStreams", "CodecZlib", "HDF5", "SparseArrays"]
+git-tree-sha1 = "ed1cf0a322d78cee07718bed5fd945e2218c35a1"
+uuid = "23992714-dd62-5051-b70f-ba57cb901cac"
+version = "0.10.6"
+
 [[deps.MIMEs]]
 git-tree-sha1 = "65f28ad4b594aebe22157d6fac869786a255b7eb"
 uuid = "6c6e2e6c-3030-632d-7369-2d6c69616d65"
@@ -2315,6 +2526,12 @@ deps = ["Artifacts", "IntelOpenMP_jll", "JLLWrappers", "LazyArtifacts", "Libdl"]
 git-tree-sha1 = "72dc3cf284559eb8f53aa593fe62cb33f83ed0c0"
 uuid = "856f044c-d86e-5d09-b602-aeab76dc8ba7"
 version = "2024.0.0+0"
+
+[[deps.MPIPreferences]]
+deps = ["Libdl", "Preferences"]
+git-tree-sha1 = "8f6af051b9e8ec597fa09d8885ed79fd582f33c9"
+uuid = "3da0fdf6-3ccc-4f1b-acd9-58baa6c99267"
+version = "0.1.10"
 
 [[deps.MacroTools]]
 deps = ["Markdown", "Random"]
@@ -2747,6 +2964,24 @@ git-tree-sha1 = "6ed52fdd3382cf21947b15e8870ac0ddbff736da"
 uuid = "f50d1b31-88e8-58de-be2c-1cc44531875f"
 version = "0.4.0+0"
 
+[[deps.Roots]]
+deps = ["Accessors", "ChainRulesCore", "CommonSolve", "Printf"]
+git-tree-sha1 = "39ebae5b76c8cd5629bec21adfca78b437dac1e6"
+uuid = "f2b01f46-fcfa-551c-844a-d8ac1e96c665"
+version = "2.1.1"
+
+    [deps.Roots.extensions]
+    RootsForwardDiffExt = "ForwardDiff"
+    RootsIntervalRootFindingExt = "IntervalRootFinding"
+    RootsSymPyExt = "SymPy"
+    RootsSymPyPythonCallExt = "SymPyPythonCall"
+
+    [deps.Roots.weakdeps]
+    ForwardDiff = "f6369f11-7733-5829-9624-2563aa707210"
+    IntervalRootFinding = "d2bf35a9-74e0-55ec-b149-d360ff49b807"
+    SymPy = "24249f21-da20-56a4-8eb1-6a02cf4ae2e6"
+    SymPyPythonCall = "bc8888f7-b21e-4b7c-a06a-5d9c9496438c"
+
 [[deps.Rotations]]
 deps = ["LinearAlgebra", "Quaternions", "Random", "StaticArrays"]
 git-tree-sha1 = "792d8fd4ad770b6d517a13ebb8dadfcac79405b8"
@@ -2900,14 +3135,11 @@ deps = ["HypergeometricFunctions", "IrrationalConstants", "LogExpFunctions", "Re
 git-tree-sha1 = "f625d686d5a88bcd2b15cd81f18f98186fdc0c9a"
 uuid = "4c63d2b9-4356-54db-8cca-17b64c39e42c"
 version = "1.3.0"
+weakdeps = ["ChainRulesCore", "InverseFunctions"]
 
     [deps.StatsFuns.extensions]
     StatsFunsChainRulesCoreExt = "ChainRulesCore"
     StatsFunsInverseFunctionsExt = "InverseFunctions"
-
-    [deps.StatsFuns.weakdeps]
-    ChainRulesCore = "d360d2e6-b24c-11e9-a2a3-2a2ae2dbcce4"
-    InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
 
 [[deps.StatsPlots]]
 deps = ["AbstractFFTs", "Clustering", "DataStructures", "Distributions", "Interpolations", "KernelDensity", "LinearAlgebra", "MultivariateStats", "NaNMath", "Observables", "Plots", "RecipesBase", "RecipesPipeline", "Reexport", "StatsBase", "TableOperations", "Tables", "Widgets"]
@@ -3028,14 +3260,11 @@ deps = ["Dates", "LinearAlgebra", "Random"]
 git-tree-sha1 = "3c793be6df9dd77a0cf49d80984ef9ff996948fa"
 uuid = "1986cc42-f94f-5a68-af5c-568840ba703d"
 version = "1.19.0"
+weakdeps = ["ConstructionBase", "InverseFunctions"]
 
     [deps.Unitful.extensions]
     ConstructionBaseUnitfulExt = "ConstructionBase"
     InverseFunctionsUnitfulExt = "InverseFunctions"
-
-    [deps.Unitful.weakdeps]
-    ConstructionBase = "187b0558-2788-49d3-abe0-74a17ed4e7c9"
-    InverseFunctions = "3587e190-3f89-42d0-90ee-14403ec27112"
 
 [[deps.UnitfulLatexify]]
 deps = ["LaTeXStrings", "Latexify", "Unitful"]
@@ -3066,6 +3295,12 @@ git-tree-sha1 = "93f43ab61b16ddfb2fd3bb13b3ce241cafb0e6c9"
 uuid = "2381bf8a-dfd0-557d-9999-79630e7b1b91"
 version = "1.31.0+0"
 
+[[deps.WeakRefStrings]]
+deps = ["DataAPI", "InlineStrings", "Parsers"]
+git-tree-sha1 = "b1be2855ed9ed8eac54e5caff2afcdb442d52c23"
+uuid = "ea10d353-3f73-51f8-a26c-33c1cb351aa5"
+version = "1.4.2"
+
 [[deps.Widgets]]
 deps = ["Colors", "Dates", "Observables", "OrderedCollections"]
 git-tree-sha1 = "fcdae142c1cfc7d89de2d11e08721d0f2f86c98a"
@@ -3077,6 +3312,11 @@ deps = ["LinearAlgebra", "SparseArrays"]
 git-tree-sha1 = "5f24e158cf4cee437052371455fe361f526da062"
 uuid = "efce3f68-66dc-5838-9240-27a6d6f5f9b6"
 version = "0.5.6"
+
+[[deps.WorkerUtilities]]
+git-tree-sha1 = "cd1659ba0d57b71a464a29e64dbc67cfe83d54e7"
+uuid = "76eceee3-57b5-4d4a-8e66-0e911cebbf60"
+version = "1.6.1"
 
 [[deps.XML2_jll]]
 deps = ["Artifacts", "JLLWrappers", "Libdl", "Libiconv_jll", "Zlib_jll"]
@@ -3314,7 +3554,7 @@ version = "1.4.1+1"
 # ╠═861d6ad1-624d-47ae-9f54-dfc434688082
 # ╠═6ceebaf0-241f-44d5-9e4c-16b634548093
 # ╠═fc63e3ff-a1f2-4c3d-829d-6399ec8c7bd5
-# ╟─bac670a4-3cf4-455c-ab78-3c2c208af7c0
+# ╠═bac670a4-3cf4-455c-ab78-3c2c208af7c0
 # ╟─10c8be85-5e1c-470f-b8fd-1ee9fefe7925
 # ╠═7a2d399f-de57-4ade-a1fd-3d41b8281a84
 # ╠═ee9a4c25-6d0b-4565-a54f-3e8221723008
@@ -3343,7 +3583,7 @@ version = "1.4.1+1"
 # ╠═690b2f82-69da-4420-ac87-b25ce10bbfa6
 # ╠═e599ffd3-2ca7-42ee-b08f-7cf980d5a9be
 # ╠═786bb65f-fc11-4e54-9577-58cbae0abe91
-# ╠═e29357ed-2e57-48cb-b788-d3069401096f
+# ╟─e29357ed-2e57-48cb-b788-d3069401096f
 # ╟─759f4a2b-b7a1-49e4-99a6-03eebf4d0573
 # ╠═70d39fb8-58d5-4a32-842d-4067ed205dbb
 # ╠═4b0456cf-29ae-4551-a704-7f5fa906df89
@@ -3383,12 +3623,21 @@ version = "1.4.1+1"
 # ╠═38106489-9095-4f43-90e5-a95b65178d2d
 # ╠═a74f6819-3520-4d7a-a1fd-a5577380048f
 # ╠═dfa53385-d100-4b53-b04c-759b2955b8c2
+# ╠═45d39348-0197-45c1-beaa-d174dfbbfa14
 # ╠═b727ce35-88ee-4d8b-9f9d-f8520fab99ec
 # ╠═07cf16af-9e71-4453-8def-1f7d77ce4b85
+# ╠═b3b4de56-c137-45a9-a89a-f59f79833e77
+# ╠═888b04c3-d581-4781-aecb-b18aa2572611
+# ╠═9ec85354-f16f-41b9-b7e3-931b81b8da02
+# ╠═505b2041-99af-48c1-a350-961f091a0447
+# ╠═628e8901-f0ba-4089-8013-b6c9a7c70468
+# ╠═191422dc-46ae-4193-803f-93a63d1d30a5
+# ╠═08e2f958-c428-4f55-93ff-1ae85222e971
 # ╠═75faefd2-f630-4d8f-87f0-055f88a5b9e9
 # ╠═c18fc658-27be-41a9-8fb6-2bc5b777b483
 # ╠═c06d581e-7e73-4524-be32-fed0518ca5ed
 # ╠═c66cc764-e06d-4851-848c-dde9f9b93a1c
 # ╠═f01553ce-4999-40fb-9316-ba9d96f90bda
+# ╠═b81d75ca-ca30-4eef-996b-443d7b6e7f5b
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
