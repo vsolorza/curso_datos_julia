@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.37
+# v0.19.39
 
 using Markdown
 using InteractiveUtils
@@ -31,11 +31,13 @@ md"""
 begin
 vars=matread("LR5309_PM11_489m_h.mat");
 #vars.keys
-v=vars["v"];u=vars["u"];t=vars["t"];prof=vars["pb"];temp=vars["tem"];
+v=vars["v"];u=vars["u"];t=vars["t"];prof=vars["pb"];
 v18=v[21:end-13,18] #Obtenemos días completos
 v19=v[21:end-13,19]
 v10=v[21:end-13,10]
 u18=u[21:end-13,18]
+u19=u[21:end-13,19]
+u10=u[21:end-13,10]
 end
 
 # ╔═╡ 5afd1e21-88f5-4606-b21e-dfe8fa4d301e
@@ -66,14 +68,38 @@ begin
 vd18=Float64[] # Creamos vectores vacíos para despues meter las velocidades  
 vd19=Float64[] # promedio (diarios)
 vd10=Float64[]
+ud18=Float64[] 
+ud19=Float64[] 
+ud10=Float64[]
 for i=1:24:length(v18)
-vd018=mean(v18[i:i+23]) # Hacemos los promedios diarios
+# Hacemos los promedios diarios
+vd018=mean(v18[i:i+23]) 
 vd019=mean(v19[i:i+23])
 vd010=mean(v10[i:i+23])
-push!(vd18,vd018)		# Concatenamos al vector vacío 
+ud018=mean(u18[i:i+23]) 
+ud019=mean(u19[i:i+23])
+ud010=mean(u10[i:i+23])
+# Concatenamos al vector vacío
+push!(vd18,vd018)		 
 push!(vd19,vd019)
 push!(vd10,vd010)
+push!(ud18,ud018)
+push!(ud19,ud019)
+push!(ud10,ud010)
 end	
+end
+
+# ╔═╡ bfbf5151-7c96-4f67-b499-0a5a2ccf059b
+begin
+# Normalizar los promedios diarios
+vdn18= (vd18 .- mean(vd18))./(std(vd18)) 
+vdn19= (vd19 .- mean(vd19))./(std(vd19))
+vdn10= (vd10 .- mean(vd10))./(std(vd10))
+
+udn18= (ud18 .- mean(ud18))./(std(ud18)) 
+udn19= (ud19 .- mean(ud19))./(std(ud19))
+udn10= (ud10 .- mean(ud10))./(std(ud10))
+
 end
 
 # ╔═╡ 05ff7314-3980-4aa2-8367-fd52d2a82b57
@@ -91,7 +117,7 @@ scatter(vd18[:],vd19[:], title="Correlación V18 y V19 (promedios diarios, m/s)"
 scatter(vd18[:],vd10[:], title="Correlación V18 y V10 (promedios diarios, m/s)", xlabel="V18",ylabel="V10")
 
 # ╔═╡ c3792bad-500e-41d6-948d-49e2ae53a2e7
-Random.seed!(123)
+Random.seed!(0)
 
 # ╔═╡ 93faef0b-8a98-484b-bcec-dd7617537f71
 begin
@@ -117,7 +143,7 @@ begin
 stephist(BSCv18_19, bins=100, normalize=:pdf,
 	title="Boostrap correlación v18-v19 (promedios diarios)",	
 	label="Correlación", xlabel=("Correlaciones"),ylabel=("Densidad normalizada"),
-	xlims=(-0.15,0.15),ylims=(0,11),
+	xlims=(-0.15,0.15),ylims=(0,12),
 	linewidth=2
 )
 plot!([Infcor19,Infcor19],[0,15], color="black",linestyle=:dash,label=("95% C.I."),
@@ -131,16 +157,14 @@ begin
 stephist(BSCv18_10, bins=100, normalize=:pdf,
 	title="Boostrap correlación v18-v10 (promedios diarios)",	
 	label="Correlación", xlabel=("Correlaciones"),ylabel=("Densidad normalizada"),
-	xlims=(-0.15,0.15),ylims=(0,11),
-	linewidth=2
-)
+	xlims=(-0.15,0.15),ylims=(0,12),linewidth=2)
 plot!([Infcor10,Infcor10],[0,15], color="black",linestyle=:dash,label=("95% C.I."),
 	linewidth=2)
 plot!([Supcor10,Supcor10],[0,15], color="black",linestyle=:dash,
 	label=(""),legend=:topright,linewidth=2)
 end
 
-# ╔═╡ 678e61f2-ca36-417b-a6b0-06c49ee82a33
+# ╔═╡ a4212fa5-d50f-4d4e-bb80-73d4cac7752e
 
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -174,7 +198,7 @@ Unitful = "~1.19.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.0"
+julia_version = "1.10.1"
 manifest_format = "2.0"
 project_hash = "95c2449315a0700c0b76a42fa3556dfbaab679ca"
 
@@ -324,7 +348,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.5+1"
+version = "1.1.0+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -961,7 +985,7 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+2"
+version = "0.3.23+4"
 
 [[deps.OpenLibm_jll]]
 deps = ["Artifacts", "Libdl"]
@@ -1729,6 +1753,7 @@ version = "1.4.1+1"
 # ╠═5afd1e21-88f5-4606-b21e-dfe8fa4d301e
 # ╠═edef96c8-6fc3-4a3b-93b7-7382b407c2a8
 # ╠═ec3aafb5-2d8a-48df-b5b5-9dadbfda920a
+# ╠═bfbf5151-7c96-4f67-b499-0a5a2ccf059b
 # ╠═05ff7314-3980-4aa2-8367-fd52d2a82b57
 # ╠═f89880b9-a69b-4c3a-8cd8-a91687f6957e
 # ╠═472e962d-b3ec-4ed6-a4e0-0908819ade59
@@ -1736,6 +1761,6 @@ version = "1.4.1+1"
 # ╠═93faef0b-8a98-484b-bcec-dd7617537f71
 # ╠═89bd50c7-c31b-4a62-a9e1-866e7767a4ec
 # ╠═772d0460-ea11-4ff9-a358-ceb512fbee35
-# ╠═678e61f2-ca36-417b-a6b0-06c49ee82a33
+# ╠═a4212fa5-d50f-4d4e-bb80-73d4cac7752e
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
