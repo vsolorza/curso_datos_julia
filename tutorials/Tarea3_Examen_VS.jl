@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.39
+# v0.19.37
 
 using Markdown
 using InteractiveUtils
@@ -113,6 +113,13 @@ println("La correlación entre el nivel 18 y 19 fue de $cor18_19
 La correlación entre el nivel 18 y 10 fue de $cor18_10")
 end
 
+# ╔═╡ 52b13baf-df60-4d7c-ba45-f7cccfce3e7f
+md"""
+---
+##### Las correlaciones para las velocidades V en el nivel 18 y 19 tienen una mejor correlacion que del 18 y 10, esto por la diferencia entre ambas profundidades, mientras mas cercas es más probable que tienen un comportamiento parecido. 
+---
+"""
+
 # ╔═╡ f89880b9-a69b-4c3a-8cd8-a91687f6957e
 StatsPlots.scatter(vd18[:],vd19[:], title="Correlación V18 y V19 (promedios diarios, m/s)", xlabel="V18",ylabel="V19")
 
@@ -140,6 +147,13 @@ Correlación v18-19: Inferior=$Infcor19, Superior=$Supcor19
 Correlación v18-10: Inferior=$Infcor10, Superior=$Supcor10")	
 end
 
+
+# ╔═╡ e66a507b-9c1f-47d1-bd97-6256e41c51f8
+md"""
+---
+##### Al correlacionar multiples veces (10^4) utilizando el bootstrap las correlaciones disminuyeron considerablemente, pero siguen un comportamiento normal en ambos niveles
+---
+"""
 
 # ╔═╡ 89bd50c7-c31b-4a62-a9e1-866e7767a4ec
 begin
@@ -254,6 +268,13 @@ Eigenvectores=$vec10
 ")
 end
 
+# ╔═╡ 054664c8-93de-4f5f-a237-038fa237299a
+md"""
+---
+##### Con esta metodología, los valores que se encuentran encerrados en el elipse son las velocidades normalizadas de las cuales pertenece nuestro conjunto de datos, con un 95% de confianza.
+---
+"""
+
 # ╔═╡ 16854666-c4ab-4f63-a6b5-1a92de16ab57
 begin
 f1, ax1, l1 = CairoMakie.lines(
@@ -361,24 +382,31 @@ Cor en [u,v,10]= $projcor10
 ")
 end
 
+# ╔═╡ b850c6a2-19b4-4057-91b6-e52ed0180ccd
+md"""
+---
+##### Con los valores de las velocidades projectados en los autovectores, las correlaciones son prácticamente cero, esto debido a que ambos ejes son orgononales en si, por lo tanto son independientes. 
+---
+"""
+
 # ╔═╡ 3ce2513b-a06b-4709-8099-7a2bb559215d
 begin
 StatsPlots.scatter(proj18_1,proj18_2,
-	title="Projeccion de [u,v,18]",
+	title="Proyeccion de [u,v,18]",
 	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor")
 end
 
 # ╔═╡ cd0d61c6-2e61-4861-87c2-089226baf460
 begin
 StatsPlots.scatter(proj19_1,proj19_2,
-	title="Projeccion de [u,v,19]",
+	title="Proyeccion de [u,v,19]",
 	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor")
 end
 
 # ╔═╡ 2578d296-85c0-4038-9d6c-746fc49857e5
 begin
 StatsPlots.scatter(proj10_1,proj10_2,
-	title="Projeccion de [u,v,10]",
+	title="Proyeccion de [u,v,10]",
 	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor")
 end
 
@@ -415,7 +443,7 @@ Unitful = "~1.19.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.1"
+julia_version = "1.10.0"
 manifest_format = "2.0"
 project_hash = "00d3078f6d31a7a7c7c26544c8b7ec7e6aa8640a"
 
@@ -676,7 +704,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.0+0"
+version = "1.0.5+1"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -1626,7 +1654,7 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+4"
+version = "0.3.23+2"
 
 [[deps.OpenEXR]]
 deps = ["Colors", "FileIO", "OpenEXR_jll"]
@@ -2629,15 +2657,18 @@ version = "1.4.1+1"
 # ╠═ec3aafb5-2d8a-48df-b5b5-9dadbfda920a
 # ╠═bfbf5151-7c96-4f67-b499-0a5a2ccf059b
 # ╠═05ff7314-3980-4aa2-8367-fd52d2a82b57
+# ╠═52b13baf-df60-4d7c-ba45-f7cccfce3e7f
 # ╠═f89880b9-a69b-4c3a-8cd8-a91687f6957e
 # ╠═472e962d-b3ec-4ed6-a4e0-0908819ade59
 # ╠═c3792bad-500e-41d6-948d-49e2ae53a2e7
 # ╠═93faef0b-8a98-484b-bcec-dd7617537f71
+# ╟─e66a507b-9c1f-47d1-bd97-6256e41c51f8
 # ╠═89bd50c7-c31b-4a62-a9e1-866e7767a4ec
 # ╠═772d0460-ea11-4ff9-a358-ceb512fbee35
 # ╠═06a54e95-d24d-477f-9cc1-9dcd513140ac
 # ╠═ef367bf5-5532-47dc-a339-1db7e36539f2
 # ╠═40a72350-fafb-4e32-8809-4d2cf68667e1
+# ╟─054664c8-93de-4f5f-a237-038fa237299a
 # ╠═22891e7b-141e-4f32-baa5-cdd72c43ce92
 # ╠═16854666-c4ab-4f63-a6b5-1a92de16ab57
 # ╠═0ce12a30-5267-4c0f-95ce-1e56cb230866
@@ -2648,6 +2679,7 @@ version = "1.4.1+1"
 # ╠═d538e64d-1b0e-48dd-a3b2-97c57b5e50cf
 # ╠═2ad12f80-1a95-4f28-86c5-df6db5f31a21
 # ╠═1c5a5d61-0bee-4158-a2c8-46e2874a9cb3
+# ╟─b850c6a2-19b4-4057-91b6-e52ed0180ccd
 # ╠═3ce2513b-a06b-4709-8099-7a2bb559215d
 # ╠═cd0d61c6-2e61-4861-87c2-089226baf460
 # ╠═2578d296-85c0-4038-9d6c-746fc49857e5
