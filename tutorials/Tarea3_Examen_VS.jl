@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.37
+# v0.19.39
 
 using Markdown
 using InteractiveUtils
@@ -306,10 +306,14 @@ end
 begin 
 #StatsPlots.plot()
 StatsPlots.scatter(udn18,vdn18)
-StatsPlots.quiver!([μu18],[μv18],
-	quiver=(vec18[1,:],vec18[2,:]),
+StatsPlots.quiver!([μu18,μu18],[μv18,μv18],
+	quiver=(vec18[:,:],vec18[:,:]),
 	linewidth=2,color="red")
+#tatsPlots.quiver!([μu18],[μv18],quiver=(vec18[1]*sqrt(λ18[1],vec18[2]*sqrt(λ18[2])), linewidth=2,color="red"))
 end
+
+# ╔═╡ f69d33f8-dbc0-49b0-a4b7-3e5ea01b7f72
+λ18
 
 # ╔═╡ fedde867-fae3-4405-a43b-860e14addc72
 begin
@@ -317,9 +321,9 @@ proj18_1=[udn18 vdn18]*vec18[1,:]
 proj18_2=[udn18 vdn18]*vec18[2,:]
 StatsPlots.plot(proj18_1,linewidth=2, 
 	title="Projección de [u,v] N18 en los eigenvectores", 
-	label="Projección eje mayor")
-StatsPlots.plot!(proj18_2,linewidth=2,
 	label="Projección eje menor")
+StatsPlots.plot!(proj18_2,linewidth=2,
+	label="Projección eje mayor")
 end
 
 # ╔═╡ d538e64d-1b0e-48dd-a3b2-97c57b5e50cf
@@ -328,9 +332,9 @@ proj19_1=[udn19 vdn19]*vec19[1,:]
 proj19_2=[udn19 vdn19]*vec19[2,:]
 StatsPlots.plot(proj19_1,linewidth=2, 
 	title="Projección de [u,v] N19 en los eigenvectores", 
-	label="Projección eje mayor")
-StatsPlots.plot!(proj19_2,linewidth=2,
 	label="Projección eje menor")
+StatsPlots.plot!(proj19_2,linewidth=2,
+	label="Projección eje mayor")
 end
 
 # ╔═╡ 2ad12f80-1a95-4f28-86c5-df6db5f31a21
@@ -339,9 +343,43 @@ proj10_1=[udn10 vdn10]*vec19[1,:]
 proj10_2=[udn10 vdn10]*vec19[2,:]
 StatsPlots.plot(proj10_1,linewidth=2, 
 	title="Projección de [u,v] N10 en los eigenvectores", 
-	label="Projección eje mayor")
-StatsPlots.plot!(proj10_2,linewidth=2,
 	label="Projección eje menor")
+StatsPlots.plot!(proj10_2,linewidth=2,
+	label="Projección eje mayor")
+end
+
+# ╔═╡ 1c5a5d61-0bee-4158-a2c8-46e2874a9cb3
+begin
+projcor18=cor(proj18_1,proj18_2)
+projcor19=cor(proj19_1,proj19_2)
+projcor10=cor(proj10_1,proj10_2)
+
+println("La correlacion entre las projecciones fueron de:
+Cor en [u,v,18]= $projcor18
+Cor en [u,v,19]= $projcor19
+Cor en [u,v,10]= $projcor10
+")
+end
+
+# ╔═╡ 3ce2513b-a06b-4709-8099-7a2bb559215d
+begin
+StatsPlots.scatter(proj18_1,proj18_2,
+	title="Projeccion de [u,v,18]",
+	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor")
+end
+
+# ╔═╡ cd0d61c6-2e61-4861-87c2-089226baf460
+begin
+StatsPlots.scatter(proj19_1,proj19_2,
+	title="Projeccion de [u,v,19]",
+	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor")
+end
+
+# ╔═╡ 2578d296-85c0-4038-9d6c-746fc49857e5
+begin
+StatsPlots.scatter(proj10_1,proj10_2,
+	title="Projeccion de [u,v,10]",
+	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor")
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -377,7 +415,7 @@ Unitful = "~1.19.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.0"
+julia_version = "1.10.1"
 manifest_format = "2.0"
 project_hash = "00d3078f6d31a7a7c7c26544c8b7ec7e6aa8640a"
 
@@ -638,7 +676,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.0.5+1"
+version = "1.1.0+0"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -1588,7 +1626,7 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+2"
+version = "0.3.23+4"
 
 [[deps.OpenEXR]]
 deps = ["Colors", "FileIO", "OpenEXR_jll"]
@@ -2605,8 +2643,13 @@ version = "1.4.1+1"
 # ╠═0ce12a30-5267-4c0f-95ce-1e56cb230866
 # ╠═29c2ae35-5744-4ef8-b4b3-940a172a468b
 # ╠═ecfdaa2f-6415-4cf4-ac29-4679abe0b4c7
+# ╠═f69d33f8-dbc0-49b0-a4b7-3e5ea01b7f72
 # ╠═fedde867-fae3-4405-a43b-860e14addc72
 # ╠═d538e64d-1b0e-48dd-a3b2-97c57b5e50cf
 # ╠═2ad12f80-1a95-4f28-86c5-df6db5f31a21
+# ╠═1c5a5d61-0bee-4158-a2c8-46e2874a9cb3
+# ╠═3ce2513b-a06b-4709-8099-7a2bb559215d
+# ╠═cd0d61c6-2e61-4861-87c2-089226baf460
+# ╠═2578d296-85c0-4038-9d6c-746fc49857e5
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
