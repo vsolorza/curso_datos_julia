@@ -4,9 +4,6 @@
 using Markdown
 using InteractiveUtils
 
-# ╔═╡ fa055827-822f-425b-9a4e-c9d3e9a7288d
-using Distributions, StatsBase, Plots, Random, Dates, StatsPlots, MAT
-
 # ╔═╡ dafae1c8-6f00-4c4f-84d2-fdf70c2cf409
 using LinearAlgebra
 
@@ -119,12 +116,6 @@ md"""
 # ╔═╡ f2280695-c4c3-43e1-a724-d15f9b4d52b1
 md" #### usar Paquete MAT.jl y cargar datos de velocidad de ADCP colocado frente a Puerto Morelos Q. ROO"
 
-# ╔═╡ cbf52225-81be-4c97-b33b-145573960aa8
-# ╠═╡ disabled = true
-#=╠═╡
-using MAT
-  ╠═╡ =#
-
 # ╔═╡ d263ca2d-f9d7-4452-a7f3-baa854a2bad1
 md"La siguiente instrucción carga los datos en un diccionario. Después ponemos a la velocidades u y v en matrices de tiempo contra profundidad"
 
@@ -194,12 +185,6 @@ md"### Chequen Distributions.jl o el help de Pluto para la función fit para aju
 
 # ╔═╡ ee2c66d6-594e-489d-bbfc-25aaf134dd02
 F=fit_mle(Normal,v[:,18] .- mean(v[:,18]))
-
-# ╔═╡ 1eec4bef-ee10-4aa8-9d9e-aec9b09736ab
-# ╠═╡ disabled = true
-#=╠═╡
-using StatsPlots
-  ╠═╡ =#
 
 # ╔═╡ f44f3ac9-c115-4425-ba85-ae72d450d649
 begin
@@ -353,6 +338,23 @@ A18=stack(d7,dims=1)
 
 # ╔═╡ 3fc77a97-2e52-4cbc-8730-2bdcdeeb1549
 scatter(A18[:,1],A18[:,2]);scatter!(zu18,z18)
+
+# ╔═╡ cbf52225-81be-4c97-b33b-145573960aa8
+# ╠═╡ disabled = true
+#=╠═╡
+using MAT
+  ╠═╡ =#
+
+# ╔═╡ fa055827-822f-425b-9a4e-c9d3e9a7288d
+#=╠═╡
+using Distributions, StatsBase, Plots, Random, Dates, StatsPlots, MAT
+  ╠═╡ =#
+
+# ╔═╡ 1eec4bef-ee10-4aa8-9d9e-aec9b09736ab
+# ╠═╡ disabled = true
+#=╠═╡
+using StatsPlots
+  ╠═╡ =#
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
 PLUTO_PROJECT_TOML_CONTENTS = """

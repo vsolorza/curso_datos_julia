@@ -1,9 +1,5 @@
 ### A Pluto.jl notebook ###
-<<<<<<< HEAD
-# v0.19.36
-=======
 # v0.19.37
->>>>>>> refs/remotes/origin/main
 
 using Markdown
 using InteractiveUtils
@@ -19,34 +15,22 @@ md"""
 # ╔═╡ c7c930cf-676a-4dfa-b060-82e13558b864
 begin
 	# Ejercicio 1
-<<<<<<< HEAD
-	x1=(23.5+6.2-0.1)
-=======
 	x1=(23.45+6.2-0.123)
->>>>>>> refs/remotes/origin/main
-	print(x1) # Una cifras significativas decimal
+	print(round(x1, digits=1)) # Una cifras significativas decimal
 end
 
 # ╔═╡ 478db9d4-5439-4296-a577-309352edfa8a
 begin
 	# Ejercicio 2
-<<<<<<< HEAD
-	x2=4.6*2.1/3.8
-=======
 	x2=4.56*2.1/3.789
->>>>>>> refs/remotes/origin/main
-	print(x2) # Una cifra significativa decimal
+	print(round(x2,digits=1)) # Una cifra significativa decimal
 end
 
 # ╔═╡ 2e7f403e-172b-4798-bcbf-0ebad703b44b
 begin
 	# Ejercicio 3
-<<<<<<< HEAD
-	x3=(8.2+3.5)*2.0/4.6
-=======
 	x3=(8.21+3.45)*2.0/4.567
->>>>>>> refs/remotes/origin/main
-	print(x3) # Una cifra significativa decimal
+	print(round(x3, digits=1)) # Una cifra significativa decimal
 end
 
 # ╔═╡ 893fb234-cd71-40f9-a9cf-7d3af06a0362
@@ -59,12 +43,8 @@ end
 # ╔═╡ b202089c-1a01-4c85-ac3c-2ccb41af1d8c
 begin
 	# Ejercicio 5
-<<<<<<< HEAD
-	x5=5.7^3.2
-=======
 	x5=5.67^3.2
->>>>>>> refs/remotes/origin/main
-	print(x5) # Una cifra significativa decimal
+	print(round(x5,digits=1)) # Una cifra significativa decimal
 end
 
 # ╔═╡ bc29bd8d-621d-4c55-a8b0-b87999cce780
@@ -78,7 +58,7 @@ begin
 	a=(3.0 ± 0.2)
 	b=(2.5 ± 0.1)
 	c=a*b
-	print(c) # Una cifra significativa decimal 
+	print(round(c,digits=1)) # Una cifra significativa decimal 
 end
 
 # ╔═╡ fd4d13c1-5b6a-4b4b-ab01-8c43bedfd812
@@ -87,7 +67,7 @@ begin
 	x=(15.4 ± 0.3)
 	y=(8.6 ± 0.2)
 	z=x*y
-	print(z)
+	print(round(z,digits=1))
 end
 
 # ╔═╡ 934ed1fc-6049-4013-b7c1-6f0f253041c2
@@ -97,14 +77,14 @@ begin
 	Q=(4.0 ± 0.2)
 	R=P
 	S=(R/Q)
-	print(S) # Una cifra significativa decimal
+	print(round(S,digits=1)) # Una cifra significativa decimal
 end
 
 # ╔═╡ 0d721bb4-7e9c-4d19-ad33-f6914da6d698
 begin
 	# Ejercicio 9
 	D=(3.2 ± 0.1)*(5.0 ± 0.2) + (2.0 ± 0.1)
-	print(D)  # Una cifra significativa decimal
+	print(round(D,digits=1))  # Una cifra significativa decimal
 end
 
 # ╔═╡ 9c90cc86-918f-48c0-ba58-695e7fdea1e8
@@ -120,7 +100,7 @@ begin
 	ΔΔM=sqrt(δM₁^2 + δM₂^2)
 
 	# Determinar Significancia
-	print("Valor de ΔM es: ", ΔM, "; Valor de k*ΔΔM: ", 1.96*ΔΔM)
+	print("Valor de ΔM es: ", ΔM, "; Valor de k*ΔΔM: ", round(1.96*ΔΔM,digits=1))
 end
 
 # ╔═╡ 1060efa2-eae4-4ce3-afde-3f6357ab51ca
@@ -134,79 +114,50 @@ md"""
 # ╔═╡ a3d39171-b1b7-4801-9eea-75e9852aa92e
 begin 
 	# Ejercicio 11
-<<<<<<< HEAD
-	x11=(3.5+1.2)*4.7
-=======
 	x11=(3.45+1.2)*4.67
->>>>>>> refs/remotes/origin/main
-	print(x11) # Una cifra significativa decimal
+	print(round(x11,digits=1)) # Una cifra significativa decimal
 end
 
 # ╔═╡ 14dd062d-9157-4474-aa05-a8b759f7a39e
 begin 
 	# Ejercicio 12
-<<<<<<< HEAD
-	x12=(9.0/(2.3-0.1))
-=======
 	x12=(8.96/(2.3-0.123))
->>>>>>> refs/remotes/origin/main
-	print(x12) # Una cifra significativa decimal
+	print(round(x12,digits=1)) # Una cifra significativa decimal
 end
 
 # ╔═╡ 5d0f8e11-5133-4cc5-8446-20cf36927aba
 begin
 	# Ejerc. 13
-<<<<<<< HEAD
-	x13=560.0 + 12.3
-=======
 	x13=560.0 + 12.34
->>>>>>> refs/remotes/origin/main
-	print(x13, " m")
+	print(round(x13,digits=1), " m")
 end
 
 # ╔═╡ e2a69313-96d7-4af1-97a8-c8e6ea32c038
 begin 
 	# Ejerc. 14
-<<<<<<< HEAD
-	x14=(5.7*2.1)^3.4
-=======
 	x14=(5.67*2.1)^3.4
->>>>>>> refs/remotes/origin/main
-	print(x14) # Una cifra significativa decimal
+	print(round(x14,digits=1)) # Una cifra significativa decimal
 end
 
 # ╔═╡ a6a66f02-a82b-48ce-a331-050bb32e10aa
 begin 
 	# Ejerc. 15
-<<<<<<< HEAD
-	x15= 272.2+32.0
-=======
 	x15= 272.15+32.0
->>>>>>> refs/remotes/origin/main
-	print(x15, " K")
+	print(round(x15,digits=1), " K")
 end
 
 # ╔═╡ d4605171-75cb-46ee-be45-82f7df5cc506
 begin
 	# Ejerc. 16
-<<<<<<< HEAD
-	x16= (12.2+0.5+3.1)
-=======
 	x16= (14.2+0.456+3.1)
->>>>>>> refs/remotes/origin/main
-	print(x16) # Una cifra significativa decimal
+	print(round(x16,digits=1)) # Una cifra significativa decimal
 end
 
 # ╔═╡ 757fe7fb-567b-40a4-b983-b730b75a7267
 begin
 	# Ejerc. 17
-<<<<<<< HEAD
-	x17= (7*10^4)
-	print(x17)
-=======
 	x17= (6.789*10^4)
 	print(x17) # cinco c.s.
->>>>>>> refs/remotes/origin/main
 end
 
 # ╔═╡ b0f3e747-9d28-4982-8ccb-d62365617224
@@ -220,7 +171,7 @@ end
 begin 
 	# Ejerc. 19
 	x19=2.345*100
-	print(x19) # una cifra significativa decimal
+	print(round(x19,digits=1)) # una cifra significativa decimal
 end
 
 # ╔═╡ d977c8b0-1e77-4acc-8617-2d7d8ff4f9ed
@@ -241,16 +192,10 @@ md"""
 begin
 	# Ejerc. 21
 	A1=3.0; δA1=0.2
-<<<<<<< HEAD
-	B1=2.5; δB1=0.1
-	Er1= sqrt((δA1/A1)^2 + (δB1/B1)^2) 
-	print("El error relativo del producto de A y B es ", Er1*100, "%")
-=======
 	B1=2.5; δB1=0.05
 	C1=A1*B1;
 	Er1= sqrt((δA1/A1)^2 + (δB1/B1)^2) 
-	print("A×B= ",C1,", con un error relativo de ", Er1)
->>>>>>> refs/remotes/origin/main
+	print("A×B= ",C1,", con un error relativo de ", round(Er1,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -259,14 +204,9 @@ begin
 	# Ejerc. 22
 	X2=5.0; δX2=0.3
 	Y2=2.2; δY2=0.1
-<<<<<<< HEAD
-	Er2= sqrt((δX2/X2)^2 + 2*(δY2/Y2)^2) 
-	print("El error relativo del producto de X y Y² es ", Er2*100, "%")
-=======
 	Z2=X2*Y2^2
 	Er2= sqrt((δX2/X2)^2 + 2*(δY2/Y2)^2) 
-	print("X×Y²= ", Z2, ", con un error relativo de ", Er2)
->>>>>>> refs/remotes/origin/main
+	print("X×Y²= ", round(Z2,digits=1), ", con un error relativo de ", round(Er2,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -275,14 +215,9 @@ begin
 	# Ejerc. 23
 	P2=4.8; δP2=0.4
 	Q2=3.0; δQ2=0.2
-<<<<<<< HEAD
-	Er3= sqrt(2*(δP2/P2)^2 + (δQ2/Q2)^2) 
-	print("El error relativo del producto de P² y Q es ", Er3*100, "%")
-=======
 	R2=P2^2 * Q2
 	Er3= sqrt(2*(δP2/P2)^2 + (δQ2/Q2)^2) 
-	print("P²×Q= ", R2,", con un E.R. de ", Er3)
->>>>>>> refs/remotes/origin/main
+	print("P²×Q= ", round(R2,digits=1),", con un E.R. de ", round(Er3,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -292,14 +227,9 @@ begin
 	M2=1.5; δM2=0.1
 	N2=2.0; δN2=0.3
 	O2=3.2; δO2=0.2
-<<<<<<< HEAD
-	Er4= sqrt((δM2/M2)^2 + (δN2/N2)^2 + (δO2/O2)^2) 
-	print("El error relativo del producto de P, Q y O es ", Er4*100, "%")
-=======
 	PP2=M2*N2*O2
 	Er4= sqrt((δM2/M2)^2 + (δN2/N2)^2 + (δO2/O2)^2) 
-	print("P×Q×O= ", PP2,", con un E.R. de ", Er4)
->>>>>>> refs/remotes/origin/main
+	print("P×Q×O= ", round(PP2,digits=1),", con un E.R. de ", round(Er4,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -307,11 +237,7 @@ end
 begin
 	# Ejerc. 25
 	Er5= sqrt((0.5/7.0)^2 + (0.1/2.4)^2) 
-<<<<<<< HEAD
-	print("El error relativo del producto de (7.0 ± 0.5) por (2.4 ± 0.1) es ", Er5*100, "%")
-=======
-	print("(7.0 ± 0.5)×(2.4 ± 0.1)= ",(7.0*2.4),", con un E.R. de ", Er5)
->>>>>>> refs/remotes/origin/main
+	print("(7.0 ± 0.5)×(2.4 ± 0.1)= ",(7.0*2.4),", con un E.R. de ", round(Er5,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -325,14 +251,9 @@ begin
 	# Ejerc. 26
 	A3=10.0; δA3=0.5
 	B3=2.5; δB3=0.1
-<<<<<<< HEAD
-	Er6= sqrt((δA3/A3)^2 + (δB3/B3)^2) 
-	print("El error relativo del cociente entre A y B es ", Er6*100, "%")
-=======
 	C3=A3/B3
 	Er6= sqrt((δA3/A3)^2 + (δB3/B3)^2) 
-	print("A/B= ", C3, ", con un E.R. de ", Er6)
->>>>>>> refs/remotes/origin/main
+	print("A/B= ", C3, ", con un E.R. de ", round(Er6,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -341,14 +262,9 @@ begin
 	# Ejerc. 27
 	X3=8.0; δX3=0.3
 	Y3=2.2; δY3=0.05
-<<<<<<< HEAD
-	Er7= sqrt((δX3/X3)^2 + 2*(δY3/Y3)^2) 
-	print("El error relativo del cociente entre X y Y² es ", Er7*100, "%")
-=======
 	Z3=X3/(Y3)^2
 	Er7= sqrt((δX3/X3)^2 + 2*(δY3/Y3)^2) 
-	print("X/Y²= ",Z3,", con un E.R. de ", Er7)
->>>>>>> refs/remotes/origin/main
+	print("X/Y²= ",round(Z3,digits=1),", con un E.R. de ", round(Er7,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -357,14 +273,9 @@ begin
 	# Ejerc. 28
 	P3=6.0; δP3=0.3
 	Q3=2.5; δQ3=0.2
-<<<<<<< HEAD
-	Er8= sqrt(2*(δP3/P3)^2 + (δQ3/Q3)^2) 
-	print("El error relativo del cociente entre P³ y Q es ", Er8*100, "%")
-=======
 	R3=(P3)^2 / Q3
 	Er8= sqrt(2*(δP3/P3)^2 + (δQ3/Q3)^2) 
-	print("P²/Q= ",R3, ", con un E.R. de ", Er8)
->>>>>>> refs/remotes/origin/main
+	print("P²/Q= ",R3, ", con un E.R. de ", round(Er8,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -374,15 +285,9 @@ begin
 	M3=10.0; δM3=0.5
 	N3=2.5; δN3=0.1
 	O3=2.5; δO3=0.1
-<<<<<<< HEAD
-	
-	Er9= sqrt((δM3/M3)^2 + (δN3/N3)^2 + (δO3/O3)^2) 
-	print("El error relativo del cociente entre A y B es ", Er9*100, "%")
-=======
 	PP3=(M3*N3)/O3
 	Er9= sqrt((δM3/M3)^2 + (δN3/N3)^2 + (δO3/O3)^2) 
-	print("(M×N)/O= ",PP3,", con un E.R. de ", Er9)
->>>>>>> refs/remotes/origin/main
+	print("(M×N)/O= ",PP3,", con un E.R. de ", round(Er9,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -390,11 +295,7 @@ end
 begin
 	# Ejerc. 30
 	Er10= sqrt((0.4/5.0)^2 + (0.1/1.2)^2) 
-<<<<<<< HEAD
-	print("El error relativo del cociente de (5.0 ± 0.4) por (1.2 ± 0.1) es ", Er10*100, "%")
-=======
-	print("(5.0 ± 0.4)/(1.2 ± 0.1)= ",(5/1.2),", con un E.R. de ", Er10)
->>>>>>> refs/remotes/origin/main
+	print("(5.0 ± 0.4)/(1.2 ± 0.1)= ",round(5/1.2,digits=1),", con un E.R. de ", round(Er10,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -402,11 +303,7 @@ end
 begin
 	# Ejerc. 31
 	Er11= sqrt((0.4/15.6)^2) 
-<<<<<<< HEAD
-	print("El error relativo de (15.6 ± 0.4) es ", Er11*100, "%")
-=======
-	print("El error relativo de (15.6 ± 0.4) es ", Er11)
->>>>>>> refs/remotes/origin/main
+	print("El error relativo de (15.6 ± 0.4) es ", round(Er11,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -414,23 +311,15 @@ end
 begin
 	# Ejerc. 32
 	Er12= sqrt((0.5/18.2)^2) 
-	print("El error relativo de (18.2 ± 0.5) cm es ", Er12*100, "%")
-<<<<<<< HEAD
-	# una cifra significativa decimal
-=======
+	print("El error relativo de (18.2 ± 0.5) cm es ", round(Er12*100,digits=0), "%")
 	# una cifra significativa (sin decimales)
->>>>>>> refs/remotes/origin/main
 end
 
 # ╔═╡ 49138cc3-3d55-4e50-ac2a-d8c4ae9f344a
 begin
 	# Ejerc. 33
 	Er13= sqrt((0.7/25.3)^2) 
-<<<<<<< HEAD
-	print("El error relativo de (25.3 ± 0.7) g es ", Er13*100, "%")
-=======
-	print("El error relativo de (25.3 ± 0.7) g es ", Er13)
->>>>>>> refs/remotes/origin/main
+	print("El error relativo de (25.3 ± 0.7) g es ", round(Er13,digits=1))
 	# una cifra significativa decimal
 end
 
@@ -438,22 +327,15 @@ end
 begin
 	# Ejerc. 34
 	Er14= sqrt((1.5/30.0)^2) 
-	print("El error relativo de (30.0 ± 1.5) m/s es ", Er14*100, "%")
-<<<<<<< HEAD
-	# una cifra significativa decimal
-=======
+	print("El error relativo de (30.0 ± 1.5) m/s es ", round(Er14*100,digits=0), "%")
 	# una cifra significativa (sin decimales)
->>>>>>> refs/remotes/origin/main
 end
 
 # ╔═╡ 46024f64-4508-4a0b-8e25-f7e0d8627d8a
 begin
 	# Ejerc. 35
 	Er15= sqrt((0.2/10.0)^2) 
-	print("El error relativo de (10.0 ± 0.2) es ", Er15*100, "%")
-<<<<<<< HEAD
-	# una cifra significativa decimal
-=======
+	print("El error relativo de (10.0 ± 0.2) es ", round(Er15*100,digits=0), "%")
 	# una cifra significativa (sin decimales)
 end
 
@@ -475,7 +357,7 @@ begin
 	=#
 	f1= (3)^2 + 2(1.5)
 	δf1= sqrt((2(3.0))*(0.1/3.0)^2 + (1.5)*(0.2/1.5)^2) # Relativo (δf1/f1)
-	print("El resultado de la función evaluada es ",f1, " con un E.R. de ", δf1)
+	print("El resultado de la función evaluada es ",f1, " con un E.R. de ", round(δf1,digits=1))
 	# Una C.S. decimal
 end
 
@@ -497,7 +379,7 @@ begin
 	g1= sqrt(4.0^2 + 2.5^2)
 	∂g∂a= (4.0)/(sqrt(4.0^2 + 2.5^2)) ; ∂g∂b= (2.5)/(sqrt(4.0^2 + 2.5^2))
 	δg1= sqrt((∂g∂a*(0.3/4.0)^2 + ∂g∂b*(0.1/2.5)^2)) # Relativo (δg1/g1)
-	print("El resultado de la función evaluada es ",g1, " con un E.R. de ", δg1)
+	print("El resultado de la función evaluada es ",round(g1,digits=1), " con un E.R. de ", round(δg1,digits=1))
 	# Una C.S. decimal
 end
 
@@ -520,7 +402,7 @@ begin
 	∂h∂u= 1.0/2.0 ; ∂h∂v= (8.0)/(2.0^2) # *Al evaluarlo en realidad es negativo, por lo que obtenemos un número complejo... 
 	
 	δh1= sqrt((∂h∂u*(0.4/8.0)^2 + ∂h∂v*(0.1/2.0)^2)) # Relativo (δh1/h1)
-	print("El resultado de la función evaluada es ",h1, " con un E.R. de ", δh1," *Leer comentario")
+	print("El resultado de la función evaluada es ",h1, " con un E.R. de ", round(δh1,digits=1)," *Leer comentario")
 	# Una C.S. decimal
 end
 
@@ -544,7 +426,7 @@ begin
 	∂k∂m= 2.0*5.0^(2.0-1) ; ∂k∂n= log(5.0)*(5.0^2.0)
 	
 	δk1= sqrt((∂k∂m*(0.2/5.0)^2 + ∂k∂n*(0.1/2.0)^2)) # Relativo (δk1/k1)
-	print("El resultado de la función evaluada es ",k1, " con un E.R. de ", δk1)
+	print("El resultado de la función evaluada es ",k1, " con un E.R. de ", round(δk1,digits=1))
 	# Una C.S. decimal
 end
 
@@ -567,9 +449,8 @@ begin
 	∂p∂x= exp(0.8) ; ∂p∂y= (2.5)*(0.8)*exp(0.8)
 	
 	δp1= sqrt((∂p∂x*(0.1/2.5)^2 + ∂p∂y*(0.05/0.8)^2)) # Relativo (δp1/p1)
-	print("El resultado de la función evaluada es ",p1, " con un E.R. de ", δp1)
+	print("El resultado de la función evaluada es ",round(p1,digits=1), " con un E.R. de ", round(δp1,digits=1))
 	# Una C.S. decimal
->>>>>>> refs/remotes/origin/main
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
@@ -709,8 +590,6 @@ version = "5.8.0+1"
 # ╠═49138cc3-3d55-4e50-ac2a-d8c4ae9f344a
 # ╠═557a3ae0-d712-4e99-897e-61281a381ae9
 # ╠═46024f64-4508-4a0b-8e25-f7e0d8627d8a
-<<<<<<< HEAD
-=======
 # ╟─297d673a-522e-4169-86d4-dd2c1c6b4320
 # ╠═0e5b3ea8-2a8b-47a8-8e77-bba583a4b624
 # ╟─2ae99d47-8d46-47e2-a7fc-c32bde717e9a
@@ -721,6 +600,5 @@ version = "5.8.0+1"
 # ╠═5e572d3a-565d-4e92-a933-61ee24f8369a
 # ╟─2fb5ecef-dbbd-43de-ba24-659be51dabc6
 # ╠═d0e41b8a-e548-4379-9400-19f030fbeaf5
->>>>>>> refs/remotes/origin/main
 # ╟─00000000-0000-0000-0000-000000000001
 # ╟─00000000-0000-0000-0000-000000000002
