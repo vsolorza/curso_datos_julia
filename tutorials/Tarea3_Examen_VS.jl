@@ -1,5 +1,5 @@
 ### A Pluto.jl notebook ###
-# v0.19.39
+# v0.19.37
 
 using Markdown
 using InteractiveUtils
@@ -107,8 +107,8 @@ end
 
 # ╔═╡ 05ff7314-3980-4aa2-8367-fd52d2a82b57
 begin
-cor18_19=cor(vd18,vd19)
-cor18_10=cor(vd18,vd10)
+cor18_19=round(cor(vd18,vd19),digits=5)
+cor18_10=round(cor(vd18,vd10),digits=5)
 println("La correlación entre el nivel 18 y 19 fue de $cor18_19
 La correlación entre el nivel 18 y 10 fue de $cor18_10")
 end
@@ -124,24 +124,69 @@ md"""
 StatsPlots.scatter(vd18[:],vd19[:], title="Correlación V18 y V19 (promedios diarios, m/s)", xlabel="V18",ylabel="V19")
 
 # ╔═╡ 472e962d-b3ec-4ed6-a4e0-0908819ade59
-StatsPlots.scatter(vd18[:],vd10[:], title="Correlación V18 y V10 (promedios diarios, m/s)", xlabel="V18",ylabel="V10")
+StatsPlots.scatter(vd18[:],vd10[:], title="Correlación V18 y V10 (promedios diarios, m/s)", xlabel="V18",ylabel="V10",aspect_ratio=:equal)
+
+# ╔═╡ 18efe1be-fc6e-4929-9c59-22afa3199357
+md"""
+---
+#### Bootstrap para correlaciones de V18-V19 y V18-V10
+---
+"""
 
 # ╔═╡ c3792bad-500e-41d6-948d-49e2ae53a2e7
 Random.seed!(0)
 
-# ╔═╡ 93faef0b-8a98-484b-bcec-dd7617537f71
-begin
+# ╔═╡ e886f6f5-33d3-499e-8fc5-b6286ee2b758
+begin 
 n,N =length(vd18), 10^4
 alfa=0.05
+
+# Caso V18-V19
+    BSCv18_19 = Float64[]
+    for _ in 1:N
+        # Resample with replacement
+        indices = rand(1:n, n)
+        resampled_data1 = vd18[indices]
+        resampled_data2 = vd19[indices]
+        
+        # Calculate correlation coefficient from resampled data
+        correlation = cor(resampled_data1, resampled_data2)
+        push!(BSCv18_19, correlation)
+    end
+    # Sort bootstrap correlations
+    sort!(BSCv18_19)
 	
-BSCv18_19=[cor(vd18,rand(vd19,n)) for i in 1:N]
-Infcor19=quantile(BSCv18_19,alfa/2)
-Supcor19=quantile(BSCv18_19,1 - alfa/2)
+    # Calculate confidence intervals
+    InfID19 = round(Int, (alfa / 2) * N)
+    SupID19 = round(Int, (1 - alfa / 2) * N)
+    Infcor19 = round.(BSCv18_19[InfID19],digits=5)
+    Supcor19 = round.(BSCv18_19[SupID19],digits=5)
 
-BSCv18_10=[cor(vd18,rand(vd10,n)) for i in 1:N]
-Infcor10=quantile(BSCv18_10,alfa/2)
-Supcor10=quantile(BSCv18_10,1 - alfa/2)
+# Caso V18-V10
+    BSCv18_10 = Float64[]
+    for _ in 1:N
+        # Resample with replacement
+        indices = rand(1:n, n)
+        resampled_data1 = vd18[indices]
+        resampled_data2 = vd10[indices]
+        
+        # Calculate correlation coefficient from resampled data
+        correlation = cor(resampled_data1, resampled_data2)
+        push!(BSCv18_10, correlation)
+    end
+    # Sort bootstrap correlations
+    sort!(BSCv18_10)
+	
+    # Calculate confidence intervals
+    InfID10 = round(Int, (alfa / 2) * N)
+    SupID10 = round(Int, (1 - alfa / 2) * N)
+    Infcor10 = round.(BSCv18_10[InfID10],digits=5)
+    Supcor10 = round.(BSCv18_10[SupID10],digits=5)
 
+end
+
+# ╔═╡ 93faef0b-8a98-484b-bcec-dd7617537f71
+begin
 println("Limites de confianza del Bootstrap con un 95% de confianza:
 Correlación v18-19: Inferior=$Infcor19, Superior=$Supcor19
 Correlación v18-10: Inferior=$Infcor10, Superior=$Supcor10")	
@@ -151,7 +196,7 @@ end
 # ╔═╡ e66a507b-9c1f-47d1-bd97-6256e41c51f8
 md"""
 ---
-##### Al correlacionar multiples veces (10^4) utilizando el bootstrap las correlaciones disminuyeron considerablemente, pero siguen un comportamiento normal en ambos niveles
+##### Al correlacionar multiples veces (10^4) utilizando el bootstrap establecemos los límites de confianza con un 95% de confianza, también coincide la mayor densidad normalizada con la correlación original.
 ---
 """
 
@@ -160,12 +205,13 @@ begin
 StatsPlots.stephist(BSCv18_19, bins=100, normalize=:pdf,
 	title="Boostrap correlación v18-v19 (promedios diarios)",	
 	label="Correlación", xlabel=("Correlaciones"),ylabel=("Densidad normalizada"),
-	xlims=(-0.15,0.15),ylims=(0,12),
-	linewidth=2
+	ylims=(0,300),linewidth=2
 )
-StatsPlots.plot!([Infcor19,Infcor19],[0,15], color="black",linestyle=:dash,label=("95% C.I."),
+StatsPlots.plot!([cor18_19,cor18_19],[0,300], color="red",linestyle=:dash,
+	label=("Correlacion Original"),legend=:topright,linewidth=2)
+StatsPlots.plot!([Infcor19,Infcor19],[0,300], color="black",linestyle=:dash,label=("95% C.I."),
 	linewidth=2)
-StatsPlots.plot!([Supcor19,Supcor19],[0,15], color="black",linestyle=:dash,
+StatsPlots.plot!([Supcor19,Supcor19],[0,300], color="black",linestyle=:dash,
 	label=(""),legend=:topright,linewidth=2)
 end
 
@@ -174,10 +220,13 @@ begin
 StatsPlots.stephist(BSCv18_10, bins=100, normalize=:pdf,
 	title="Boostrap correlación v18-v10 (promedios diarios)",	
 	label="Correlación", xlabel=("Correlaciones"),ylabel=("Densidad normalizada"),
-	xlims=(-0.15,0.15),ylims=(0,12),linewidth=2)
-StatsPlots.plot!([Infcor10,Infcor10],[0,15], color="black",linestyle=:dash,label=("95% C.I."),
+	ylims=(0,15),linewidth=2)
+
+StatsPlots.plot!([cor18_10,cor18_10],[0,20], color="red",linestyle=:dash,
+	label=("Correlacion Original"),legend=:topright,linewidth=2)
+StatsPlots.plot!([Infcor10,Infcor10],[0,20], color="black",linestyle=:dash,label=("95% C.I."),
 	linewidth=2)
-StatsPlots.plot!([Supcor10,Supcor10],[0,15], color="black",linestyle=:dash,
+StatsPlots.plot!([Supcor10,Supcor10],[0,20], color="black",linestyle=:dash,
 	label=(""),legend=:topright,linewidth=2)
 end
 
@@ -252,6 +301,8 @@ begin
 λ19,vec19=eigen(C19)
 λ10,vec10=eigen(C10)
 
+λ18=round.(λ18,digits=5);λ19=round.(λ19,digits=5);λ10=round.(λ10,digits=5)
+vec18=round.(vec18,digits=5);vec19=round.(vec19,digits=5);vec10=round.(vec10,digits=5)
 println("Los valores de los eigenvalores y eigenvectores son: 
 
 C18: 
@@ -281,7 +332,7 @@ f1, ax1, l1 = CairoMakie.lines(
     getellipsepoints([μu18,μv18],C18)...;
     label="95% HPD",
     linewidth=2,
-    axis=(; title="U vs V Promediados diariamente y normalizados [Nivel 18]", xlabel=L"\theta_1", ylabel=L"\theta_2"),
+    axis=(; title="U vs V Promediados diariamente y normalizados [Nivel 18]", xlabel=L"\theta_1", ylabel=L"\theta_2",aspect=1),
 )
 axislegend(ax1)
 	for i in 1:651
@@ -297,7 +348,7 @@ f2, ax2, l2 = CairoMakie.lines(
     getellipsepoints([μu19,μv19],C19)...;
     label="95% HPD",
     linewidth=2,
-    axis=(; title="U vs V Promediados diariamente y normalizados [Nivel 19]",xlabel=L"\theta_1", ylabel=L"\theta_2"),
+    axis=(; title="U vs V Promediados diariamente y normalizados [Nivel 19]",xlabel=L"\theta_1", ylabel=L"\theta_2",aspect=1),
 )
 axislegend(ax2)
 	for i in 1:651
@@ -313,7 +364,7 @@ f3, ax3, l3 = CairoMakie.lines(
     getellipsepoints([μu10,μv10],C10)...;
     label="95% HPD",
     linewidth=2,
-    axis=(; title="U vs V Promediados diariamente y normalizados [Nivel 10]",xlabel=L"\theta_1", ylabel=L"\theta_2"),
+    axis=(; title="U vs V Promediados diariamente y normalizados [Nivel 10]",xlabel=L"\theta_1", ylabel=L"\theta_2",aspect=1),
 )
 axislegend(ax3)
 	for i in 1:651
@@ -326,7 +377,7 @@ end
 # ╔═╡ ecfdaa2f-6415-4cf4-ac29-4679abe0b4c7
 begin 
 #StatsPlots.plot()
-StatsPlots.scatter(udn18,vdn18)
+StatsPlots.scatter(udn18,vdn18,aspect_ratio=:equal)
 StatsPlots.quiver!([μu18,μu18],[μv18,μv18],
 	quiver=(vec18[:,:],vec18[:,:]),
 	linewidth=2,color="red")
@@ -371,9 +422,9 @@ end
 
 # ╔═╡ 1c5a5d61-0bee-4158-a2c8-46e2874a9cb3
 begin
-projcor18=cor(proj18_1,proj18_2)
-projcor19=cor(proj19_1,proj19_2)
-projcor10=cor(proj10_1,proj10_2)
+projcor18=round(cor(proj18_1,proj18_2),digits=5)
+projcor19=round(cor(proj19_1,proj19_2),digits=5)
+projcor10=round(cor(proj10_1,proj10_2),digits=5)
 
 println("La correlacion entre las projecciones fueron de:
 Cor en [u,v,18]= $projcor18
@@ -443,7 +494,7 @@ Unitful = "~1.19.0"
 PLUTO_MANIFEST_TOML_CONTENTS = """
 # This file is machine-generated - editing it directly is not advised
 
-julia_version = "1.10.1"
+julia_version = "1.10.0"
 manifest_format = "2.0"
 project_hash = "00d3078f6d31a7a7c7c26544c8b7ec7e6aa8640a"
 
@@ -704,7 +755,7 @@ weakdeps = ["Dates", "LinearAlgebra"]
 [[deps.CompilerSupportLibraries_jll]]
 deps = ["Artifacts", "Libdl"]
 uuid = "e66e0078-7015-5450-92f7-15fbd957f2ae"
-version = "1.1.0+0"
+version = "1.0.5+1"
 
 [[deps.ConcurrentUtilities]]
 deps = ["Serialization", "Sockets"]
@@ -1654,7 +1705,7 @@ version = "1.3.5+1"
 [[deps.OpenBLAS_jll]]
 deps = ["Artifacts", "CompilerSupportLibraries_jll", "Libdl"]
 uuid = "4536629a-c528-5b80-bd46-f80d51c5b363"
-version = "0.3.23+4"
+version = "0.3.23+2"
 
 [[deps.OpenEXR]]
 deps = ["Colors", "FileIO", "OpenEXR_jll"]
@@ -2660,7 +2711,9 @@ version = "1.4.1+1"
 # ╠═52b13baf-df60-4d7c-ba45-f7cccfce3e7f
 # ╠═f89880b9-a69b-4c3a-8cd8-a91687f6957e
 # ╠═472e962d-b3ec-4ed6-a4e0-0908819ade59
+# ╟─18efe1be-fc6e-4929-9c59-22afa3199357
 # ╠═c3792bad-500e-41d6-948d-49e2ae53a2e7
+# ╠═e886f6f5-33d3-499e-8fc5-b6286ee2b758
 # ╠═93faef0b-8a98-484b-bcec-dd7617537f71
 # ╟─e66a507b-9c1f-47d1-bd97-6256e41c51f8
 # ╠═89bd50c7-c31b-4a62-a9e1-866e7767a4ec
