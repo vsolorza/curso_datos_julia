@@ -211,7 +211,7 @@ md"""
 md"### Chequen Distributions.jl o el help de Pluto para la función fit para ajustar una distribución a los datos, tomen el caso de los que se grafican y comparen sus histogramas con el ajuste"
 
 # ╔═╡ 3a9c308e-7fe5-4e99-b69e-09faee0cb9f8
-scatter(u[:,18] .-mean(u[:,18]),v[:,18] .- mean(v[:,18]))
+scatter(u[:,18] .-mean(u[:,18]),v[:,18] .- mean(v[:,18]),aspect_ratio=:equal)
 
 # ╔═╡ c97a07cc-c28b-491b-bcc1-b522171038ad
 md"""

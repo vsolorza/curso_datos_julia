@@ -121,7 +121,7 @@ md"""
 """
 
 # ╔═╡ f89880b9-a69b-4c3a-8cd8-a91687f6957e
-StatsPlots.scatter(vd18[:],vd19[:], title="Correlación V18 y V19 (promedios diarios, m/s)", xlabel="V18",ylabel="V19")
+StatsPlots.scatter(vd18[:],vd19[:], title="Correlación V18 y V19 (promedios diarios, m/s)", xlabel="V18",ylabel="V19",aspect_ratio=:equal)
 
 # ╔═╡ 472e962d-b3ec-4ed6-a4e0-0908819ade59
 StatsPlots.scatter(vd18[:],vd10[:], title="Correlación V18 y V10 (promedios diarios, m/s)", xlabel="V18",ylabel="V10",aspect_ratio=:equal)
@@ -444,21 +444,21 @@ md"""
 begin
 StatsPlots.scatter(proj18_1,proj18_2,
 	title="Proyeccion de [u,v,18]",
-	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor")
+	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor", aspect_ratio=:equal)
 end
 
 # ╔═╡ cd0d61c6-2e61-4861-87c2-089226baf460
 begin
 StatsPlots.scatter(proj19_1,proj19_2,
 	title="Proyeccion de [u,v,19]",
-	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor")
+	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor",aspect_ratio=:equal)
 end
 
 # ╔═╡ 2578d296-85c0-4038-9d6c-746fc49857e5
 begin
 StatsPlots.scatter(proj10_1,proj10_2,
 	title="Proyeccion de [u,v,10]",
-	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor")
+	label="", xlabel="Proj. eje menor",ylabel="Proj. eje mayor", aspect_ratio=:equal)
 end
 
 # ╔═╡ 00000000-0000-0000-0000-000000000001
